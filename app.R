@@ -52,6 +52,8 @@ require(deSolve)
 source("log_normal_transf.R")
 source("stat_func.R")
 
+# Turn off warnings
+options(warn=-1)
 
 #' busyIndicator START
 #' 
@@ -100,7 +102,7 @@ busyIndicator <- function(text = "Calculation in progress..",img = "ajax-loader.
 ui <- navbarPage(
 
 # Application title
-  "PBPK-QSTS v0.3",
+  "PBPK-QSTS v0.6",
   tabPanel("Welcome",
            shinyjs::useShinyjs(),
            titlePanel(h4("Introduction")),
@@ -1377,7 +1379,24 @@ ui <- navbarPage(
                         numericInput("downloadPlot_res_conc_metab_in_heart_dpi", "Resolution [dpi]", value = 600, min = 72, max = 1200),
                         radioButtons("downloadPlot_res_conc_metab_in_heart_device", "Format", choices = c("png","pdf","jpeg","eps"), selected = "png", inline = TRUE),
                         downloadButton("downloadPlot_res_conc_metab_in_heart", "Download plot")
-                      )
+                      ),
+                      tags$hr(),
+                      tags$h4("Stats plot settings in plasma"),
+                      sliderInput(inputId = "downloadPlot_stats_res_conc_in_venous_plasma_CI",
+                                  label = "Confidence interval [%]:",
+                                  value = 95,
+                                  min = 0,
+                                  max = 100),
+                      numericInput("downloadPlot_stats_res_conc_in_venous_plasma_width", "Width [mm]", value = 120, min = 10, max = 1200),
+                      numericInput("downloadPlot_stats_res_conc_in_venous_plasma_height", "Height [mm]", value = 90, min = 30, max = 900),
+                      numericInput("downloadPlot_stats_res_conc_in_venous_plasma_dpi", "Resolution [dpi]", value = 600, min = 72, max = 1200),
+                      radioButtons("downloadPlot_stats_res_conc_in_venous_plasma_device", "Format", choices = c("png","pdf","jpeg","eps"), selected = "png", inline = TRUE),
+                      downloadButton("downloadPlot_stats_res_conc_in_venous_plasma", "Download plot"),
+                      
+                      bsTooltip("downloadPlot_stats_res_conc_in_venous_plasma_CI", "confidence interval, default = 95%",
+                                placement = "bottom", trigger = "hover",
+                                options = NULL)
+                      
                       
              ),
 
@@ -1404,7 +1423,7 @@ ui <- navbarPage(
                       busyIndicator(),
                       tags$br(),
                       tags$h4("Stats plots of API concentration in plasma"),
-                      plotOutput("stat_res_conc_in_venous_plasma")
+                      plotOutput("stats_res_conc_in_venous_plasma")
                       
                 )
              
@@ -3676,7 +3695,7 @@ server <- function(input, output, session) {
 
   #
   # API tab logic (end) ------------------------------------------------------
-  #
+  #p
   
 
   #
@@ -3686,8 +3705,82 @@ server <- function(input, output, session) {
 # Run simulation button logic  
 observeEvent(input$run_sim, {
   
-  # requirements
-  req(pop_vals$ka)
+  # requirements tu run simulation
+  req(study_vals$dose,
+      study_vals$dose_every,
+      study_vals$inf_dose,
+      study_vals$inf_time,
+      study_vals$t_end,
+      study_vals$ISEF1A2,
+      study_vals$ISEF2C19,
+      study_vals$ISEF2D6,
+      study_vals$ISEF2C9,
+      study_vals$ISEF3A4,
+      study_vals$ISEF2B6,
+      study_vals$ISEF2C8,
+      study_vals$fumic,
+      study_vals$fumic_metab,
+      study_vals$CLrenal,
+      study_vals$CLrenal_metab,
+      study_vals$liver_density,
+      study_vals$heart_density,
+      study_vals$Qpf,
+      study_vals$CLefflux,
+      study_vals$CLuptake)
+  
+  req(api_vals$MW_api,
+      api_vals$pKa_api,
+      api_vals$PAMPA,
+      api_vals$MW_metab,
+      api_vals$pKa_metab,
+      api_vals$Kpad,
+      api_vals$Kpbo,
+      api_vals$Kpbr,
+      api_vals$Kpgu,
+      api_vals$Kphe,
+      api_vals$Kppf,
+      api_vals$Kpec,
+      api_vals$Kpki,
+      api_vals$Kpli,
+      api_vals$Kplu,
+      api_vals$Kpmu,
+      api_vals$Kpsk,
+      api_vals$Kpsp,
+      api_vals$Kpre,
+      api_vals$Kpli_metab,
+      api_vals$Kphe_metab,
+      api_vals$fu_ht_api,
+      api_vals$Kpre_metab,
+      api_vals$fuha,
+      api_vals$fuhn,
+      api_vals$Vmax_1A2_api_dm,
+      api_vals$Km_1A2_api_dm,
+      api_vals$Vmax_2B6_api_dm,
+      api_vals$Km_2B6_api_dm,
+      api_vals$Vmax_2C8_api_dm,
+      api_vals$Km_2C8_api_dm,
+      api_vals$Vmax_2C9_api_dm,
+      api_vals$Km_2C9_api_dm,
+      api_vals$Vmax_2C19_api_dm,
+      api_vals$Km_2C19_api_dm,
+      api_vals$Vmax_2D6_api_dm,
+      api_vals$Km_2D6_api_dm,
+      api_vals$Vmax_3A4_api_dm,
+      api_vals$Km_3A4_api_dm,
+      api_vals$Vmax_2B6_api_h,
+      api_vals$Km_2B6_api_h,
+      api_vals$Vmax_2D6_api_h,
+      api_vals$Km_2D6_api_h,
+      api_vals$Vmax_3A4_api_h,
+      api_vals$Km_3A4_api_h,
+      api_vals$Vmax_1A2_metab_dm,
+      api_vals$Km_1A2_metab_dm,
+      api_vals$Vmax_2C19_metab_dm,
+      api_vals$Km_2C19_metab_dm,
+      api_vals$Vmax_2D6_metab_dm,
+      api_vals$Km_2D6_metab_dm,
+      api_vals$Vmax_2D6_metab_h,
+      api_vals$Km_2D6_metab_h)
   
   # Disable all buttons/sliders/checkboxes/textinput etc. when running simulations
   shinyjs::disable("reset_population_defaults_general")
@@ -3728,7 +3821,7 @@ observeEvent(input$run_sim, {
   shinyjs::disable("pop_data_rownames")
   shinyjs::disable("pop_data_sep")
   shinyjs::disable("dose")
-  shinyjs::disable("no_dose")
+  shinyjs::disable("no_doses")
   shinyjs::disable("dose_every")
   shinyjs::disable("inf_dose")
   shinyjs::disable("inf_time")
@@ -3965,7 +4058,7 @@ observeEvent(input$run_sim, {
   
   newDF <- do.call(function(...) rbind(..., make.row.names=FALSE), outputCurry) # save calculated data to newDF
 
-  print(newDF)
+  # print(newDF)
   
   
   #
@@ -4040,29 +4133,6 @@ observeEvent(input$run_sim, {
   })
   
 
-  # output$res_conc_in_heart <- renderPlot({
-  #   ggplot(newDF, aes(time, HT, colour = rn)) +
-  #     geom_line(size = 1) +
-  #     theme_classic() +
-  #     theme(
-  #       panel.grid.major = element_blank(),
-  #       panel.grid.minor = element_blank(),
-  #       axis.title = element_text(size = 13),
-  #       axis.text = element_text(size = 13),
-  #       legend.text = element_text(size = 11),
-  #       legend.title = element_text(size = 11),
-  #       legend.position = "right"
-  #     ) +
-  #     ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
-  #     labs(
-  #       list(
-  #         x = "Time [h]",
-  #         y = "Concentration in heart tissue [mg/L]",
-  #         colour = "Individuals"
-  #       )
-  #     )
-  # })
-  
   
   output$res_conc_in_heart <- renderPlot({
     ggplot(newDF, aes(time, HT, colour = rn)) +
@@ -4136,37 +4206,44 @@ if(input$METAB_present == TRUE){
   })
 }
   
-  output$stat_res_conc_in_venous_plasma <- renderPlot({
+  output$stats_res_conc_in_venous_plasma <- renderPlot({
     
     newDF <- as.data.frame(newDF)
-    
-    stats_iv <- plyr::ddply(newDF, .(time), function(newDF) statFunc(newDF$BL,0.025, 0.975))
-    
-    newDF <- merge(newDF, stats_iv, by = "time")
-    
-    ggplot(data=newDF, aes(time, BL, colour = rn), alpha = 0.4) +
-      geom_line(size = 1) +
-      theme_classic() +
-      theme(
-        panel.grid.major = element_line(colour="grey",size = rel(0.5)),
-        panel.grid.minor = element_blank(),
-        axis.title = element_text(size = 13),
-        axis.text = element_text(size = 13),
-        legend.text = element_text(size = 11),
-        legend.title = element_text(size = 11),
-        legend.position = "right"
-      ) +
-      ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
-      labs(
-        list(
-          x = "Time [h]",
-          y = "Concentration in venous plasma [mg/L]",
-          colour =
-            "Individuals"
-        )
-      ) + geom_ribbon(data= newDF, aes(x = time, ymin = lower_CI, ymax = higher_CI, fill = "red", alpha = 0.3)) +
-      geom_line(data = newDF, aes(x = time, y=median, alpha = 0.8))
-    
+
+    subset <- newDF[is.finite(rowSums(newDF[,2:ncol(newDF)])),]
+
+
+      CI_level <- input$downloadPlot_stats_res_conc_in_venous_plasma_CI
+
+      CI_low <- (1-(CI_level/100))/2
+      CI_high <- 1 - ((1- (CI_level/100))/2)
+
+      stats_iv <- plyr::ddply(subset, .(time), function(subset) statFunc(subset$BL,CI_low, CI_high))
+
+      newDF$median <- with(newDF, ave(BL, time, FUN=function(x) median(x, na.rm = TRUE)))
+
+      ggplot(data=stats_iv, aes(x = time, y = median), colour = "red", alpha = 0.8) +
+        geom_line(size = 1) +
+        theme_classic() +
+        theme(
+          panel.grid.major = element_line(colour="grey",size = rel(0.5)),
+          panel.grid.minor = element_blank(),
+          axis.title = element_text(size = 13),
+          axis.text = element_text(size = 13),
+          legend.text = element_text(size = 11),
+          legend.title = element_text(size = 11),
+          legend.position = "right"
+        ) +
+        ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
+        labs(
+          list(
+            x = "Time [h]",
+            y = "Concentration in venous plasma [mg/L]",
+            colour =
+              "Individuals"
+          )
+        ) + geom_ribbon(data= stats_iv, aes(x = time, ymin = lower_CI, ymax = higher_CI), fill="red", color = "red", alpha = 0.3)
+
   })
   
   
@@ -4237,6 +4314,15 @@ if(input$METAB_present == TRUE){
       ggsave(file, plot = plot_res_conc_metab_in_heart(newDF), units = "mm", width = input$downloadPlot_res_conc_metab_in_heart_width,
              height = input$downloadPlot_res_conc_metab_in_heart_height, dpi = input$downloadPlot_res_conc_metab_in_heart_dpi,
              device = input$downloadPlot_res_conc_metab_in_heart_device)
+    }
+  )
+  
+  output$downloadPlot_stats_res_conc_in_venous_plasma <- downloadHandler(
+    filename = function() { paste(input$downloadPlot_stats_res_conc_in_venous_plasma, '.png', sep='') },
+    content = function(file) {
+      ggsave(file, plot = plot_stats_res_conc_in_venous_plasma(newDF), units = "mm", width = input$downloadPlot_res_log_conc_in_venous_plasma_width,
+             height = input$downloadPlot_res_log_conc_in_venous_plasma_height, dpi = input$downloadPlot_res_log_conc_in_venous_plasma_dpi,
+             device = input$downloadPlot_res_log_conc_in_venous_plasma_device)
     }
   )
   
@@ -5350,11 +5436,16 @@ if(input$METAB_present == TRUE){
   
   ######## Stats res plots
   
-  plot_stat_res_conc_in_venous_plasma <- function(data_to_plot){
+  plot_stats_res_conc_in_venous_plasma <- function(data_to_plot){
     
-    stats_iv <- plyr::ddply(data_to_plot, .(time), function(data_to_plot) statFunc(data_to_plot$BL,0.025, 0.975))
+    CI_level <- input$downloadPlot_stats_res_conc_in_venous_plasma_CI
     
-    ggplot(data_to_plot, aes(time, BL, colour = rn)) +
+    CI_low <- (1-(CI_level/100))/2
+    CI_high <- 1 - ((1- (CI_level/100))/2)
+    
+    stats_iv <- plyr::ddply(data_to_plot, .(time), function(data_to_plot) statFunc(data_to_plot$BL,CI_low, CI_high))
+    
+    ggplot(data=stats_iv, aes(x = time, y = median), colour = "red", alpha = 0.8) +
       geom_line(size = 1) +
       theme_classic() +
       theme(
@@ -5374,8 +5465,8 @@ if(input$METAB_present == TRUE){
           colour =
             "Individuals"
         )
-      ) + geom_ribbon(data = stats_iv, aes(x = time, ymin = lower_CI, ymax = higher_CI), fill = "red", alpha = 0.3) +
-      geom_line(data = stats_iv, aes(x = time, y=median), fill = "red", alpha = 0.8)
+      ) + geom_ribbon(data= stats_iv, aes(x = time, ymin = lower_CI, ymax = higher_CI), fill="red", color = "red", alpha = 0.3)
+    
   }
   
   
@@ -5702,49 +5793,7 @@ if(input$METAB_present == TRUE){
     
 
   })
-  
- 
-  # print("All inputs")
-  # observe(print(reactiveValuesToList(input)))
-  
-  # 
-  # sumfuncx <- function(x) {
-  #   stat1 <-  median(x)
-  #   stat2 <-  quantile(x, probs=CIlow, names=F)
-  #   stat3 <-  quantile(x, probs=CIhi, names=F)
-  #   stat4 <-  length(x)
-  #   result <- c("median"=stat1, "low"=stat2, "hi"=stat3, "n"=stat4)
-  #   result
-  # }
-  # 
-  # output$res_conc_in_venous_plasma <- renderPlot({
-  #   ggplot() +
-  #     geom_line(data=newDF, aes(time, BL, colour = rn), size = 1) +
-  #     theme_classic() +
-  #     theme(
-  #       panel.grid.major = element_line(colour="grey",size = rel(0.5)),
-  #       panel.grid.minor = element_blank(),
-  #       axis.title = element_text(size = 13),
-  #       axis.text = element_text(size = 13),
-  #       legend.text = element_text(size = 11),
-  #       legend.title = element_text(size = 11),
-  #       legend.position = "right"
-  #     ) +
-  #     ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
-  #     labs(
-  #       list(
-  #         x = "Time [h]",
-  #         y = "Concentration in venous plasma [mg/L]",
-  #         colour =
-  #           "Individuals"
-  #       )
-  #     ) + geom_ribbon(data = statsCONCS, aes(x = time, ymin = lower_CI, ymax = higher_CI), fill = "red", alpha = 0.3) +
-  #     geom_line(data = statsCONCS, aes(x = time, y=median), fill = "red", alpha = 0.8)
-  #   
-  # })
-  
-  
-  
+
 
 }  
 
