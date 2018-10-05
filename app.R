@@ -1,4 +1,4 @@
-# PBPK-QSTS shiny v0.6
+# PBPK-QSTS shiny v0.7
 # 
 # 
 # Copyright (C) 2018 
@@ -41,7 +41,6 @@ require(dplyr)
 require(plyr)
 require(ggplot2)
 require(ggthemes)
-require(plotly)
 require(distr)
 require(data.table)
 require(deSolve)
@@ -1392,8 +1391,22 @@ ui <- navbarPage(
                       numericInput("downloadPlot_stats_res_conc_in_venous_plasma_dpi", "Resolution [dpi]", value = 600, min = 72, max = 1200),
                       radioButtons("downloadPlot_stats_res_conc_in_venous_plasma_device", "Format", choices = c("png","pdf","jpeg","eps"), selected = "png", inline = TRUE),
                       downloadButton("downloadPlot_stats_res_conc_in_venous_plasma", "Download plot"),
+                      tags$hr(),
+                      sliderInput(inputId = "downloadPlot_stats_res_log_conc_in_venous_plasma_CI",
+                                  label = "Confidence interval [%]:",
+                                  value = 95,
+                                  min = 0,
+                                  max = 100),
+                      numericInput("downloadPlot_stats_res_log_conc_in_venous_plasma_width", "Width [mm]", value = 120, min = 10, max = 1200),
+                      numericInput("downloadPlot_stats_res_log_conc_in_venous_plasma_height", "Height [mm]", value = 90, min = 30, max = 900),
+                      numericInput("downloadPlot_stats_res_log_conc_in_venous_plasma_dpi", "Resolution [dpi]", value = 600, min = 72, max = 1200),
+                      radioButtons("downloadPlot_stats_res_log_conc_in_venous_plasma_device", "Format", choices = c("png","pdf","jpeg","eps"), selected = "png", inline = TRUE),
+                      downloadButton("downloadPlot_stats_res_log_conc_in_venous_plasma", "Download plot"),
                       
                       bsTooltip("downloadPlot_stats_res_conc_in_venous_plasma_CI", "confidence interval, default = 95%",
+                                placement = "bottom", trigger = "hover",
+                                options = NULL),
+                      bsTooltip("downloadPlot_stats_res_log_conc_in_venous_plasma_CI", "confidence interval, default = 95%",
                                 placement = "bottom", trigger = "hover",
                                 options = NULL)
                       
@@ -4066,20 +4079,6 @@ observeEvent(input$run_sim, {
   #
   
   output$res_log_conc_in_venous_plasma <- renderPlot({
-    
-    # plot_ly(data = newDF, x = ~time, y = ~BL, type = "scatter", mode = "lines", color = ~rn) %>%
-    #   layout(title = paste("Log 10 concentration vs. time for ",input$api_plot_caption, sep=""),
-    #          xaxis = list(title = "Time [h]"),
-    #          yaxis = list (type = "log", title = "log 10 concentration in venous plasma [mg/L]",
-    #                        zeroline=F, showline=T, 
-    #                        ticks="outside",
-    #                        nticks=8),
-    #          legend= list(x = 1.05, y = 0.5, yanchor = "top") ) %>%
-    #   add_annotations(text="Individuals", xref="paper", yref="paper",
-    #                   x=1.05, xanchor="left",
-    #                   y=0.5, yanchor="bottom",    # Same y as legend below
-    #                   legendtitle=TRUE, showarrow=FALSE )
-    #   
 
         ggplot(as.data.frame(newDF), aes(time, BL, colour = rn)) +
         geom_line(size = 1) +
@@ -4244,6 +4243,48 @@ if(input$METAB_present == TRUE){
           )
         ) + geom_ribbon(data= stats_iv, aes(x = time, ymin = lower_CI, ymax = higher_CI), fill="red", color = "red", alpha = 0.3)
 
+  })
+  
+  
+  output$stats_res_log_conc_in_venous_plasma <- renderPlot({
+    
+    newDF <- as.data.frame(newDF)
+    
+    subset <- newDF[is.finite(rowSums(newDF[,2:ncol(newDF)])),]
+    
+    
+    CI_level <- input$downloadPlot_stats_res_conc_in_venous_plasma_CI
+    
+    CI_low <- (1-(CI_level/100))/2
+    CI_high <- 1 - ((1- (CI_level/100))/2)
+    
+    stats_iv <- plyr::ddply(subset, .(time), function(subset) statFunc(subset$BL,CI_low, CI_high))
+    
+    newDF$median <- with(newDF, ave(BL, time, FUN=function(x) median(x, na.rm = TRUE)))
+    
+    ggplot(data=stats_iv, aes(x = time, y = median), colour = "red", alpha = 0.8) +
+      geom_line(size = 1) +
+      theme_classic() +
+      scale_y_log10() + # correct way of presenting the log10 values
+      theme(
+        panel.grid.major = element_line(colour="grey",size = rel(0.5)),
+        panel.grid.minor = element_blank(),
+        axis.title = element_text(size = 13),
+        axis.text = element_text(size = 13),
+        legend.text = element_text(size = 11),
+        legend.title = element_text(size = 11),
+        legend.position = "right"
+      ) +
+      ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
+      labs(
+        list(
+          x = "Time [h]",
+          y = "Concentration in venous plasma [mg/L]",
+          colour =
+            "Individuals"
+        )
+      ) + geom_ribbon(data= stats_iv, aes(x = time, ymin = lower_CI, ymax = higher_CI), fill="red", color = "red", alpha = 0.3)
+    
   })
   
   
@@ -5469,6 +5510,40 @@ if(input$METAB_present == TRUE){
     
   }
   
+  
+  plot_stats_res_log_conc_in_venous_plasma <- function(data_to_plot){
+    
+    CI_level <- input$downloadPlot_stats_res_log_conc_in_venous_plasma_CI
+    
+    CI_low <- (1-(CI_level/100))/2
+    CI_high <- 1 - ((1- (CI_level/100))/2)
+    
+    stats_iv <- plyr::ddply(data_to_plot, .(time), function(data_to_plot) statFunc(data_to_plot$BL,CI_low, CI_high))
+    
+    ggplot(data=stats_iv, aes(x = time, y = median), colour = "red", alpha = 0.8) +
+      geom_line(size = 1) +
+      theme_classic() +
+      scale_y_log10() + # correct way of presenting the log10 values
+      theme(
+        panel.grid.major = element_line(colour="grey",size = rel(0.5)),
+        panel.grid.minor = element_blank(),
+        axis.title = element_text(size = 13),
+        axis.text = element_text(size = 13),
+        legend.text = element_text(size = 11),
+        legend.title = element_text(size = 11),
+        legend.position = "right"
+      ) +
+      ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
+      labs(
+        list(
+          x = "Time [h]",
+          y = "Concentration in venous plasma [mg/L]",
+          colour =
+            "Individuals"
+        )
+      ) + geom_ribbon(data= stats_iv, aes(x = time, ymin = lower_CI, ymax = higher_CI), fill="red", color = "red", alpha = 0.3)
+    
+  }
   
   
   

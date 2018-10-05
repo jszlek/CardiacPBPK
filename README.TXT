@@ -1,6 +1,6 @@
 /**
 *
-* PBPK-QSTS v0.6 - 
+* PBPK-QSTS v0.7 - 
 Copyright (C) 2018 
 
 Authors: 
@@ -32,7 +32,8 @@ If not, see <http://www.gnu.org/licenses/>.
 REQUIREMENTS
 ========================
 1) R environment version >= 3.3.0 (for download check https://cran.r-project.org/)
-2) Additional R packages: shiny, DT, shinyBS, dplyr, optimx, ggplot2, nloptr, GenSA, MASS, reshape, gridExtra
+2) Additional R packages: shiny, shinyjs, DT, shinyBS, dplyr, plyr, ggplot2, ggthemes, distr, data.table, deSolve
+
 
 Note: Please ensure that nlopt libraries (https://nlopt.readthedocs.io/en/latest/) are installed on your system.
 If you encounter troubles installing nlopt please read the StackOverflow question https://stackoverflow.com/questions/29716857/installing-nloptr-on-linux
