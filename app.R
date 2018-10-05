@@ -1361,7 +1361,19 @@ ui <- navbarPage(
                         numericInput("downloadPlot_res_conc_metab_in_venous_plasma_height", "Height [mm]", value = 90, min = 30, max = 900),
                         numericInput("downloadPlot_res_conc_metab_in_venous_plasma_dpi", "Resolution [dpi]", value = 600, min = 72, max = 1200),
                         radioButtons("downloadPlot_res_conc_metab_in_venous_plasma_device", "Format", choices = c("png","pdf","jpeg","eps"), selected = "png", inline = TRUE),
-                        downloadButton("downloadPlot_res_conc_metab_in_venous_plasma", "Download plot")
+                        downloadButton("downloadPlot_res_conc_metab_in_venous_plasma", "Download plot"),
+                        tags$hr(),
+                        tags$h4("Stats metabolite conc plot settings in plasma"),
+                        sliderInput(inputId = "downloadPlot_stats_res_conc_metab_in_venous_plasma_CI",
+                                    label = "Confidence interval [%]:",
+                                    value = 95,
+                                    min = 0,
+                                    max = 100),
+                        numericInput("downloadPlot_stats_res_conc_metab_in_venous_plasma_width", "Width [mm]", value = 120, min = 10, max = 1200),
+                        numericInput("downloadPlot_stats_res_conc_metab_in_venous_plasma_height", "Height [mm]", value = 90, min = 30, max = 900),
+                        numericInput("downloadPlot_stats_res_conc_metab_in_venous_plasma_dpi", "Resolution [dpi]", value = 600, min = 72, max = 1200),
+                        radioButtons("downloadPlot_stats_res_conc__metab_in_venous_plasma_device", "Format", choices = c("png","pdf","jpeg","eps"), selected = "png", inline = TRUE),
+                        downloadButton("downloadPlot_stats_res_conc_metab_in_venous_plasma", "Download plot")
                       ),
                       tags$hr(),
                       tags$h4("Conc plot settings in heart"),
@@ -1377,10 +1389,22 @@ ui <- navbarPage(
                         numericInput("downloadPlot_res_conc_metab_in_heart_height", "Height [mm]", value = 90, min = 30, max = 900),
                         numericInput("downloadPlot_res_conc_metab_in_heart_dpi", "Resolution [dpi]", value = 600, min = 72, max = 1200),
                         radioButtons("downloadPlot_res_conc_metab_in_heart_device", "Format", choices = c("png","pdf","jpeg","eps"), selected = "png", inline = TRUE),
-                        downloadButton("downloadPlot_res_conc_metab_in_heart", "Download plot")
+                        downloadButton("downloadPlot_res_conc_metab_in_heart", "Download plot"),
+                        tags$hr(),
+                        tags$h4("Stats metabolite conc plot settings in heart"),
+                        sliderInput(inputId = "downloadPlot_stats_res_conc_metab_in_heart_CI",
+                                    label = "Confidence interval [%]:",
+                                    value = 95,
+                                    min = 0,
+                                    max = 100),
+                        numericInput("downloadPlot_stats_res_conc_metab_in_heart_width", "Width [mm]", value = 120, min = 10, max = 1200),
+                        numericInput("downloadPlot_stats_res_conc_metab_in_heart_height", "Height [mm]", value = 90, min = 30, max = 900),
+                        numericInput("downloadPlot_stats_res_conc_metab_in_heart_dpi", "Resolution [dpi]", value = 600, min = 72, max = 1200),
+                        radioButtons("downloadPlot_stats_res_conc_metab_in_heart_device", "Format", choices = c("png","pdf","jpeg","eps"), selected = "png", inline = TRUE),
+                        downloadButton("downloadPlot_stats_res_conc_metab_in_heart", "Download plot")
                       ),
                       tags$hr(),
-                      tags$h4("Stats plot settings in plasma"),
+                      tags$h4("Stats plot settings conc in plasma"),
                       sliderInput(inputId = "downloadPlot_stats_res_conc_in_venous_plasma_CI",
                                   label = "Confidence interval [%]:",
                                   value = 95,
@@ -1392,6 +1416,7 @@ ui <- navbarPage(
                       radioButtons("downloadPlot_stats_res_conc_in_venous_plasma_device", "Format", choices = c("png","pdf","jpeg","eps"), selected = "png", inline = TRUE),
                       downloadButton("downloadPlot_stats_res_conc_in_venous_plasma", "Download plot"),
                       tags$hr(),
+                      tags$h4("Stats plot settings log 10 conc in plasma"),
                       sliderInput(inputId = "downloadPlot_stats_res_log_conc_in_venous_plasma_CI",
                                   label = "Confidence interval [%]:",
                                   value = 95,
@@ -1402,6 +1427,20 @@ ui <- navbarPage(
                       numericInput("downloadPlot_stats_res_log_conc_in_venous_plasma_dpi", "Resolution [dpi]", value = 600, min = 72, max = 1200),
                       radioButtons("downloadPlot_stats_res_log_conc_in_venous_plasma_device", "Format", choices = c("png","pdf","jpeg","eps"), selected = "png", inline = TRUE),
                       downloadButton("downloadPlot_stats_res_log_conc_in_venous_plasma", "Download plot"),
+                      tags$hr(),
+                      tags$h4("Stats plot settings conc in heart"),
+                      sliderInput(inputId = "downloadPlot_stats_res_conc_in_heart_CI",
+                                  label = "Confidence interval [%]:",
+                                  value = 95,
+                                  min = 0,
+                                  max = 100),
+                      numericInput("downloadPlot_stats_res_conc_in_heart_width", "Width [mm]", value = 120, min = 10, max = 1200),
+                      numericInput("downloadPlot_stats_res_conc_in_heart_height", "Height [mm]", value = 90, min = 30, max = 900),
+                      numericInput("downloadPlot_stats_res_conc_in_heart_dpi", "Resolution [dpi]", value = 600, min = 72, max = 1200),
+                      radioButtons("downloadPlot_stats_res_conc_in_heart_device", "Format", choices = c("png","pdf","jpeg","eps"), selected = "png", inline = TRUE),
+                      downloadButton("downloadPlot_stats_res_conc_in_heart", "Download plot"),
+                      
+                      
                       
                       bsTooltip("downloadPlot_stats_res_conc_in_venous_plasma_CI", "confidence interval, default = 95%",
                                 placement = "bottom", trigger = "hover",
@@ -1420,14 +1459,13 @@ ui <- navbarPage(
                       tags$br(),
                       plotOutput("res_conc_in_venous_plasma"),
                       tags$br(),
-                      conditionalPanel(condition = "input.METAB_present==true",
-                                       plotOutput("res_conc_metab_in_venous_plasma")
-                                       ),
-                      tags$br(),
                       plotOutput("res_conc_in_heart"),
                       tags$br(),
                       conditionalPanel(condition = "input.METAB_present==true",
-                                      plotOutput("res_conc_metab_in_heart")
+                                      plotOutput("res_conc_metab_in_heart"),
+                                      plotOutput("res_conc_metab_in_venous_plasma"),
+                                      plotOutput("stats_res_conc_metab_in_venous_plasma"),
+                                      plotOutput("stats_res_conc_metab_in_heart")
                                       ),
                       tags$br(),
                       busyIndicator(),
@@ -1436,11 +1474,19 @@ ui <- navbarPage(
                       busyIndicator(),
                       tags$br(),
                       tags$h4("Stats plots of API concentration in plasma"),
-                      plotOutput("stats_res_conc_in_venous_plasma")
+                      plotOutput("stats_res_conc_in_venous_plasma"),
+                      busyIndicator(),
+                      tags$br(),
+                      tags$h4("Stats plots of API log 10 concentration in plasma"),
+                      plotOutput("stats_res_log_conc_in_venous_plasma"),
+                      busyIndicator(),
+                      tags$br(),
+                      tags$h4("Stats plots of API concentration in heart"),
+                      plotOutput("stats_res_conc_in_heart")
                       
                 )
              
-           )
+              )
            ),
   
   tabPanel("About",
@@ -4181,6 +4227,44 @@ if(input$METAB_present == TRUE){
       )
   })
   
+  output$stats_res_conc_metab_in_heart <- renderPlot({
+    
+    newDF <- as.data.frame(newDF)
+    
+    subset <- newDF[is.finite(rowSums(newDF[,2:ncol(newDF)])),]
+    
+    
+    CI_level <- input$downloadPlot_stats_res_conc_metab_in_heart_CI
+    
+    CI_low <- (1-(CI_level/100))/2
+    CI_high <- 1 - ((1- (CI_level/100))/2)
+    
+    stats_iv <- plyr::ddply(subset, .(time), function(subset) statFunc(subset$HT_METAB,CI_low, CI_high))
+    
+    ggplot(data=stats_iv, aes(x = time, y = median), colour = "red", alpha = 0.8) +
+      geom_line(size = 1) +
+      theme_classic() +
+      theme(
+        panel.grid.major = element_line(colour="grey",size = rel(0.5)),
+        panel.grid.minor = element_blank(),
+        axis.title = element_text(size = 13),
+        axis.text = element_text(size = 13),
+        legend.text = element_text(size = 11),
+        legend.title = element_text(size = 11),
+        legend.position = "right"
+      ) +
+      ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
+      labs(
+        list(
+          x = "Time [h]",
+          y = "Concentration ofemetabolite in heart [mg/L]",
+          colour =
+            "Individuals"
+        )
+      ) + geom_ribbon(data= stats_iv, aes(x = time, ymin = lower_CI, ymax = higher_CI), fill="red", color = "red", alpha = 0.3)
+    
+  })
+  
   output$res_conc_metab_in_venous_plasma <- renderPlot({
     ggplot(newDF, aes(time, BL_METAB, colour = rn)) +
       geom_line(size = 1) +
@@ -4203,6 +4287,44 @@ if(input$METAB_present == TRUE){
         )
       )
   })
+  
+  output$stats_res_metab_conc_in_venous_plasma <- renderPlot({
+    
+    newDF <- as.data.frame(newDF)
+    
+    subset <- newDF[is.finite(rowSums(newDF[,2:ncol(newDF)])),]
+    
+    
+    CI_level <- input$downloadPlot_stats_res_metab_conc_in_venous_plasma_CI
+    
+    CI_low <- (1-(CI_level/100))/2
+    CI_high <- 1 - ((1- (CI_level/100))/2)
+    
+    stats_iv <- plyr::ddply(subset, .(time), function(subset) statFunc(subset$BL_METAB,CI_low, CI_high))
+
+    ggplot(data=stats_iv, aes(x = time, y = median), colour = "red", alpha = 0.8) +
+      geom_line(size = 1) +
+      theme_classic() +
+      theme(
+        panel.grid.major = element_line(colour="grey",size = rel(0.5)),
+        panel.grid.minor = element_blank(),
+        axis.title = element_text(size = 13),
+        axis.text = element_text(size = 13),
+        legend.text = element_text(size = 11),
+        legend.title = element_text(size = 11),
+        legend.position = "right"
+      ) +
+      ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
+      labs(
+        list(
+          x = "Time [h]",
+          y = "Concentration of metabolite in venous plasma [mg/L]",
+          colour =
+            "Individuals"
+        )
+      ) + geom_ribbon(data= stats_iv, aes(x = time, ymin = lower_CI, ymax = higher_CI), fill="red", color = "red", alpha = 0.3)
+    
+  })
 }
   
   output$stats_res_conc_in_venous_plasma <- renderPlot({
@@ -4218,8 +4340,6 @@ if(input$METAB_present == TRUE){
       CI_high <- 1 - ((1- (CI_level/100))/2)
 
       stats_iv <- plyr::ddply(subset, .(time), function(subset) statFunc(subset$BL,CI_low, CI_high))
-
-      newDF$median <- with(newDF, ave(BL, time, FUN=function(x) median(x, na.rm = TRUE)))
 
       ggplot(data=stats_iv, aes(x = time, y = median), colour = "red", alpha = 0.8) +
         geom_line(size = 1) +
@@ -4253,7 +4373,7 @@ if(input$METAB_present == TRUE){
     subset <- newDF[is.finite(rowSums(newDF[,2:ncol(newDF)])),]
     
     
-    CI_level <- input$downloadPlot_stats_res_conc_in_venous_plasma_CI
+    CI_level <- input$downloadPlot_stats_res_log_conc_in_venous_plasma_CI
     
     CI_low <- (1-(CI_level/100))/2
     CI_high <- 1 - ((1- (CI_level/100))/2)
@@ -4279,7 +4399,47 @@ if(input$METAB_present == TRUE){
       labs(
         list(
           x = "Time [h]",
-          y = "Concentration in venous plasma [mg/L]",
+          y = "Log 10 Concentration in venous plasma [mg/L]",
+          colour =
+            "Individuals"
+        )
+      ) + geom_ribbon(data= stats_iv, aes(x = time, ymin = lower_CI, ymax = higher_CI), fill="red", color = "red", alpha = 0.3)
+    
+  })
+  
+  output$stats_res_conc_in_heart <- renderPlot({
+    
+    newDF <- as.data.frame(newDF)
+    
+    subset <- newDF[is.finite(rowSums(newDF[,2:ncol(newDF)])),]
+    
+    
+    CI_level <- input$downloadPlot_stats_res_conc_in_heart_CI
+    
+    CI_low <- (1-(CI_level/100))/2
+    CI_high <- 1 - ((1- (CI_level/100))/2)
+    
+    stats_iv <- plyr::ddply(subset, .(time), function(subset) statFunc(subset$HT,CI_low, CI_high))
+    
+    newDF$median <- with(newDF, ave(HT, time, FUN=function(x) median(x, na.rm = TRUE)))
+    
+    ggplot(data=stats_iv, aes(x = time, y = median), colour = "red", alpha = 0.8) +
+      geom_line(size = 1) +
+      theme_classic() +
+      theme(
+        panel.grid.major = element_line(colour="grey",size = rel(0.5)),
+        panel.grid.minor = element_blank(),
+        axis.title = element_text(size = 13),
+        axis.text = element_text(size = 13),
+        legend.text = element_text(size = 11),
+        legend.title = element_text(size = 11),
+        legend.position = "right"
+      ) +
+      ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
+      labs(
+        list(
+          x = "Time [h]",
+          y = "Concentration in heart [mg/L]",
           colour =
             "Individuals"
         )
@@ -4361,9 +4521,45 @@ if(input$METAB_present == TRUE){
   output$downloadPlot_stats_res_conc_in_venous_plasma <- downloadHandler(
     filename = function() { paste(input$downloadPlot_stats_res_conc_in_venous_plasma, '.png', sep='') },
     content = function(file) {
-      ggsave(file, plot = plot_stats_res_conc_in_venous_plasma(newDF), units = "mm", width = input$downloadPlot_res_log_conc_in_venous_plasma_width,
-             height = input$downloadPlot_res_log_conc_in_venous_plasma_height, dpi = input$downloadPlot_res_log_conc_in_venous_plasma_dpi,
-             device = input$downloadPlot_res_log_conc_in_venous_plasma_device)
+      ggsave(file, plot = plot_stats_res_conc_in_venous_plasma(newDF), units = "mm", width = input$downloadPlot_stats_res_conc_in_venous_plasma_width,
+             height = input$downloadPlot_stats_res_conc_in_venous_plasma_height, dpi = input$downloadPlot_stats_res_conc_in_venous_plasma_dpi,
+             device = input$downloadPlot_stats_res_conc_in_venous_plasma_device)
+    }
+  )
+  
+  output$downloadPlot_stats_res_log_conc_in_venous_plasma <- downloadHandler(
+    filename = function() { paste(input$downloadPlot_stats_res_log_conc_in_venous_plasma, '.png', sep='') },
+    content = function(file) {
+      ggsave(file, plot = plot_stats_res_log_conc_in_venous_plasma(newDF), units = "mm", width = input$downloadPlot_stats_res_log_conc_in_venous_plasma_width,
+             height = input$downloadPlot_stats_res_log_conc_in_venous_plasma_height, dpi = input$downloadPlot_stats_res_log_conc_in_venous_plasma_dpi,
+             device = input$downloadPlot_stats_res_log_conc_in_venous_plasma_device)
+    }
+  )
+  
+  output$downloadPlot_stats_res_conc_in_heart <- downloadHandler(
+    filename = function() { paste(input$downloadPlot_stats_res_conc_in_heart, '.png', sep='') },
+    content = function(file) {
+      ggsave(file, plot = plot_stats_res_conc_in_heart(newDF), units = "mm", width = input$downloadPlot_stats_res_conc_in_heart_width,
+             height = input$downloadPlot_stats_res_conc_in_heart_height, dpi = input$downloadPlot_stats_res_conc_in_heart_dpi,
+             device = input$downloadPlot_stats_res_conc_in_heart_device)
+    }
+  )
+  
+  output$downloadPlot_stats_res_conc_metab_in_venous_plasma <- downloadHandler(
+    filename = function() { paste(input$downloadPlot_stats_res_conc_metab_in_venous_plasma, '.png', sep='') },
+    content = function(file) {
+      ggsave(file, plot = plot_stats_res_conc_metab_in_venous_plasma(newDF), units = "mm", width = input$downloadPlot_stats_res_conc_metab_in_venous_plasma_width,
+             height = input$downloadPlot_stats_res_conc_metab_in_venous_plasma_height, dpi = input$downloadPlot_stats_res_conc_metab_in_venous_plasma_dpi,
+             device = input$downloadPlot_stats_res_conc_metab_in_venous_plasma_device)
+    }
+  )
+  
+  output$downloadPlot_stats_res_conc_metab_in_heart <- downloadHandler(
+    filename = function() { paste(input$downloadPlot_stats_res_conc_metab_in_heart, '.png', sep='') },
+    content = function(file) {
+      ggsave(file, plot = plot_stats_res_conc_metab_in_heart(newDF), units = "mm", width = input$downloadPlot_stats_res_conc_metab_in_heart_width,
+             height = input$downloadPlot_stats_res_conc_metab_in_heart_height, dpi = input$downloadPlot_stats_res_conc_metab_in_heart_dpi,
+             device = input$downloadPlot_stats_res_conc_metab_in_heart_device)
     }
   )
   
@@ -5511,6 +5707,40 @@ if(input$METAB_present == TRUE){
   }
   
   
+  plot_stats_res_conc_metab_in_venous_plasma <- function(data_to_plot){
+    
+    CI_level <- input$downloadPlot_stats_res_conc_metab_in_venous_plasma_CI
+    
+    CI_low <- (1-(CI_level/100))/2
+    CI_high <- 1 - ((1- (CI_level/100))/2)
+    
+    stats_iv <- plyr::ddply(data_to_plot, .(time), function(data_to_plot) statFunc(data_to_plot$BL_METAB,CI_low, CI_high))
+    
+    ggplot(data=stats_iv, aes(x = time, y = median), colour = "red", alpha = 0.8) +
+      geom_line(size = 1) +
+      theme_classic() +
+      theme(
+        panel.grid.major = element_line(colour="grey",size = rel(0.5)),
+        panel.grid.minor = element_blank(),
+        axis.title = element_text(size = 13),
+        axis.text = element_text(size = 13),
+        legend.text = element_text(size = 11),
+        legend.title = element_text(size = 11),
+        legend.position = "right"
+      ) +
+      ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
+      labs(
+        list(
+          x = "Time [h]",
+          y = "Concentration in venous plasma [mg/L]",
+          colour =
+            "Individuals"
+        )
+      ) + geom_ribbon(data= stats_iv, aes(x = time, ymin = lower_CI, ymax = higher_CI), fill="red", color = "red", alpha = 0.3)
+    
+  }
+  
+  
   plot_stats_res_log_conc_in_venous_plasma <- function(data_to_plot){
     
     CI_level <- input$downloadPlot_stats_res_log_conc_in_venous_plasma_CI
@@ -5537,7 +5767,74 @@ if(input$METAB_present == TRUE){
       labs(
         list(
           x = "Time [h]",
-          y = "Concentration in venous plasma [mg/L]",
+          y = "Log 10 Concentration in venous plasma [mg/L]",
+          colour =
+            "Individuals"
+        )
+      ) + geom_ribbon(data= stats_iv, aes(x = time, ymin = lower_CI, ymax = higher_CI), fill="red", color = "red", alpha = 0.3)
+    
+  }
+  
+  plot_stats_res_conc_in_heart <- function(data_to_plot){
+    
+    CI_level <- input$downloadPlot_stats_res_conc_in_heart_CI
+    
+    CI_low <- (1-(CI_level/100))/2
+    CI_high <- 1 - ((1- (CI_level/100))/2)
+    
+    stats_iv <- plyr::ddply(data_to_plot, .(time), function(data_to_plot) statFunc(data_to_plot$HT,CI_low, CI_high))
+    
+    ggplot(data=stats_iv, aes(x = time, y = median), colour = "red", alpha = 0.8) +
+      geom_line(size = 1) +
+      theme_classic() +
+      theme(
+        panel.grid.major = element_line(colour="grey",size = rel(0.5)),
+        panel.grid.minor = element_blank(),
+        axis.title = element_text(size = 13),
+        axis.text = element_text(size = 13),
+        legend.text = element_text(size = 11),
+        legend.title = element_text(size = 11),
+        legend.position = "right"
+      ) +
+      ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
+      labs(
+        list(
+          x = "Time [h]",
+          y = "Concentration in heart [mg/L]",
+          colour =
+            "Individuals"
+        )
+      ) + geom_ribbon(data= stats_iv, aes(x = time, ymin = lower_CI, ymax = higher_CI), fill="red", color = "red", alpha = 0.3)
+    
+  }
+  
+  
+  plot_stats_res_conc_metab_in_heart <- function(data_to_plot){
+    
+    CI_level <- input$downloadPlot_stats_res_conc_metab_in_heart_CI
+    
+    CI_low <- (1-(CI_level/100))/2
+    CI_high <- 1 - ((1- (CI_level/100))/2)
+    
+    stats_iv <- plyr::ddply(data_to_plot, .(time), function(data_to_plot) statFunc(data_to_plot$HT_METAB,CI_low, CI_high))
+    
+    ggplot(data=stats_iv, aes(x = time, y = median), colour = "red", alpha = 0.8) +
+      geom_line(size = 1) +
+      theme_classic() +
+      theme(
+        panel.grid.major = element_line(colour="grey",size = rel(0.5)),
+        panel.grid.minor = element_blank(),
+        axis.title = element_text(size = 13),
+        axis.text = element_text(size = 13),
+        legend.text = element_text(size = 11),
+        legend.title = element_text(size = 11),
+        legend.position = "right"
+      ) +
+      ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
+      labs(
+        list(
+          x = "Time [h]",
+          y = "Concentration of metabolite in heart [mg/L]",
           colour =
             "Individuals"
         )
