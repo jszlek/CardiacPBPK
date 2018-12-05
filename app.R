@@ -1,22 +1,21 @@
-# PBPK-QSTS shiny v0.7
+# PBPK-QSTS shiny v0.8
 # 
 # 
 # Copyright (C) 2018 
 # 
-# Authors: 
+# Authors: Zofia Tylutki, Jakub Szlęk
 # 
 # 
 # Affiliation: 
 # Jagiellonian University Medical College,
 # Faculty of Pharmacy,
-# ,
 # Medyczna 9 st.,
 # 30-688 Kraków
 # Poland
 # 
 # Bugs, issues, please e-mail to maintainer
 # Jakub Szlęk: j.szlek@uj.edu.pl
-# 
+#
 # Copyright (C) 2018 
 # 
 # This program is free software: you can redistribute it and/or modify it under the terms of the GNU General 
@@ -53,6 +52,9 @@ source("stat_func.R")
 
 # Turn off warnings
 options(warn=-1)
+
+# Create dummy obj
+data_vals <- NULL
 
 #' busyIndicator START
 #' 
@@ -101,7 +103,7 @@ busyIndicator <- function(text = "Calculation in progress..",img = "ajax-loader.
 ui <- navbarPage(
 
 # Application title
-  "PBPK-QSTS v0.6",
+  "PBPK-QSTS v0.8",
   tabPanel("Welcome",
            shinyjs::useShinyjs(),
            titlePanel(h4("Introduction")),
@@ -152,28 +154,6 @@ ui <- navbarPage(
                                              max = 70,
                                              value = c(18, 70)),
                                  
-                                 #Tooltips 
-                                 bsTooltip("seed", "Random Number Generation (seed). A single value, interpreted as an integer.", placement = "bottom", trigger = "hover",
-                                           options = NULL),
-                                 bsTooltip("individual_count", "Number of individuals used in the study during simulation process.", placement = "bottom", trigger = "hover",
-                                           options = NULL),
-                                 bsTooltip("female_count", "Percentage [%] of females participants.", placement = "bottom", trigger = "hover",
-                                           options = NULL),
-                                 bsTooltip("age_range", "Age of participants between 18 and 70 years.", placement = "bottom", trigger = "hover",
-                                           options = NULL),
-                                 bsTooltip("reset_population_defaults_general", "Reset all settings of \\'General parameters\\' to defaults.", placement = "bottom", trigger = "hover",
-                                           options = NULL)
-
-                          ),
-                          column(4,
-                                 tags$h4(
-                                   tags$b(
-                                     "Weibull age distribution parameters:"
-                                   )
-                                 ),
-                                 tags$hr(),
-                                 actionButton("reset_population_defaults_weibull", "Default settings"),  # Reset population weibull settings  button
-                                 tags$hr(),
                                  numericInput(inputId = "scale_M",
                                               label = "Scale parameter for males' age distribution", # [Simcyp Simulator v.16]
                                               value = 24.7,
@@ -202,21 +182,57 @@ ui <- navbarPage(
                                  # Alerts
                                  bsAlert("shape_F_alert"),
                                  
+                                 numericInput(inputId = "liver_density",
+                                              label = "Liver density [g/L]",
+                                              value = 1080),
+                                 # bsAlert
+                                 bsAlert("liver_density_alert"),
+                                 
+                                 numericInput(inputId = "heart_density",
+                                              label = "Heart density [g/L]",
+                                              value = 1050),
+                                 # bsAlert
+                                 bsAlert("heart_density_alert"),
+                                 
+                                 numericInput(inputId = "Qpf",
+                                              label = "Pericaridum blood flow", 
+                                              value = 0.011),
+                                 # bsAlert
+                                 bsAlert("Qpf_alert"),
+                                 
+                                 
                                  #Tooltips 
-                                 bsTooltip("scale_M", "Scale parameter for males\\' age distribution.", placement = "bottom", trigger = "hover",
+                                 bsTooltip("seed", "Random Number Generation (seed). A single value, interpreted as an integer.", placement = "bottom", trigger = "hover",
                                            options = NULL),
-                                 bsTooltip("reset_population_defaults_weibull", "Reset all settings of \\'Weibull age distribution parameters\\' to defaults.", placement = "bottom", trigger = "hover",
+                                 bsTooltip("individual_count", "Number of individuals used in the study during simulation process.", placement = "bottom", trigger = "hover",
+                                           options = NULL),
+                                 bsTooltip("female_count", "Percentage [%] of females participants.", placement = "bottom", trigger = "hover",
+                                           options = NULL),
+                                 bsTooltip("age_range", "Age of participants between 18 and 70 years.", placement = "bottom", trigger = "hover",
+                                           options = NULL),
+                                 bsTooltip("reset_population_defaults_general", "Reset all settings of \\'General parameters\\' to defaults.", placement = "bottom", trigger = "hover",
+                                           options = NULL),
+                                 bsTooltip("scale_M", "Scale parameter for males\\' age distribution (Weibull).", placement = "bottom", trigger = "hover",
+                                           options = NULL),
+                                 bsTooltip("shape_M", "Shape parameter for males\\' age distribution (Weibull).", placement = "bottom", trigger = "hover",
+                                           options = NULL),
+                                 bsTooltip("scale_F", "Scale parameter for females\\' age distribution (Weibull).", placement = "bottom", trigger = "hover",
+                                           options = NULL),
+                                 bsTooltip("shape_F", "Shape parameter for females\\' age distribution (Weibull).", placement = "bottom", trigger = "hover",
                                            options = NULL)
+                                 
+
                           ),
                           column(4,
                                  tags$h4(
                                    tags$b(
-                                     "Pharmacokinetic distribution parameters:"
+                                     "Absorption parameters:"
                                    )
                                  ),
                                  tags$hr(),
-                                 actionButton("reset_population_defaults_pharmacokinetics", "Default settings"), # Reset population pharmacokinetics settings button
+                                 actionButton("reset_population_defaults_pharmacokinetics_absorption", "Default settings"), # Reset population pharmacokinetics settings button
                                  tags$hr(),
+                                 
                                  numericInput(inputId = "ka",
                                               label = "ka", # [Simcyp Simulator v.16]
                                               value = 0.2434986),
@@ -271,9 +287,55 @@ ui <- navbarPage(
                                  # Alerts
                                  bsAlert("FaFg_m_lognorm_cv_alert"),
                                  
+                                 # Tooltips
+                                 bsTooltip("reset_population_defaults_pharmacokinetics_absorption", "Reset all settings of \\'Absorption parameters\\' to defaults.",
+                                           placement = "bottom", trigger = "hover",
+                                           options = NULL),
+                                 bsTooltip("ka", "first order absorption rate [1/h]",
+                                           placement = "bottom", trigger = "hover",
+                                           options = NULL),
+                                 bsTooltip("tlag_m_lognorm_m", "mean lag time of drug absorption [h]",
+                                           placement = "bottom", trigger = "hover",
+                                           options = NULL),
+                                 bsTooltip("tlag_m_lognorm_cv", "coefficient of variation of lag time of drug absorption",
+                                           placement = "bottom", trigger = "hover",
+                                           options = NULL),
+                                 bsTooltip("F_mean", "mean oral bioavailability of API [%]",
+                                           placement = "bottom", trigger = "hover",
+                                           options = NULL),
+                                 bsTooltip("F_sd", "standard deviation of API\\'s oral bioavailability [%]",
+                                           placement = "bottom", trigger = "hover",
+                                           options = NULL),
+                                 bsTooltip("F_lower", "lower bound of the range of API\\'s oral bioavailability if known [%]",
+                                           placement = "bottom", trigger = "hover",
+                                           options = NULL),
+                                 bsTooltip("F_upper", "upper bound of the range of API\\'s oral bioavailability if known [%]",
+                                           placement = "bottom", trigger = "hover",
+                                           options = NULL),
+                                 bsTooltip("FaFg_m_lognorm_m", "mean fraction of administered dose of API absorbed to enterocytes, escaping gut wall metabolism and entering portal vein",
+                                           placement = "bottom", trigger = "hover",
+                                           options = NULL),
+                                 bsTooltip("FaFg_m_lognorm_cv", "coefficient of variation of fraction of administered dose of API absorbed to enterocytes, escaping gut wall metabolism and entering portal vein",
+                                           placement = "bottom", trigger = "hover",
+                                           options = NULL)
+                                 
+                                 
+                          ),
+                          column(4,
+                                 tags$h4(
+                                   tags$b(
+                                     "Distribution parameters:"
+                                   )
+                                 ),
+                                 
+                                 tags$hr(),
+                                 actionButton("reset_population_defaults_pharmacokinetics_distribution", "Default settings"), # Reset population pharmacokinetics settings button
+                                 tags$hr(),
+                                 
                                  numericInput(inputId = "fup_m_lognorm_2_m",
                                               label = "fup m_lognormal_2 and s_lognormal_2 1st param (m)", # [Simcyp Simulator v.16]
                                               value = 0.060),
+                                 
                                  # Alerts
                                  bsAlert("fup_m_lognorm_2_m_alert"),
                                  
@@ -319,35 +381,9 @@ ui <- navbarPage(
                                  # Alerts
                                  bsAlert("fup_metab_2_alert"),
                                  
+                                 
                                  # Tooltips
-                                 bsTooltip("reset_population_defaults_pharmacokinetics", "Reset all settings of \\'Pharmacokinetic distribution parameters\\' to defaults.",
-                                           placement = "bottom", trigger = "hover",
-                                           options = NULL),
-                                 bsTooltip("ka", "first order absorption rate [1/h]",
-                                           placement = "bottom", trigger = "hover",
-                                           options = NULL),
-                                 bsTooltip("tlag_m_lognorm_m", "mean lag time of drug absorption [h]",
-                                           placement = "bottom", trigger = "hover",
-                                           options = NULL),
-                                 bsTooltip("tlag_m_lognorm_cv", "coefficient of variation of lag time of drug absorption",
-                                           placement = "bottom", trigger = "hover",
-                                           options = NULL),
-                                 bsTooltip("F_mean", "mean oral bioavailability of API [%]",
-                                           placement = "bottom", trigger = "hover",
-                                           options = NULL),
-                                 bsTooltip("F_sd", "standard deviation of API\\'s oral bioavailability [%]",
-                                           placement = "bottom", trigger = "hover",
-                                           options = NULL),
-                                 bsTooltip("F_lower", "lower bound of the range of API\\'s oral bioavailability if known [%]",
-                                           placement = "bottom", trigger = "hover",
-                                           options = NULL),
-                                 bsTooltip("F_upper", "upper bound of the range of API\\'s oral bioavailability if known [%]",
-                                           placement = "bottom", trigger = "hover",
-                                           options = NULL),
-                                 bsTooltip("FaFg_m_lognorm_m", "mean fraction of administered dose of API absorbed to enterocytes, escaping gut wall metabolism and entering portal vein",
-                                           placement = "bottom", trigger = "hover",
-                                           options = NULL),
-                                 bsTooltip("FaFg_m_lognorm_cv", "coefficient of variation of fraction of administered dose of API absorbed to enterocytes, escaping gut wall metabolism and entering portal vein",
+                                 bsTooltip("reset_population_defaults_pharmacokinetics_distribution", "Reset all settings of \\'Distribution parameters\\' to defaults.",
                                            placement = "bottom", trigger = "hover",
                                            options = NULL),
                                  bsTooltip("fup_m_lognorm_2_m", "mean of fraction of API unbound in plasma",
@@ -538,11 +574,11 @@ ui <- navbarPage(
                column(4,
                       tags$h4(
                         tags$b(
-                          "Elimination - metabolite:"
+                          "Scaling factors:"
                         )
                       ),
                       tags$hr(),
-                      actionButton("reset_study_specific_defaults_elimination", "Default settings"), # Reset study specific parameters settings button
+                      actionButton("reset_scaling_factors_defaults", "Default settings"), # Reset scaling factors settings button
                       tags$hr(),
                       numericInput(inputId = "ISEF1A2",
                                    label = "ISEF1A2", # [Simcyp Simulator v.16]
@@ -612,7 +648,7 @@ ui <- navbarPage(
                column(4,
                       tags$h4(
                         tags$b(
-                          "fumic parameters:"
+                          "Fraction of unbound API in vitro:"
                         )
                       ),
                       tags$hr(),
@@ -630,50 +666,6 @@ ui <- navbarPage(
                       # bsAlert
                       bsAlert("fumic_metab_alert"),
                       
-                      numericInput(inputId = "CLrenal",
-                                   label = "CLrenal [L/h]", # [Simcyp Simulator v.16]
-                                   value = 0.09),
-                      # bsAlert
-                      bsAlert("CLrenal_alert"),
-                      
-                      numericInput(inputId = "CLrenal_metab",
-                                   label = "CLrenal_metab [L/h]", # [Simcyp Simulator v.16]
-                                   value = 0.39),
-                      # bsAlert
-                      bsAlert("CLrenal_metab_alert"),
-                      
-                      tags$h5("Physiological parameters"),
-                      tags$hr(),
-                      numericInput(inputId = "liver_density",
-                                   label = "Liver density [g/L]", # TO HIDE
-                                   value = 1080),
-                      # bsAlert
-                      bsAlert("liver_density_alert"),
-                      
-                      numericInput(inputId = "heart_density",
-                                   label = "Heart density [g/L]", # TO HIDE
-                                   value = 1050),
-                      # bsAlert
-                      bsAlert("heart_density_alert"),
-                      
-                      numericInput(inputId = "Qpf",
-                                   label = "Pericaridum blood flow", # TO HIDE
-                                   value = 0.011),
-                      # bsAlert
-                      bsAlert("Qpf_alert"),
-                      
-                      numericInput(inputId = "CLefflux",
-                                   label = "CLefflux # 2.996919 x[4]", # [Simcyp Simulator v.16]
-                                   value = 2.996919),
-                      # bsAlert
-                      bsAlert("CLefflux_alert"),
-                      
-                      numericInput(inputId = "CLuptake",
-                                   label = "CLuptake # 2.177201 x[5]", # [Simcyp Simulator v.16]
-                                   value = 2.177201),
-                      # bsAlert
-                      bsAlert("CLuptake_alert"),
-                      
                       
                       # Tooltips
                       bsTooltip("fumic", "fraction of API unbound in an in vitro microsomal preparation",
@@ -681,20 +673,8 @@ ui <- navbarPage(
                                 options = NULL),
                       bsTooltip("fumic_metab", "fraction of API's metabolite unbound in an in vitro microsomal preparation",
                                 placement = "bottom", trigger = "hover",
-                                options = NULL),
-                      bsTooltip("CLrenal", "renal clearance of API [L/h]",
-                                placement = "bottom", trigger = "hover",
-                                options = NULL),
-                      bsTooltip("CLrenal_metab", "renal clearance of API's metabolie [L/h]",
-                                placement = "bottom", trigger = "hover",
-                                options = NULL),
-                      bsTooltip("CLefflux", "the active efflux transport of API at the membranes of cardiomyocyte (intracellular) compartments [L/h]",
-                                placement = "bottom", trigger = "hover",
-                                options = NULL),
-                      bsTooltip("CLuptake", "the active uptake transport of API at the membranes of cardiomyocyte (intracellular) compartments [L/h]",
-                                placement = "bottom", trigger = "hover",
                                 options = NULL)
-                      
+
                       )
                
              ),
@@ -718,6 +698,45 @@ ui <- navbarPage(
                       ),
                       tags$hr(),
                       actionButton("reset_API_defaults_phys_chem_param", "Default settings"), # Reset API phys-chem parameters settings button
+                      
+                      tags$hr(),
+                      tags$h6("METABOLITE"),
+                      tags$hr(),
+                      
+                      checkboxInput("METAB_present","Calculate concentration of metabolite",FALSE),
+                      conditionalPanel(condition = "input.METAB_present==true",
+                                       numericInput(inputId = "MW_metab",
+                                                    label = "Metabolite's molecular weight [g/mol]", #
+                                                    value = 263.384,
+                                                    min=1),
+                                       # bsAlert
+                                       bsAlert("MW_metab_alert"),
+                                       
+                                       numericInput(inputId = "pKa_metab",
+                                                    label = "Metabolite's pKa", #
+                                                    value = 10.1,
+                                                    min=0),
+                                       # bsAlert
+                                       bsAlert("pKa_metab_alert"),
+                                       
+                                       numericInput(inputId = "Kpre_metab",
+                                                    label = "Kpre_metab # 28.73022 # x[1]", # [Simcyp Simulator v.16]
+                                                    value = 28.73022),
+                                       # bsAlert
+                                       bsAlert("Kpre_metab_alert"),
+                                       
+                                       
+                                       # Tooltips
+                                       bsTooltip("MW_metab", "API\\'s metabolite molecular weight [g/mol] as neutral entity",
+                                                 placement = "bottom", trigger = "hover",
+                                                 options = NULL),
+                                       bsTooltip("pKa_metab", "the negative base-10 logarithm of the acid dissociation constant of API's metabolite as neutral entity",
+                                                 placement = "bottom", trigger = "hover",
+                                                 options = NULL),
+                                       bsTooltip("Kpre_metab", "rest of the body partition coefficient for API\\'s metabolite",
+                                                 placement = "bottom", trigger = "hover",
+                                                 options = NULL)
+                                       ),
                       tags$hr(),
                       tags$h6("API"),
                       tags$hr(),
@@ -742,25 +761,6 @@ ui <- navbarPage(
                       # bsAlert
                       bsAlert("PAMPA_alert"),
                       
-                      numericInput(inputId = "fu_ht_api",
-                                   label = "Fraction of API unbound in heart tissue", # [Simcyp Simulator v.16]
-                                   value = 0.0012),
-                      # bsAlert
-                      bsAlert("fu_ht_api_alert"),
-                      
-                      numericInput(inputId = "fuha",
-                                   label = "fuha # 0.1230352 x[2]", # [Simcyp Simulator v.16]
-                                   value = 0.1230352),
-                      # bsAlert
-                      bsAlert("fuha_alert"),
-                      
-                      numericInput(inputId = "fuhn",
-                                   label = "fuhn # 0.1575158 x[3]", # [Simcyp Simulator v.16]
-                                   value = 0.1575158),
-                      # bsAlert
-                      bsAlert("fuhn_alert"),
-                      
-                      
                       # Tooltips
                       bsTooltip("MW_api", "API\\'s molecular weight [g/mol] as neutral entity",
                                 placement = "bottom", trigger = "hover",
@@ -770,67 +770,40 @@ ui <- navbarPage(
                                 options = NULL),
                       bsTooltip("PAMPA", "in vitro parallel artificial membrane permeability (PAMPA) assay result [cm/s] for API",
                                 placement = "bottom", trigger = "hover",
-                                options = NULL),
-                      bsTooltip("fuha", "the fraction of API actively transported to hepatocytes",
-                                placement = "bottom", trigger = "hover",
-                                options = NULL),
-                      bsTooltip("fuhn", "the fraction of API\\'s metabolite actively transported to hepatocytes",
-                                placement = "bottom", trigger = "hover",
-                                options = NULL),
-                      
-                      
-                      tags$hr(),
-                      tags$h6("METABOLITE"),
-                      tags$hr(),
-                      
-                      checkboxInput("METAB_present","Calculate concentration of metabolite",FALSE),
-                      conditionalPanel(condition = "input.METAB_present==true",
-                        numericInput(inputId = "MW_metab",
-                                     label = "Metabolite's molecular weight [g/mol]", #
-                                     value = 263.384,
-                                     min=1),
-                        # bsAlert
-                        bsAlert("MW_metab_alert"),
-                        
-                        numericInput(inputId = "pKa_metab",
-                                     label = "Metabolite's pKa", #
-                                     value = 10.1,
-                                     min=0),
-                        # bsAlert
-                        bsAlert("pKa_metab_alert"),
-                        
-                        numericInput(inputId = "Kpre_metab",
-                                     label = "Kpre_metab # 28.73022 # x[1]", # [Simcyp Simulator v.16]
-                                     value = 28.73022),
-                        # bsAlert
-                        bsAlert("Kpre_metab_alert"),
-                        
-                        
-                        # Tooltips
-                        bsTooltip("MW_metab", "API\\'s metabolite molecular weight [g/mol] as neutral entity",
-                                  placement = "bottom", trigger = "hover",
-                                  options = NULL),
-                        bsTooltip("pKa_metab", "the negative base-10 logarithm of the acid dissociation constant of API's metabolite as neutral entity",
-                                  placement = "bottom", trigger = "hover",
-                                  options = NULL),
-                        bsTooltip("Kpre_metab", "rest of the body partition coefficient for API\\'s metabolite",
-                                  placement = "bottom", trigger = "hover",
-                                  options = NULL)
-                      )
-                      
-                      
+                                options = NULL)
+
                ),
                
                column(4,
                       tags$h4(
                         tags$b(
-                          "Tissue to plasma partition coefficient:"
+                          "Distribution:"
                         )
                       ),
                       tags$hr(),
                       actionButton("reset_tissue_partition_coefficients_defaults_param", "Default settings"), # Reset tissue part coef parameters settings button
                       tags$hr(),
                       tags$h6("API"),
+                      tags$hr(),
+                      
+                      numericInput(inputId = "fu_ht_api",
+                                   label = "Fraction of API unbound in heart tissue", # [Simcyp Simulator v.16]
+                                   value = 0.0012),
+                      # bsAlert
+                      bsAlert("fu_ht_api_alert"),
+                      
+                      numericInput(inputId = "CLefflux",
+                                   label = "CLefflux", # [Simcyp Simulator v.16]
+                                   value = 2.996919),
+                      # bsAlert
+                      bsAlert("CLefflux_alert"),
+                      
+                      numericInput(inputId = "CLuptake",
+                                   label = "CLuptake", # [Simcyp Simulator v.16]
+                                   value = 2.177201),
+                      # bsAlert
+                      bsAlert("CLuptake_alert"),
+
                       tags$hr(),
                       
                       checkboxInput("Kpad_API","Adipose partition coefficient",TRUE),
@@ -988,8 +961,12 @@ ui <- navbarPage(
                       bsTooltip("Kpec", "partition coefficient between plasma and heart extracellular water",
                                 placement = "bottom", trigger = "hover",
                                 options = NULL),
-                      
-                      
+                      bsTooltip("CLefflux", "the active efflux transport of API at the membranes of cardiomyocyte (intracellular) compartments [L/h]",
+                                placement = "bottom", trigger = "hover",
+                                options = NULL),
+                      bsTooltip("CLuptake", "the active uptake transport of API at the membranes of cardiomyocyte (intracellular) compartments [L/h]",
+                                placement = "bottom", trigger = "hover",
+                                options = NULL),
                       
                       tags$hr(),
                       tags$h6("METABOLITE"),
@@ -1028,13 +1005,27 @@ ui <- navbarPage(
                column(4,
                       tags$h4(
                         tags$b(
-                          "Metabolism kinetics:"
+                          "Elimination:"
                         )
                       ),
                       tags$hr(),
-                      actionButton("reset_metabolism_kinetics_defaults_param", "Default settings"), # Reset metabolism kinetics settings button
+                      actionButton("reset_elimination_defaults_param", "Default settings"), # Reset metabolism kinetics settings button
                       tags$hr(),
-                      tags$h5("API"),
+                      tags$h6("API"),
+                      tags$hr(),
+                      
+                      numericInput(inputId = "fuha",
+                                   label = "fuha", # [Simcyp Simulator v.16]
+                                   value = 0.1230352),
+                      # bsAlert
+                      bsAlert("fuha_alert"),
+                      
+                      numericInput(inputId = "CLrenal",
+                                   label = "CLrenal [L/h]", # [Simcyp Simulator v.16]
+                                   value = 0.09),
+                      # bsAlert
+                      bsAlert("CLrenal_alert"),
+
                       tags$hr(),
                       
                       tags$h5("Pathway 1"),
@@ -1226,6 +1217,20 @@ ui <- navbarPage(
                       tags$h6("METABOLITE"),
                       tags$hr(),
                       
+                      numericInput(inputId = "fuhn",
+                                   label = "fuhn", # [Simcyp Simulator v.16]
+                                   value = 0.1575158),
+                      # bsAlert
+                      bsAlert("fuhn_alert"),
+                      
+                      numericInput(inputId = "CLrenal_metab",
+                                   label = "CLrenal_metab [L/h]", # [Simcyp Simulator v.16]
+                                   value = 0.39),
+                      # bsAlert
+                      bsAlert("CLrenal_metab_alert"),
+
+                      tags$hr(),
+                      
                       tags$h5("Pathway 1"),
                       
                       checkboxInput("CYP1A2_METAB_dm","CYP1A2_METAB",FALSE),
@@ -1299,7 +1304,21 @@ ui <- navbarPage(
                         # bsAlert
                         bsAlert("Km_2D6_metab_h_alert")
                         
-                      )
+                      ),
+                      
+                      # Tooltips
+                      bsTooltip("CLrenal", "renal clearance of API [L/h]",
+                                placement = "bottom", trigger = "hover",
+                                options = NULL),
+                      bsTooltip("CLrenal_metab", "renal clearance of API\\'s metabolite [L/h]",
+                                placement = "bottom", trigger = "hover",
+                                options = NULL),
+                      bsTooltip("fuha", "the fraction of API actively transported to hepatocytes",
+                                placement = "bottom", trigger = "hover",
+                                options = NULL),
+                      bsTooltip("fuhn", "the fraction of API\\'s metabolite actively transported to hepatocytes",
+                                placement = "bottom", trigger = "hover",
+                                options = NULL)
 
                       
                       )
@@ -1324,6 +1343,31 @@ ui <- navbarPage(
                       conditionalPanel(condition = "input.METAB_present==true",
                         textInput("metab_plot_caption", "Metabolite name", value = "Nortryptyline")
                       ),
+                      tags$hr(),
+                      # Input: Select a file ----
+                      h4("Add data to plots"),
+                      fileInput("in_external_data", "Choose CSV File",
+                                multiple = TRUE,
+                                accept = c("text/csv",
+                                           "text/comma-separated-values,text/plain",
+                                           ".csv")),
+                      
+                      # Input: Checkbox if file has header ----
+                      checkboxInput("in_external_header", "Header", TRUE),
+                      
+                      # Input: Select separator ----
+                      radioButtons("in_external_sep", "Separator",
+                                   choices = c(Comma = ",",
+                                               Semicolon = ";",
+                                               Tab = "\t"),
+                                   selected = ","),
+                      
+                      # Input: Select quotes ----
+                      radioButtons("in_external_quote", "Quote",
+                                   choices = c(None = "",
+                                               "Double Quote" = '"',
+                                               "Single Quote" = "'"),
+                                   selected = '"'),
                       tags$hr(),
                       h4("Save results dataset as csv"),
                       tags$hr(),
@@ -1511,7 +1555,6 @@ server <- function(input, output, session) {
   # Object to store reactive values for population
   
   pop_vals <- reactiveValues()
-  
   
   observe({
 
@@ -3754,7 +3797,7 @@ server <- function(input, output, session) {
 
   #
   # API tab logic (end) ------------------------------------------------------
-  #p
+  #
   
 
   #
@@ -3843,14 +3886,13 @@ observeEvent(input$run_sim, {
   
   # Disable all buttons/sliders/checkboxes/textinput etc. when running simulations
   shinyjs::disable("reset_population_defaults_general")
-  shinyjs::disable("reset_population_defaults_weibull")
-  shinyjs::disable("reset_population_defaults_pharmacokinetics")
+  shinyjs::disable("reset_population_defaults_pharmacokinetics_absorption")
   shinyjs::disable("reset_study_specific_defaults_oral")
-  shinyjs::disable("reset_study_specific_defaults_elimination")
+  shinyjs::disable("reset_scaling_factors_defaults")
   shinyjs::disable("reset_study_specific_defaults_fumic")
   shinyjs::disable("reset_API_defaults_phys_chem_param")
   shinyjs::disable("reset_tissue_partition_coefficients_defaults_param")
-  shinyjs::disable("reset_metabolism_kinetics_defaults_param")
+  shinyjs::disable("reset_elimination_defaults_param")
   shinyjs::disable("seed")
   shinyjs::disable("individual_count")
   shinyjs::disable("female_count")
@@ -4177,7 +4219,6 @@ observeEvent(input$run_sim, {
     
   })
   
-
   
   output$res_conc_in_heart <- renderPlot({
     ggplot(newDF, aes(time, HT, colour = rn)) +
@@ -4257,7 +4298,7 @@ if(input$METAB_present == TRUE){
       labs(
         list(
           x = "Time [h]",
-          y = "Concentration ofemetabolite in heart [mg/L]",
+          y = "Concentration of metabolite in heart [mg/L]",
           colour =
             "Individuals"
         )
@@ -4446,8 +4487,7 @@ if(input$METAB_present == TRUE){
       ) + geom_ribbon(data= stats_iv, aes(x = time, ymin = lower_CI, ymax = higher_CI), fill="red", color = "red", alpha = 0.3)
     
   })
-  
-  
+
   #
   # Render results plots inside run_sim button observeEvent END ----------------------------
   #
@@ -4571,14 +4611,14 @@ if(input$METAB_present == TRUE){
   
   # Enable all buttons/sliders/checkboxes/textinput etc. when simulations is finished (START)
   shinyjs::enable("reset_population_defaults_general")
-  shinyjs::enable("reset_population_defaults_weibull")
-  shinyjs::enable("reset_population_defaults_pharmacokinetics")
+  shinyjs::enable("reset_population_defaults_pharmacokinetics_absorption")
+  shinyjs::enable("reset_population_defaults_pharmacokinetics_distribution")
   shinyjs::enable("reset_study_specific_defaults_oral")
-  shinyjs::enable("reset_study_specific_defaults_elimination")
+  shinyjs::enable("reset_scaling_factors_defaults")
   shinyjs::enable("reset_study_specific_defaults_fumic")
   shinyjs::enable("reset_API_defaults_phys_chem_param")
   shinyjs::enable("reset_tissue_partition_coefficients_defaults_param")
-  shinyjs::enable("reset_metabolism_kinetics_defaults_param")
+  shinyjs::enable("reset_elimination_defaults_param")
   shinyjs::enable("seed")
   shinyjs::enable("individual_count")
   shinyjs::enable("female_count")
@@ -4608,7 +4648,7 @@ if(input$METAB_present == TRUE){
   shinyjs::enable("pop_data_rownames")
   shinyjs::enable("pop_data_sep")
   shinyjs::enable("dose")
-  shinyjs::enable("no_dose")
+  shinyjs::enable("no_doses")
   shinyjs::enable("dose_every")
   shinyjs::enable("inf_dose")
   shinyjs::enable("inf_time")
@@ -4768,6 +4808,15 @@ if(input$METAB_present == TRUE){
   shinyjs::enable("downloadPlot_res_conc_metab_in_heart_dpi")
   shinyjs::enable("downloadPlot_res_conc_metab_in_heart_device")
   # Enable all buttons/sliders/checkboxes/textinput etc. when simulations is finished (END)
+  
+  
+  
+  #
+  # Store newDF - results in data_vals object for further processing
+  # 
+  
+  data_vals <<- newDF
+  
 
   }
 )
@@ -5576,7 +5625,6 @@ if(input$METAB_present == TRUE){
       )
   }
   
-  
   plot_res_conc_in_venous_plasma <- function(data_to_plot){
     ggplot(data_to_plot, aes(time, BL, colour = rn)) +
       geom_line(size = 1) +
@@ -5842,8 +5890,6 @@ if(input$METAB_present == TRUE){
     
   }
   
-  
-  
   #
   # Functions results plots END ----------------------------
   #
@@ -5903,20 +5949,18 @@ if(input$METAB_present == TRUE){
     updateNumericInput(session, inputId = "individual_count",value = 15)
     updateSliderInput(session, inputId = "female_count",value = 0)
     updateSliderInput(session, inputId = "age_range",value = c(18, 70))
-    
-    
-  })
-  
-  observeEvent(input$reset_population_defaults_weibull,{
-    
     updateNumericInput(session, inputId = "scale_M", value = 24.7)
     updateNumericInput(session, inputId = "shape_M", value = 2.1)
     updateNumericInput(session, inputId = "scale_F", value = 24.7)
     updateNumericInput(session, inputId = "shape_F", value = 1.9)
+    updateNumericInput(session, inputId = "liver_density", value = 1080)
+    updateNumericInput(session, inputId = "heart_density", value = 1050)
+    updateNumericInput(session, inputId = "Qpf", value = 0.011)
     
   })
   
-  observeEvent(input$reset_population_defaults_pharmacokinetics,{
+  
+  observeEvent(input$reset_population_defaults_pharmacokinetics_absorption,{
     
     updateNumericInput(session, inputId = "ka",value = 0.2434986)
     updateNumericInput(session, inputId = "tlag_m_lognorm_m",value = 1.3321865)
@@ -5927,6 +5971,11 @@ if(input$METAB_present == TRUE){
     updateNumericInput(session, inputId = "F_upper",value = 62)
     updateNumericInput(session, inputId = "FaFg_m_lognorm_m",value = 0.832)
     updateNumericInput(session, inputId = "FaFg_m_lognorm_cv",value = 0.131)
+    
+  })
+  
+  observeEvent(input$reset_population_defaults_pharmacokinetics_distribution,{
+    
     updateNumericInput(session, inputId = "fup_m_lognorm_2_m",value = 0.060)
     updateNumericInput(session, inputId = "fup_m_lognorm_2_cv",value = 0.018)
     updateNumericInput(session, inputId = "BP_m_lognorm_2_m",value = 0.877)
@@ -5947,7 +5996,7 @@ if(input$METAB_present == TRUE){
     
   })
   
-  observeEvent(input$reset_study_specific_defaults_elimination , {
+  observeEvent(input$reset_scaling_factors_defaults , {
     
     updateNumericInput(session, inputId = "ISEF1A2", value = 11.1)
     updateNumericInput(session, inputId = "ISEF2C19", value = 3.07)
@@ -5963,13 +6012,6 @@ if(input$METAB_present == TRUE){
     
     updateNumericInput(session, inputId = "fumic", value = 0.82)
     updateNumericInput(session, inputId = "fumic_metab", value = 0.82)
-    updateNumericInput(session, inputId = "CLrenal", value = 0.09)
-    updateNumericInput(session, inputId = "CLrenal_metab", value = 0.39)
-    
-    
-    updateNumericInput(session, inputId = "liver_density", value = 1080)
-    updateNumericInput(session, inputId = "heart_density", value = 1050)
-    updateNumericInput(session, inputId = "Qpf", value = 0.011)
     updateNumericInput(session, inputId = "CLefflux", value = 2.996919)
     updateNumericInput(session, inputId = "CLuptake", value = 2.177201)
     
@@ -5980,18 +6022,17 @@ if(input$METAB_present == TRUE){
     updateNumericInput(session, inputId = "MW_api", value = 277.4)
     updateNumericInput(session, inputId = "pKa_api", value = 9.41)
     updateNumericInput(session, inputId = "PAMPA", value = 12.3*10^(-6))
-    updateNumericInput(session, inputId = "fu_ht_api", value = 0.0012)
+    
     updateNumericInput(session, inputId = "Kpre_metab", value = 28.73022)
-    updateNumericInput(session, inputId = "fuha", value = 0.1230352)
-    updateNumericInput(session, inputId = "fuhn", value = 0.1575158)
     updateCheckboxInput(session, inputId = "METAB_present",value = FALSE)
     updateNumericInput(session, inputId = "MW_metab", value = 263.384)
     updateNumericInput(session, inputId = "pKa_metab", value = 10.1)
-    
+
   })
   
   observeEvent(input$reset_tissue_partition_coefficients_defaults_param , {
     
+    updateNumericInput(session, inputId = "fu_ht_api", value = 0.0012)
     updateCheckboxInput(session, "Kpad_API", value = TRUE)
     updateNumericInput(session, inputId = "Kpad", value = 4.10)
     updateCheckboxInput(session, "Kpbo_API", value = TRUE)
@@ -6024,38 +6065,43 @@ if(input$METAB_present == TRUE){
     updateNumericInput(session, inputId = "Kpli_metab", value = 59.08)
     updateCheckboxInput(session, "Kphe_METAB", value = FALSE)
     updateNumericInput(session, inputId = "Kphe_metab", value = 35.63)
+    
   })
   
-  observeEvent(input$reset_metabolism_kinetics_defaults_param, {
+  observeEvent(input$reset_elimination_defaults_param, {
     
-    updateCheckboxInput(session, "CYP1A2_API_dm", value = FALSE)
+    updateNumericInput(session, inputId = "CLrenal", value = 0.09)
+    updateNumericInput(session, inputId = "CLrenal_metab", value = 0.39)
+    updateNumericInput(session, inputId = "fuha", value = 0.1230352)
+    updateNumericInput(session, inputId = "fuhn", value = 0.1575158)
+    updateCheckboxInput(session, "CYP1A2_API_dm", value = TRUE)
     updateNumericInput(session, inputId = "Vmax_1A2_api_dm", value = 59.08)
     updateNumericInput(session, inputId = "Km_1A2_api_dm", value = 35.63)
-    updateCheckboxInput(session, "CYP2B6_API_dm", value = FALSE)
+    updateCheckboxInput(session, "CYP2B6_API_dm", value = TRUE)
     updateNumericInput(session, inputId = "Vmax_2B6_api_dm", value = 0.25)
     updateNumericInput(session, inputId = "Km_2B6_api_dm", value = 56.7)
-    updateCheckboxInput(session, "CYP2C8_API_dm", value = FALSE)
+    updateCheckboxInput(session, "CYP2C8_API_dm", value = TRUE)
     updateNumericInput(session, inputId = "Vmax_2C8_api_dm", value = 0.7)
     updateNumericInput(session, inputId = "Km_2C8_api_dm", value = 9.74)
-    updateCheckboxInput(session, "CYP2C9_API_dm", value = FALSE)
+    updateCheckboxInput(session, "CYP2C9_API_dm", value = TRUE)
     updateNumericInput(session, inputId = "Vmax_2C9_api_dm", value = 3.97)
     updateNumericInput(session, inputId = "Km_2C9_api_dm", value = 50.5)
-    updateCheckboxInput(session, "CYP2C19_API_dm", value = FALSE)
+    updateCheckboxInput(session, "CYP2C19_API_dm", value = TRUE)
     updateNumericInput(session, inputId = "Vmax_2C19_api_dm", value = 4.22)
     updateNumericInput(session, inputId = "Km_2C19_api_dm", value = 8.52)
-    updateCheckboxInput(session, "CYP2D6_API_dm", value = FALSE)
+    updateCheckboxInput(session, "CYP2D6_API_dm", value = TRUE)
     updateNumericInput(session, inputId = "Vmax_2D6_api_dm", value = 1.49)
     updateNumericInput(session, inputId = "Km_2D6_api_dm", value = 7.12)
-    updateCheckboxInput(session, "CYP3A4_API_dm", value = FALSE)
+    updateCheckboxInput(session, "CYP3A4_API_dm", value = TRUE)
     updateNumericInput(session, inputId = "Vmax_3A4_api_dm", value = 3.37)
     updateNumericInput(session, inputId = "Km_3A4_api_dm", value = 213.8)
-    updateCheckboxInput(session, "CYP2B6_API_h", value = FALSE)
+    updateCheckboxInput(session, "CYP2B6_API_h", value = TRUE)
     updateNumericInput(session, inputId = "Vmax_2B6_api_h", value = 0.13)
     updateNumericInput(session, inputId = "Km_2B6_api_h", value = 98)
-    updateCheckboxInput(session, "CYP2D6_API_h", value = FALSE)
+    updateCheckboxInput(session, "CYP2D6_API_h", value = TRUE)
     updateNumericInput(session, inputId = "Vmax_2D6_api_h", value = 2.71)
     updateNumericInput(session, inputId = "Km_2D6_api_h", value = 4.75)
-    updateCheckboxInput(session, "CYP3A4_API_h", value = FALSE)
+    updateCheckboxInput(session, "CYP3A4_API_h", value = TRUE)
     updateNumericInput(session, inputId = "Vmax_3A4_api_h", value = 0.4)
     updateNumericInput(session, inputId = "Km_3A4_api_h", value = 69.3)
     updateCheckboxInput(session, "CYP1A2_METAB_dm", value = FALSE)
@@ -6085,6 +6131,9 @@ if(input$METAB_present == TRUE){
     
     if(input$METAB_present == TRUE){
         
+        shinyjs::enable("fuhn")
+        shinyjs::enable("BP_metab_m_lognorm_2_m")
+        shinyjs::enable("BP_metab_m_lognorm_2_cv")
         shinyjs::enable("fup_metab_1")
         shinyjs::enable("fup_metab_2")
         shinyjs::enable("fumic_metab")
@@ -6121,7 +6170,10 @@ if(input$METAB_present == TRUE){
         shinyjs::enable("downloadPlot_res_conc_metab_in_heart_device")
         
     } else {
-        
+      
+      shinyjs::disable("fuhn")
+      shinyjs::disable("BP_metab_m_lognorm_2_m")
+      shinyjs::disable("BP_metab_m_lognorm_2_cv")
       shinyjs::disable("fup_metab_1")
       shinyjs::disable("fup_metab_2")
       shinyjs::disable("fumic_metab")
@@ -6162,8 +6214,161 @@ if(input$METAB_present == TRUE){
   # 
   # Check Calculate metabolite concentration checkbox (END) ----------------
   # 
-    
 
+  })
+  
+  
+  #
+  # Check for providing external data
+  #
+  
+  observeEvent(input$in_external_data,{
+    
+    ##### if external data is added plot with points
+    
+    if(!is.null(input$in_external_data)){
+      
+      tbl_in_external_data <- read.csv(input$in_external_data$datapath, header = input$in_external_header,
+                                       sep = input$in_external_sep, quote = input$in_external_quote)
+      
+      output$res_conc_in_venous_plasma <- renderPlot({
+        ggplot(data_vals, aes(time, BL, colour = rn)) +
+          geom_line(size = 1) +
+          theme_classic() +
+          theme(
+            panel.grid.major = element_line(colour="grey",size = rel(0.5)),
+            panel.grid.minor = element_blank(),
+            axis.title = element_text(size = 13),
+            axis.text = element_text(size = 13),
+            legend.text = element_text(size = 11),
+            legend.title = element_text(size = 11),
+            legend.position = "right"
+          ) +
+          ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
+          labs(
+            list(
+              x = "Time [h]",
+              y = "Concentration in venous plasma [mg/L]",
+              colour =
+                "Individuals"
+            )
+          ) +
+          geom_point(data = tbl_in_external_data, mapping = aes(x = time, y = conc, colour = "external data"))
+        
+      })
+      
+      output$res_log_conc_in_venous_plasma <- renderPlot({
+        
+        ggplot(data_vals, aes(time, BL, colour = rn)) +
+          geom_line(size = 1) +
+          theme_classic() +
+          scale_y_log10() + # correct way of presenting the log10 values?
+          theme(
+            panel.grid.major = element_line(colour="grey",size = rel(0.5)),
+            panel.grid.minor = element_blank(),
+            axis.title = element_text(size = 13),
+            axis.text = element_text(size = 13),
+            legend.text = element_text(size = 11),
+            legend.title = element_text(size = 11),
+            legend.position = "right"
+          ) +
+          ggtitle(paste("Log 10 concentration vs. time for ",input$api_plot_caption, sep="")) +
+          labs(
+            list(
+              x = "Time [h]",
+              y = "log 10 concentration in venous plasma [mg/L]",
+              colour =
+                "Individuals"
+            )
+          ) +
+          geom_point(data = tbl_in_external_data, mapping = aes(x = time, y = conc, colour = "external data"))
+        
+        
+      })
+
+      output$stats_res_conc_in_venous_plasma <- renderPlot({
+        
+        newDF <- as.data.frame(data_vals)
+        
+        subset <- newDF[is.finite(rowSums(newDF[,2:ncol(newDF)])),]
+        
+        
+        CI_level <- input$downloadPlot_stats_res_conc_in_venous_plasma_CI
+        
+        CI_low <- (1-(CI_level/100))/2
+        CI_high <- 1 - ((1- (CI_level/100))/2)
+        
+        stats_iv <- plyr::ddply(subset, .(time), function(subset) statFunc(subset$BL,CI_low, CI_high))
+        
+        ggplot(data=stats_iv, aes(x = time, y = median), colour = "red", alpha = 0.8) +
+          geom_line(size = 1) +
+          theme_classic() +
+          theme(
+            panel.grid.major = element_line(colour="grey",size = rel(0.5)),
+            panel.grid.minor = element_blank(),
+            axis.title = element_text(size = 13),
+            axis.text = element_text(size = 13),
+            legend.text = element_text(size = 11),
+            legend.title = element_text(size = 11),
+            legend.position = "right"
+          ) +
+          ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
+          labs(
+            list(
+              x = "Time [h]",
+              y = "Concentration in venous plasma [mg/L]",
+              colour =
+                "Individuals"
+            )
+          ) + geom_ribbon(data= stats_iv, aes(x = time, ymin = lower_CI, ymax = higher_CI), fill="red", color = "red", alpha = 0.3)+
+          geom_point(data = tbl_in_external_data, mapping = aes(x = time, y = conc, colour = "external data"))
+        
+      })
+      
+      output$stats_res_log_conc_in_venous_plasma <- renderPlot({
+        
+        newDF <- as.data.frame(data_vals)
+        
+        subset <- newDF[is.finite(rowSums(newDF[,2:ncol(newDF)])),]
+        
+        
+        CI_level <- input$downloadPlot_stats_res_log_conc_in_venous_plasma_CI
+        
+        CI_low <- (1-(CI_level/100))/2
+        CI_high <- 1 - ((1- (CI_level/100))/2)
+        
+        stats_iv <- plyr::ddply(subset, .(time), function(subset) statFunc(subset$BL,CI_low, CI_high))
+        
+        newDF$median <- with(newDF, ave(BL, time, FUN=function(x) median(x, na.rm = TRUE)))
+        
+        ggplot(data=stats_iv, aes(x = time, y = median), colour = "red", alpha = 0.8) +
+          geom_line(size = 1) +
+          theme_classic() +
+          scale_y_log10() + # correct way of presenting the log10 values
+          theme(
+            panel.grid.major = element_line(colour="grey",size = rel(0.5)),
+            panel.grid.minor = element_blank(),
+            axis.title = element_text(size = 13),
+            axis.text = element_text(size = 13),
+            legend.text = element_text(size = 11),
+            legend.title = element_text(size = 11),
+            legend.position = "right"
+          ) +
+          ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
+          labs(
+            list(
+              x = "Time [h]",
+              y = "Log 10 Concentration in venous plasma [mg/L]",
+              colour =
+                "Individuals"
+            )
+          ) + geom_ribbon(data= stats_iv, aes(x = time, ymin = lower_CI, ymax = higher_CI), fill="red", color = "red", alpha = 0.3)+
+          geom_point(data = tbl_in_external_data, mapping = aes(x = time, y = conc, colour = "external data"))
+        
+      })
+      
+    }
+    
   })
 
 

@@ -1,15 +1,14 @@
 /**
 *
-* PBPK-QSTS v0.7 - 
+* PBPK-QSTS v0.8 - 
 Copyright (C) 2018 
 
-Authors: 
+Authors: Zofia Tylutki, Jakub Szlęk
 
 
 Affiliation: 
 Jagiellonian University Medical College,
 Faculty of Pharmacy,
-,
 Medyczna 9 st.,
 30-688 Kraków
 Poland
