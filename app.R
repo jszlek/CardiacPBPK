@@ -6231,6 +6231,8 @@ if(input$METAB_present == TRUE){
       tbl_in_external_data <- read.csv(input$in_external_data$datapath, header = input$in_external_header,
                                        sep = input$in_external_sep, quote = input$in_external_quote)
       
+      names(tbl_in_external_data) <- c("rn","time","conc")
+      
       output$res_conc_in_venous_plasma <- renderPlot({
         ggplot(data_vals, aes(time, BL, colour = rn)) +
           geom_line(size = 1) +
