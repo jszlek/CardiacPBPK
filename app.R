@@ -5312,7 +5312,7 @@ if(input$METAB_present == TRUE){
         #(E)-10-hydroxylation
         #1. CYP2D6
         V_2D6_metab_h <- Vmax_2D6_metab_h * MW_metab * 10 ^ -9 #[mg/h/pmol CYP]
-        K_2D6_metab_h <- Vmax_2D6_metab_h * MW_metab * 10 ^ -3 #[mg/L]
+        K_2D6_metab_h <- Km_2D6_metab_h * MW_metab * 10 ^ -3 #[mg/L]
         CLint_2D6_metab_h <- (ISEF2C8 * (V_2D6_metab_h / (K_2D6_metab_h + Cliverfree_metab)) * CYP2D6_L)/fumic_metab  #[L/h/mg of microsomal protein]
         #sum of intrinsic clearances for hydroxylation for all CYPs isoforms
         CLint_hydroxylation_metab_L <- CLint_2D6_metab_h #[L/h/mg of microsomal protein]
