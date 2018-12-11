@@ -4177,18 +4177,14 @@ observeEvent(input$run_sim, {
           panel.grid.minor = element_blank(),
           axis.title = element_text(size = 13),
           axis.text = element_text(size = 13),
-          legend.text = element_text(size = 11),
           legend.title = element_text(size = 11),
           legend.position = "right"
         ) +
         ggtitle(paste("Log 10 concentration vs. time for ",input$api_plot_caption, sep="")) +
         labs(
-          list(
             x = "Time [h]",
             y = "log 10 concentration in venous plasma [mg/L]",
-            colour =
-              "Individuals"
-          )
+            colour = "Individuals"
         )
     
 
@@ -4209,12 +4205,9 @@ observeEvent(input$run_sim, {
       ) +
       ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
       labs(
-        list(
           x = "Time [h]",
           y = "Concentration in venous plasma [mg/L]",
-          colour =
-            "Individuals"
-        )
+          colour ="Individuals"
       )
     
   })
@@ -4235,13 +4228,10 @@ observeEvent(input$run_sim, {
      ) +
      ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
      labs(
-       list(
          x = "Time [h]",
          y = "Concentration in heart tissue [mg/L]",
          colour = "Individuals"
-       )
      )
-
   })
   
 if(input$METAB_present == TRUE){
@@ -4260,12 +4250,10 @@ if(input$METAB_present == TRUE){
       ) +
       ggtitle(paste("Concentration vs. time for ",input$metab_plot_caption, sep="")) +
       labs(
-        list(
           x = "Time [h]",
           y = "Concentration in heart tissue [mg/L]",
           colour = "Individuals"
         )
-      )
   })
   
   output$stats_res_conc_metab_in_heart <- renderPlot({
@@ -4296,12 +4284,9 @@ if(input$METAB_present == TRUE){
       ) +
       ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
       labs(
-        list(
           x = "Time [h]",
           y = "Concentration of metabolite in heart [mg/L]",
-          colour =
-            "Individuals"
-        )
+          colour ="Individuals"
       ) + geom_ribbon(data= stats_iv, aes(x = time, ymin = lower_CI, ymax = higher_CI), fill="red", color = "red", alpha = 0.3)
     
   })
@@ -4321,11 +4306,9 @@ if(input$METAB_present == TRUE){
       ) +
       ggtitle(paste("Concentration vs. time for ",input$metab_plot_caption, sep="")) +
       labs(
-        list(
           x = "Time [h]",
           y = "Concentration in venous plasma [mg/L]",
           colour = "Individuals"
-        )
       )
   })
   
@@ -4357,12 +4340,9 @@ if(input$METAB_present == TRUE){
       ) +
       ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
       labs(
-        list(
           x = "Time [h]",
           y = "Concentration of metabolite in venous plasma [mg/L]",
-          colour =
-            "Individuals"
-        )
+          colour = "Individuals"
       ) + geom_ribbon(data= stats_iv, aes(x = time, ymin = lower_CI, ymax = higher_CI), fill="red", color = "red", alpha = 0.3)
     
   })
@@ -4396,12 +4376,9 @@ if(input$METAB_present == TRUE){
         ) +
         ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
         labs(
-          list(
             x = "Time [h]",
             y = "Concentration in venous plasma [mg/L]",
-            colour =
-              "Individuals"
-          )
+            colour = "Individuals"
         ) + geom_ribbon(data= stats_iv, aes(x = time, ymin = lower_CI, ymax = higher_CI), fill="red", color = "red", alpha = 0.3)
 
   })
@@ -4438,12 +4415,9 @@ if(input$METAB_present == TRUE){
       ) +
       ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
       labs(
-        list(
           x = "Time [h]",
           y = "Log 10 Concentration in venous plasma [mg/L]",
-          colour =
-            "Individuals"
-        )
+          colour = "Individuals"
       ) + geom_ribbon(data= stats_iv, aes(x = time, ymin = lower_CI, ymax = higher_CI), fill="red", color = "red", alpha = 0.3)
     
   })
@@ -4478,12 +4452,9 @@ if(input$METAB_present == TRUE){
       ) +
       ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
       labs(
-        list(
           x = "Time [h]",
           y = "Concentration in heart [mg/L]",
-          colour =
-            "Individuals"
-        )
+          colour = "Individuals"
       ) + geom_ribbon(data= stats_iv, aes(x = time, ymin = lower_CI, ymax = higher_CI), fill="red", color = "red", alpha = 0.3)
     
   })
@@ -4505,7 +4476,7 @@ if(input$METAB_present == TRUE){
   
   output$downloadResults <- downloadHandler(
     filename = function(){
-      paste("Population",input$seed, ".csv",sep=".")
+      paste("Population",input$seed, "_res_1.csv",sep=".")
     },content = function(file) {
       write.table(newDF,  file=file, row.names=input$res_data_rownames, col.names=input$res_data_colnames, sep=paste(input$res_data_sep))
     },
@@ -4514,7 +4485,7 @@ if(input$METAB_present == TRUE){
   
   
   output$downloadPlot_res_log_conc_in_venous_plasma <- downloadHandler(
-    filename = function() { paste(input$downloadPlot_res_log_conc_in_venous_plasma, '.png', sep='') },
+    filename = function() { paste(input$downloadPlot_res_log_conc_in_venous_plasma, '_plot_1.png', sep='') },
     content = function(file) {
       ggsave(file, plot = plot_res_log_conc_in_venous_plasma(newDF), units = "mm", width = input$downloadPlot_res_log_conc_in_venous_plasma_width,
              height = input$downloadPlot_res_log_conc_in_venous_plasma_height, dpi = input$downloadPlot_res_log_conc_in_venous_plasma_dpi,
@@ -4523,7 +4494,7 @@ if(input$METAB_present == TRUE){
   )
   
   output$downloadPlot_res_conc_in_venous_plasma <- downloadHandler(
-    filename = function() { paste(input$downloadPlot_res_conc_in_venous_plasma, '.png', sep='') },
+    filename = function() { paste(input$downloadPlot_res_conc_in_venous_plasma, '_plot_2.png', sep='') },
     content = function(file) {
       ggsave(file, plot = plot_res_conc_in_venous_plasma(newDF), units = "mm", width = input$downloadPlot_res_conc_in_venous_plasma_width,
              height = input$downloadPlot_res_conc_in_venous_plasma_height, dpi = input$downloadPlot_res_conc_in_venous_plasma_dpi,
@@ -4532,7 +4503,7 @@ if(input$METAB_present == TRUE){
   )
   
   output$downloadPlot_res_conc_metab_in_venous_plasma <- downloadHandler(
-    filename = function() { paste(input$downloadPlot_res_conc_metab_in_venous_plasma, '.png', sep='') },
+    filename = function() { paste(input$downloadPlot_res_conc_metab_in_venous_plasma, '_plot_3.png', sep='') },
     content = function(file) {
       ggsave(file, plot = plot_res_conc_metab_in_venous_plasma(newDF), units = "mm", width = input$downloadPlot_res_conc_metab_in_venous_plasma_width,
              height = input$downloadPlot_res_conc_metab_in_venous_plasma_height, dpi = input$downloadPlot_res_conc_metab_in_venous_plasma_dpi,
@@ -4541,7 +4512,7 @@ if(input$METAB_present == TRUE){
   )
   
   output$downloadPlot_res_conc_in_heart <- downloadHandler(
-    filename = function() { paste(input$downloadPlot_res_conc_in_heart, '.png', sep='') },
+    filename = function() { paste(input$downloadPlot_res_conc_in_heart, '_plot_4.png', sep='') },
     content = function(file) {
       ggsave(file, plot = plot_res_conc_in_heart(newDF), units = "mm", width = input$downloadPlot_res_conc_in_heart_width,
              height = input$downloadPlot_res_conc_in_heart_height, dpi = input$downloadPlot_res_conc_in_heart_dpi,
@@ -4550,7 +4521,7 @@ if(input$METAB_present == TRUE){
   )
   
   output$downloadPlot_res_conc_metab_in_heart <- downloadHandler(
-    filename = function() { paste(input$downloadPlot_res_conc_metab_in_heart, '.png', sep='') },
+    filename = function() { paste(input$downloadPlot_res_conc_metab_in_heart, '_plot_5.png', sep='') },
     content = function(file) {
       ggsave(file, plot = plot_res_conc_metab_in_heart(newDF), units = "mm", width = input$downloadPlot_res_conc_metab_in_heart_width,
              height = input$downloadPlot_res_conc_metab_in_heart_height, dpi = input$downloadPlot_res_conc_metab_in_heart_dpi,
@@ -4559,7 +4530,7 @@ if(input$METAB_present == TRUE){
   )
   
   output$downloadPlot_stats_res_conc_in_venous_plasma <- downloadHandler(
-    filename = function() { paste(input$downloadPlot_stats_res_conc_in_venous_plasma, '.png', sep='') },
+    filename = function() { paste(input$downloadPlot_stats_res_conc_in_venous_plasma, '_plot_6.png', sep='') },
     content = function(file) {
       ggsave(file, plot = plot_stats_res_conc_in_venous_plasma(newDF), units = "mm", width = input$downloadPlot_stats_res_conc_in_venous_plasma_width,
              height = input$downloadPlot_stats_res_conc_in_venous_plasma_height, dpi = input$downloadPlot_stats_res_conc_in_venous_plasma_dpi,
@@ -4568,7 +4539,7 @@ if(input$METAB_present == TRUE){
   )
   
   output$downloadPlot_stats_res_log_conc_in_venous_plasma <- downloadHandler(
-    filename = function() { paste(input$downloadPlot_stats_res_log_conc_in_venous_plasma, '.png', sep='') },
+    filename = function() { paste(input$downloadPlot_stats_res_log_conc_in_venous_plasma, '_plot_7.png', sep='') },
     content = function(file) {
       ggsave(file, plot = plot_stats_res_log_conc_in_venous_plasma(newDF), units = "mm", width = input$downloadPlot_stats_res_log_conc_in_venous_plasma_width,
              height = input$downloadPlot_stats_res_log_conc_in_venous_plasma_height, dpi = input$downloadPlot_stats_res_log_conc_in_venous_plasma_dpi,
@@ -4577,7 +4548,7 @@ if(input$METAB_present == TRUE){
   )
   
   output$downloadPlot_stats_res_conc_in_heart <- downloadHandler(
-    filename = function() { paste(input$downloadPlot_stats_res_conc_in_heart, '.png', sep='') },
+    filename = function() { paste(input$downloadPlot_stats_res_conc_in_heart, '_plot_8.png', sep='') },
     content = function(file) {
       ggsave(file, plot = plot_stats_res_conc_in_heart(newDF), units = "mm", width = input$downloadPlot_stats_res_conc_in_heart_width,
              height = input$downloadPlot_stats_res_conc_in_heart_height, dpi = input$downloadPlot_stats_res_conc_in_heart_dpi,
@@ -4586,7 +4557,7 @@ if(input$METAB_present == TRUE){
   )
   
   output$downloadPlot_stats_res_conc_metab_in_venous_plasma <- downloadHandler(
-    filename = function() { paste(input$downloadPlot_stats_res_conc_metab_in_venous_plasma, '.png', sep='') },
+    filename = function() { paste(input$downloadPlot_stats_res_conc_metab_in_venous_plasma, '_plot_9.png', sep='') },
     content = function(file) {
       ggsave(file, plot = plot_stats_res_conc_metab_in_venous_plasma(newDF), units = "mm", width = input$downloadPlot_stats_res_conc_metab_in_venous_plasma_width,
              height = input$downloadPlot_stats_res_conc_metab_in_venous_plasma_height, dpi = input$downloadPlot_stats_res_conc_metab_in_venous_plasma_dpi,
@@ -4595,7 +4566,7 @@ if(input$METAB_present == TRUE){
   )
   
   output$downloadPlot_stats_res_conc_metab_in_heart <- downloadHandler(
-    filename = function() { paste(input$downloadPlot_stats_res_conc_metab_in_heart, '.png', sep='') },
+    filename = function() { paste(input$downloadPlot_stats_res_conc_metab_in_heart, '_plot_10.png', sep='') },
     content = function(file) {
       ggsave(file, plot = plot_stats_res_conc_metab_in_heart(newDF), units = "mm", width = input$downloadPlot_stats_res_conc_metab_in_heart_width,
              height = input$downloadPlot_stats_res_conc_metab_in_heart_height, dpi = input$downloadPlot_stats_res_conc_metab_in_heart_dpi,
@@ -5605,23 +5576,20 @@ if(input$METAB_present == TRUE){
       geom_line(size = 1) +
       theme_classic() +
       scale_y_log10() + # correct way of presenting the log10 values?
-      theme(
-        panel.grid.major = element_line(colour="grey",size = rel(0.5)),
-        panel.grid.minor = element_blank(),
-        axis.title = element_text(size = 13),
-        axis.text = element_text(size = 13),
-        legend.text = element_text(size = 11),
-        legend.title = element_text(size = 11),
-        legend.position = "right"
-      ) +
+     theme(
+      panel.grid.major = element_line(colour="grey",size = rel(0.5)),
+      panel.grid.minor = element_blank(),
+      axis.title = element_text(size = 13),
+      axis.text = element_text(size = 13),
+      legend.text = element_text(size = 11),
+      legend.title = element_text(size = 11),
+      legend.position = "right"
+    ) +
       ggtitle(paste("Log 10 concentration vs. time for ",input$api_plot_caption, sep="")) +
       labs(
-        list(
           x = "Time [h]",
           y = "log 10 concentration in venous plasma [mg/L]",
-          colour =
-            "Individuals"
-        )
+          colour = "Individuals"
       )
   }
   
@@ -5640,12 +5608,9 @@ if(input$METAB_present == TRUE){
       ) +
       ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
       labs(
-        list(
           x = "Time [h]",
           y = "Concentration in venous plasma [mg/L]",
-          colour =
-            "Individuals"
-        )
+          colour = "Individuals"
       )
   }
   
@@ -5664,11 +5629,9 @@ if(input$METAB_present == TRUE){
       ) +
       ggtitle(paste("Concentration vs. time for ",input$metab_plot_caption, sep="")) +
       labs(
-        list(
           x = "Time [h]",
           y = "Concentration in venous plasma [mg/L]",
           colour = "Individuals"
-        )
       )
   }
   
@@ -5687,11 +5650,9 @@ if(input$METAB_present == TRUE){
       ) +
       ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
       labs(
-        list(
           x = "Time [h]",
           y = "Concentration in heart tissue [mg/L]",
           colour = "Individuals"
-        )
       )
   }
   
@@ -5710,11 +5671,9 @@ if(input$METAB_present == TRUE){
       ) +
       ggtitle(paste("Concentration vs. time for ",input$metab_plot_caption, sep="")) +
       labs(
-        list(
           x = "Time [h]",
           y = "Concentration in heart tissue [mg/L]",
           colour = "Individuals"
-        )
       )
   }
   
@@ -5744,12 +5703,9 @@ if(input$METAB_present == TRUE){
       ) +
       ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
       labs(
-        list(
           x = "Time [h]",
           y = "Concentration in venous plasma [mg/L]",
-          colour =
-            "Individuals"
-        )
+          colour = "Individuals"
       ) + geom_ribbon(data= stats_iv, aes(x = time, ymin = lower_CI, ymax = higher_CI), fill="red", color = "red", alpha = 0.3)
     
   }
@@ -5778,16 +5734,11 @@ if(input$METAB_present == TRUE){
       ) +
       ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
       labs(
-        list(
           x = "Time [h]",
           y = "Concentration in venous plasma [mg/L]",
-          colour =
-            "Individuals"
-        )
+          colour = "Individuals"
       ) + geom_ribbon(data= stats_iv, aes(x = time, ymin = lower_CI, ymax = higher_CI), fill="red", color = "red", alpha = 0.3)
-    
   }
-  
   
   plot_stats_res_log_conc_in_venous_plasma <- function(data_to_plot){
     
@@ -5813,14 +5764,10 @@ if(input$METAB_present == TRUE){
       ) +
       ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
       labs(
-        list(
           x = "Time [h]",
           y = "Log 10 Concentration in venous plasma [mg/L]",
-          colour =
-            "Individuals"
-        )
+          colour = "Individuals"
       ) + geom_ribbon(data= stats_iv, aes(x = time, ymin = lower_CI, ymax = higher_CI), fill="red", color = "red", alpha = 0.3)
-    
   }
   
   plot_stats_res_conc_in_heart <- function(data_to_plot){
@@ -5846,14 +5793,10 @@ if(input$METAB_present == TRUE){
       ) +
       ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
       labs(
-        list(
           x = "Time [h]",
           y = "Concentration in heart [mg/L]",
-          colour =
-            "Individuals"
-        )
+          colour = "Individuals"
       ) + geom_ribbon(data= stats_iv, aes(x = time, ymin = lower_CI, ymax = higher_CI), fill="red", color = "red", alpha = 0.3)
-    
   }
   
   
@@ -5880,14 +5823,10 @@ if(input$METAB_present == TRUE){
       ) +
       ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
       labs(
-        list(
           x = "Time [h]",
           y = "Concentration of metabolite in heart [mg/L]",
-          colour =
-            "Individuals"
-        )
+          colour = "Individuals"
       ) + geom_ribbon(data= stats_iv, aes(x = time, ymin = lower_CI, ymax = higher_CI), fill="red", color = "red", alpha = 0.3)
-    
   }
   
   #
@@ -5901,7 +5840,7 @@ if(input$METAB_present == TRUE){
   #
   
   output$downloadPlot_pop_age <- downloadHandler(
-    filename = function() { paste(input$pop_age, '.png', sep='') },
+    filename = function() { paste(input$pop_age, 'pop_plot_1.png', sep='') },
     content = function(file) {
       ggsave(file, plot = plot_pop_age(), units = "mm", width = input$downloadPlot_pop_age_width,
              height = input$downloadPlot_pop_age_height, dpi = input$downloadPlot_pop_age_dpi, device = input$downloadPlot_pop_age_device)
@@ -5910,7 +5849,7 @@ if(input$METAB_present == TRUE){
   
   output$downloadPlot_pop_height <- downloadHandler(
 
-    filename = function() { paste(input$pop_height, '.png', sep='') },
+    filename = function() { paste(input$pop_height, 'pop_plot_2.png', sep='') },
     content = function(file) {
       ggsave(file, plot = plot_pop_height(), units = "mm", width = input$downloadPlot_pop_height_width,
              height = input$downloadPlot_pop_height_height, dpi = input$downloadPlot_pop_height_dpi, device = input$downloadPlot_pop_height_device)
@@ -5918,7 +5857,7 @@ if(input$METAB_present == TRUE){
   )
   
   output$downloadPlot_pop_weight <- downloadHandler(
-    filename = function() { paste(input$pop_weight, '.png', sep='') },
+    filename = function() { paste(input$pop_weight, 'pop_plot_3.png', sep='') },
     content = function(file) {
       ggsave(file, plot = plot_pop_weight(),units = "mm", width = input$downloadPlot_pop_weight_width,
              height = input$downloadPlot_pop_weight_height, dpi = input$downloadPlot_pop_weight_dpi, device = input$downloadPlot_pop_weight_device)
@@ -5926,7 +5865,7 @@ if(input$METAB_present == TRUE){
   )
   
   output$downloadPlot_pop_mean_CO_Tanner <- downloadHandler(
-    filename = function() { paste(input$pop_mean_CO_Tanner, '.png', sep='') },
+    filename = function() { paste(input$pop_mean_CO_Tanner, 'pop_plot_4.png', sep='') },
     content = function(file) {
       ggsave(file, plot = plot_pop_mean_CO_Tanner(), units = "mm", width = input$downloadPlot_mean_CO_Tanner_width,
              height = input$downloadPlot_pop_mean_CO_Tanner_height, dpi = input$downloadPlot_pop_mean_CO_Tanner_dpi,
@@ -6264,7 +6203,14 @@ if(input$METAB_present == TRUE){
         ggplot(data_vals, aes(time, BL, colour = rn)) +
           geom_line(size = 1) +
           theme_classic() +
-          scale_y_log10() + # correct way of presenting the log10 values?
+          scale_y_log10() +
+          ggtitle(paste("Log 10 concentration vs. time for ",input$api_plot_caption, sep="")) +
+          labs(
+              x = "Time [h]",
+              y = "log 10 concentration in venous plasma [mg/L]",
+              legend = "Individuals"
+            ) +
+          geom_point(data = tbl_in_external_data, mapping = aes(x = time, y = conc, colour = "external data"))+
           theme(
             panel.grid.major = element_line(colour="grey",size = rel(0.5)),
             panel.grid.minor = element_blank(),
@@ -6273,17 +6219,7 @@ if(input$METAB_present == TRUE){
             legend.text = element_text(size = 11),
             legend.title = element_text(size = 11),
             legend.position = "right"
-          ) +
-          ggtitle(paste("Log 10 concentration vs. time for ",input$api_plot_caption, sep="")) +
-          labs(
-            list(
-              x = "Time [h]",
-              y = "log 10 concentration in venous plasma [mg/L]",
-              colour =
-                "Individuals"
-            )
-          ) +
-          geom_point(data = tbl_in_external_data, mapping = aes(x = time, y = conc, colour = "external data"))
+          )
         
         
       })
