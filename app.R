@@ -1345,7 +1345,7 @@ ui <- navbarPage(
                       ),
                       tags$hr(),
                       # Input: Select a file ----
-                      h4("Add data to plots"),
+                      h4("Add data to API plots"),
                       fileInput("in_external_data", "Choose CSV File",
                                 multiple = TRUE,
                                 accept = c("text/csv",
@@ -1368,6 +1368,33 @@ ui <- navbarPage(
                                                "Double Quote" = '"',
                                                "Single Quote" = "'"),
                                    selected = '"'),
+                      conditionalPanel(condition = "input.METAB_present==true",
+                                       tags$hr(),
+                                       # Input: Select a file ----
+                                       h4("Add data to metabolite plots"),
+                                       fileInput("in_external_data_metab", "Choose CSV File",
+                                                 multiple = TRUE,
+                                                 accept = c("text/csv",
+                                                            "text/comma-separated-values,text/plain",
+                                                            ".csv")),
+                                       
+                                       # Input: Checkbox if file has header ----
+                                       checkboxInput("in_external_metab_header", "Header", TRUE),
+                                       
+                                       # Input: Select separator ----
+                                       radioButtons("in_external_metab_sep", "Separator",
+                                                    choices = c(Comma = ",",
+                                                                Semicolon = ";",
+                                                                Tab = "\t"),
+                                                    selected = ","),
+                                       
+                                       # Input: Select quotes ----
+                                       radioButtons("in_external_metab_quote", "Quote",
+                                                    choices = c(None = "",
+                                                                "Double Quote" = '"',
+                                                                "Single Quote" = "'"),
+                                                    selected = '"')
+                                       ),
                       tags$hr(),
                       h4("Save results dataset as csv"),
                       tags$hr(),
@@ -1497,19 +1524,18 @@ ui <- navbarPage(
              ),
 
                mainPanel(
-                      tags$h4("Concentration of API and metabolite plots"),
+                      tags$h4("Concentration of API plots"),
                       plotOutput("res_log_conc_in_venous_plasma"),
-                      # plotlyOutput("res_log_conc_in_venous_plasma"),  ##### Error. SETLENGTH() cannot be applied to an ALTVEC object.
                       tags$br(),
                       plotOutput("res_conc_in_venous_plasma"),
                       tags$br(),
                       plotOutput("res_conc_in_heart"),
-                      tags$br(),
                       conditionalPanel(condition = "input.METAB_present==true",
+                                      tags$br(),
+                                      tags$h4("Concentration of metabolite plots"),
                                       plotOutput("res_conc_metab_in_heart"),
-                                      plotOutput("res_conc_metab_in_venous_plasma"),
-                                      plotOutput("stats_res_conc_metab_in_venous_plasma"),
-                                      plotOutput("stats_res_conc_metab_in_heart")
+                                      tags$br(),
+                                      plotOutput("res_conc_metab_in_venous_plasma")
                                       ),
                       tags$br(),
                       busyIndicator(),
@@ -1526,7 +1552,16 @@ ui <- navbarPage(
                       busyIndicator(),
                       tags$br(),
                       tags$h4("Stats plots of API concentration in heart"),
-                      plotOutput("stats_res_conc_in_heart")
+                      plotOutput("stats_res_conc_in_heart"),
+                      conditionalPanel(condition = "input.METAB_present==true",
+                                       tags$br(),
+                                       tags$h4("Stats plots of metabolite concentration in venous plasma"),
+                                       plotOutput("stats_res_conc_metab_in_venous_plasma"),
+                                       tags$br(),
+                                       tags$h4("Stats plots of metabolite concentration in heart"),
+                                       plotOutput("stats_res_conc_metab_in_heart")
+                      )
+                      
                       
                 )
              
@@ -3070,7 +3105,7 @@ server <- function(input, output, session) {
   observeEvent(input$CYP1A2_API_dm, {
     if(input$CYP1A2_API_dm == FALSE){
       print("CYP1A2 not selected")
-      updateNumericInput(session, "Vmax_1A2_api_dm", value = 1)
+      updateNumericInput(session, "Vmax_1A2_api_dm", value = 0)
       updateNumericInput(session, "Km_1A2_api_dm", value = 1)
     } else {
       print("CYP1A2 selected")
@@ -3084,7 +3119,7 @@ server <- function(input, output, session) {
   observeEvent(input$CYP2B6_API_dm, {
     if(input$CYP2B6_API_dm == FALSE){
       print("CYP2B6 not selected")
-      updateNumericInput(session, inputId = "Vmax_2B6_api_dm", value = 1)
+      updateNumericInput(session, inputId = "Vmax_2B6_api_dm", value = 0)
       updateNumericInput(session, inputId = "Km_2B6_api_dm", value = 1)
       
     } else {
@@ -3097,7 +3132,7 @@ server <- function(input, output, session) {
   observeEvent(input$CYP2C8_API_dm, {
     if(input$CYP2C8_API_dm == FALSE){
       print("CYP2C8 not selected")
-      updateNumericInput(session, inputId = "Vmax_2C8_api_dm", value = 1)
+      updateNumericInput(session, inputId = "Vmax_2C8_api_dm", value = 0)
       updateNumericInput(session, inputId = "Km_2C8_api_dm", value = 1)
     } else {
       print("CYP2C8 selected")
@@ -3109,7 +3144,7 @@ server <- function(input, output, session) {
   observeEvent(input$CYP2C9_API_dm, {
     if(input$CYP2C9_API_dm == FALSE){
       print("CYP2C9 not selected")
-      updateNumericInput(session, inputId = "Vmax_2C9_api_dm", value = 1)
+      updateNumericInput(session, inputId = "Vmax_2C9_api_dm", value = 0)
       updateNumericInput(session, inputId = "Km_2C9_api_dm", value = 1)
     } else {
       print("CYP2C9 selected")
@@ -3121,7 +3156,7 @@ server <- function(input, output, session) {
   observeEvent(input$CYP2C19_API_dm, {
     if(input$CYP2C19_API_dm == FALSE){
       print("CYP2C19 not selected")
-      updateNumericInput(session, inputId = "Vmax_2C19_api_dm", value = 1)
+      updateNumericInput(session, inputId = "Vmax_2C19_api_dm", value = 0)
       updateNumericInput(session, inputId = "Km_2C19_api_dm", value = 1)
     } else {
       print("CYP2C19 selected")
@@ -3134,7 +3169,7 @@ server <- function(input, output, session) {
   observeEvent(input$CYP2D6_API_dm, {
     if(input$CYP2D6_API_dm == FALSE){
       print("CYP2D6 not selected")
-      updateNumericInput(session, inputId = "Vmax_2D6_api_dm", value = 1)
+      updateNumericInput(session, inputId = "Vmax_2D6_api_dm", value = 0)
       updateNumericInput(session, inputId = "Km_2D6_api_dm", value = 1)
     } else {
       print("CYP2D6 selected")
@@ -3146,7 +3181,7 @@ server <- function(input, output, session) {
   observeEvent(input$CYP3A4_API_dm, {
     if(input$CYP3A4_API_dm == FALSE){
       print("CYP3A4 not selected")
-      updateNumericInput(session, inputId = "Vmax_3A4_api_dm", value = 1)
+      updateNumericInput(session, inputId = "Vmax_3A4_api_dm", value = 0)
       updateNumericInput(session, inputId = "Km_3A4_api_dm", value = 1)
     } else {
       print("CYP3A4 selected")
@@ -3158,7 +3193,7 @@ server <- function(input, output, session) {
   observeEvent(input$CYP2B6_API_h, {
     if(input$CYP2B6_API_h == FALSE){
       print("CYP2B6_hydroxylation not selected")
-      updateNumericInput(session, inputId = "Vmax_2B6_api_h", value = 1)
+      updateNumericInput(session, inputId = "Vmax_2B6_api_h", value = 0)
       updateNumericInput(session, inputId = "Km_2B6_api_h", value = 1)
     } else {
       print("CYP2B6_hydroxylation selected")
@@ -3170,7 +3205,7 @@ server <- function(input, output, session) {
   observeEvent(input$CYP2D6_API_h, {
     if(input$CYP2D6_API_h == FALSE){
       print("CYP2D6_hydroxylation not selected")
-      updateNumericInput(session, inputId = "Vmax_2D6_api_h", value = 1)
+      updateNumericInput(session, inputId = "Vmax_2D6_api_h", value = 0)
       updateNumericInput(session, inputId = "Km_2D6_api_h", value = 1)
     } else {
       print("CYP2D6_hydroxylation selected")
@@ -3182,7 +3217,7 @@ server <- function(input, output, session) {
   observeEvent(input$CYP3A4_API_h, {
     if(input$CYP3A4_API_h == FALSE){
       print("CYP2D6_hydroxylation not selected")
-      updateNumericInput(session, inputId = "Vmax_3A4_api_h", value = 1)
+      updateNumericInput(session, inputId = "Vmax_3A4_api_h", value = 0)
       updateNumericInput(session, inputId = "Km_3A4_api_h", value = 1)
     } else {
       print("CYP2D6_hydroxylation selected")
@@ -3194,7 +3229,7 @@ server <- function(input, output, session) {
   observeEvent(input$CYP1A2_METAB_dm, {
     if(input$CYP1A2_METAB_dm == FALSE){
       print("CYP1A2 metabolite not selected")
-      updateNumericInput(session, inputId = "Vmax_1A2_metab_dm", value = 1)
+      updateNumericInput(session, inputId = "Vmax_1A2_metab_dm", value = 0)
       updateNumericInput(session, inputId = "Km_1A2_metab_dm", value = 1)
     } else {
       print("CYP1A2 metabolite selected")
@@ -3206,7 +3241,7 @@ server <- function(input, output, session) {
   observeEvent(input$CYP2C19_METAB_dm, {
     if(input$CYP2C19_METAB_dm == FALSE){
       print("CYP2C19 metabolite not selected")
-      updateNumericInput(session, inputId = "Vmax_2C19_metab_dm", value = 1)
+      updateNumericInput(session, inputId = "Vmax_2C19_metab_dm", value = 0)
       updateNumericInput(session, inputId = "Km_2C19_metab_dm", value = 1)
     } else {
       print("CYP2C19 metabolite selected")
@@ -3218,7 +3253,7 @@ server <- function(input, output, session) {
   observeEvent(input$CYP2D6_METAB_dm, {
     if(input$CYP2D6_METAB_dm == FALSE){
       print("CYP2D6 metabolite not selected")
-      updateNumericInput(session, inputId = "Vmax_2D6_metab_dm", value = 1)
+      updateNumericInput(session, inputId = "Vmax_2D6_metab_dm", value = 0)
       updateNumericInput(session, inputId = "Km_2D6_metab_dm", value = 1)
     } else {
       print("CYP2D6 metabolite selected")
@@ -3230,7 +3265,7 @@ server <- function(input, output, session) {
   observeEvent(input$CYP2D6_METAB_h, {
     if(input$CYP2D6_METAB_h == FALSE){
       print("CYP2D6_hydroxylation metabolite not selected")
-      updateNumericInput(session, inputId = "Vmax_2D6_metab_h", value = 1)
+      updateNumericInput(session, inputId = "Vmax_2D6_metab_h", value = 0)
       updateNumericInput(session, inputId = "Km_2D6_metab_h", value = 1)
     } else {
       print("CYP2D6_hydroxylation metabolite selected")
@@ -4235,6 +4270,29 @@ observeEvent(input$run_sim, {
   })
   
 if(input$METAB_present == TRUE){
+  
+  output$res_conc_metab_in_venous_plasma <- renderPlot({
+    ggplot(newDF, aes(time, BL_METAB, colour = rn)) +
+      geom_line(size = 1) +
+      theme_classic() +
+      theme(
+        panel.grid.major = element_line(colour="grey",size = rel(0.5)),
+        panel.grid.minor = element_blank(),
+        axis.title = element_text(size = 13),
+        axis.text = element_text(size = 13),
+        legend.text = element_text(size = 11),
+        legend.title = element_text(size = 11),
+        legend.position = "right"
+      ) +
+      ggtitle(paste("Concentration vs. time for ",input$metab_plot_caption, sep="")) +
+      labs(
+        x = "Time [h]",
+        y = "Concentration in venous plasma [mg/L]",
+        colour = "Individuals"
+      )
+  })
+  
+  
   output$res_conc_metab_in_heart <- renderPlot({
     ggplot(newDF, aes(time, HT_METAB, colour = rn)) +
       geom_line(size = 1) +
@@ -4256,19 +4314,19 @@ if(input$METAB_present == TRUE){
         )
   })
   
-  output$stats_res_conc_metab_in_heart <- renderPlot({
+  output$stats_res_conc_metab_in_venous_plasma <- renderPlot({
     
     newDF <- as.data.frame(newDF)
     
     subset <- newDF[is.finite(rowSums(newDF[,2:ncol(newDF)])),]
     
     
-    CI_level <- input$downloadPlot_stats_res_conc_metab_in_heart_CI
+    CI_level <- input$downloadPlot_stats_res_conc_metab_in_venous_plasma_CI
     
     CI_low <- (1-(CI_level/100))/2
     CI_high <- 1 - ((1- (CI_level/100))/2)
     
-    stats_iv <- plyr::ddply(subset, .(time), function(subset) statFunc(subset$HT_METAB,CI_low, CI_high))
+    stats_iv <- plyr::ddply(subset, .(time), function(subset) statFunc(subset$BL_METAB, CI_low, CI_high))
     
     ggplot(data=stats_iv, aes(x = time, y = median), colour = "red", alpha = 0.8) +
       geom_line(size = 1) +
@@ -4282,17 +4340,30 @@ if(input$METAB_present == TRUE){
         legend.title = element_text(size = 11),
         legend.position = "right"
       ) +
-      ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
+      ggtitle(paste("Concentration vs. time for ",input$metab_plot_caption, sep="")) +
       labs(
-          x = "Time [h]",
-          y = "Concentration of metabolite in heart [mg/L]",
-          colour ="Individuals"
+        x = "Time [h]",
+        y = "Concentration of metabolite in venous plasma [mg/L]",
+        colour ="Individuals"
       ) + geom_ribbon(data= stats_iv, aes(x = time, ymin = lower_CI, ymax = higher_CI), fill="red", color = "red", alpha = 0.3)
     
   })
   
-  output$res_conc_metab_in_venous_plasma <- renderPlot({
-    ggplot(newDF, aes(time, BL_METAB, colour = rn)) +
+  output$stats_res_conc_metab_in_heart <- renderPlot({
+    
+    newDF <- as.data.frame(newDF)
+    
+    subset <- newDF[is.finite(rowSums(newDF[,2:ncol(newDF)])),]
+    
+    
+    CI_level <- input$downloadPlot_stats_res_conc_metab_in_heart_CI
+    
+    CI_low <- (1-(CI_level/100))/2
+    CI_high <- 1 - ((1- (CI_level/100))/2)
+    
+    stats_iv <- plyr::ddply(subset, .(time), function(subset) statFunc(subset$HT_METAB, CI_low, CI_high))
+    
+    ggplot(data=stats_iv, aes(x = time, y = median), colour = "red", alpha = 0.8) +
       geom_line(size = 1) +
       theme_classic() +
       theme(
@@ -4307,45 +4378,12 @@ if(input$METAB_present == TRUE){
       ggtitle(paste("Concentration vs. time for ",input$metab_plot_caption, sep="")) +
       labs(
           x = "Time [h]",
-          y = "Concentration in venous plasma [mg/L]",
-          colour = "Individuals"
-      )
-  })
-  
-  output$stats_res_metab_conc_in_venous_plasma <- renderPlot({
-    
-    newDF <- as.data.frame(newDF)
-    
-    subset <- newDF[is.finite(rowSums(newDF[,2:ncol(newDF)])),]
-    
-    
-    CI_level <- input$downloadPlot_stats_res_metab_conc_in_venous_plasma_CI
-    
-    CI_low <- (1-(CI_level/100))/2
-    CI_high <- 1 - ((1- (CI_level/100))/2)
-    
-    stats_iv <- plyr::ddply(subset, .(time), function(subset) statFunc(subset$BL_METAB,CI_low, CI_high))
-
-    ggplot(data=stats_iv, aes(x = time, y = median), colour = "red", alpha = 0.8) +
-      geom_line(size = 1) +
-      theme_classic() +
-      theme(
-        panel.grid.major = element_line(colour="grey",size = rel(0.5)),
-        panel.grid.minor = element_blank(),
-        axis.title = element_text(size = 13),
-        axis.text = element_text(size = 13),
-        legend.text = element_text(size = 11),
-        legend.title = element_text(size = 11),
-        legend.position = "right"
-      ) +
-      ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
-      labs(
-          x = "Time [h]",
-          y = "Concentration of metabolite in venous plasma [mg/L]",
-          colour = "Individuals"
+          y = "Concentration of metabolite in heart [mg/L]",
+          colour ="Individuals"
       ) + geom_ribbon(data= stats_iv, aes(x = time, ymin = lower_CI, ymax = higher_CI), fill="red", color = "red", alpha = 0.3)
     
   })
+  
 }
   
   output$stats_res_conc_in_venous_plasma <- renderPlot({
@@ -4434,7 +4472,7 @@ if(input$METAB_present == TRUE){
     CI_low <- (1-(CI_level/100))/2
     CI_high <- 1 - ((1- (CI_level/100))/2)
     
-    stats_iv <- plyr::ddply(subset, .(time), function(subset) statFunc(subset$HT,CI_low, CI_high))
+    stats_iv <- plyr::ddply(subset, .(time), function(subset) statFunc(subset$HT, CI_low, CI_high))
     
     newDF$median <- with(newDF, ave(HT, time, FUN=function(x) median(x, na.rm = TRUE)))
     
@@ -5732,7 +5770,7 @@ if(input$METAB_present == TRUE){
         legend.title = element_text(size = 11),
         legend.position = "right"
       ) +
-      ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
+      ggtitle(paste("Concentration vs. time for ",input$metab_plot_caption, sep="")) +
       labs(
           x = "Time [h]",
           y = "Concentration in venous plasma [mg/L]",
@@ -5807,7 +5845,7 @@ if(input$METAB_present == TRUE){
     CI_low <- (1-(CI_level/100))/2
     CI_high <- 1 - ((1- (CI_level/100))/2)
     
-    stats_iv <- plyr::ddply(data_to_plot, .(time), function(data_to_plot) statFunc(data_to_plot$HT_METAB,CI_low, CI_high))
+    stats_iv <- plyr::ddply(data_to_plot, .(time), function(data_to_plot) statFunc(data_to_plot$HT_METAB, CI_low, CI_high))
     
     ggplot(data=stats_iv, aes(x = time, y = median), colour = "red", alpha = 0.8) +
       geom_line(size = 1) +
@@ -5821,7 +5859,7 @@ if(input$METAB_present == TRUE){
         legend.title = element_text(size = 11),
         legend.position = "right"
       ) +
-      ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
+      ggtitle(paste("Concentration vs. time for ",input$metab_plot_caption, sep="")) +
       labs(
           x = "Time [h]",
           y = "Concentration of metabolite in heart [mg/L]",
@@ -6163,7 +6201,7 @@ if(input$METAB_present == TRUE){
   
   observeEvent(input$in_external_data,{
     
-    ##### if external data is added plot with points
+    ##### if external data API is added plot with points
     
     if(!is.null(input$in_external_data)){
       
@@ -6187,12 +6225,9 @@ if(input$METAB_present == TRUE){
           ) +
           ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
           labs(
-            list(
               x = "Time [h]",
               y = "Concentration in venous plasma [mg/L]",
-              colour =
-                "Individuals"
-            )
+              colour = "Individuals"
           ) +
           geom_point(data = tbl_in_external_data, mapping = aes(x = time, y = conc, colour = "external data"))
         
@@ -6252,12 +6287,9 @@ if(input$METAB_present == TRUE){
           ) +
           ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
           labs(
-            list(
               x = "Time [h]",
               y = "Concentration in venous plasma [mg/L]",
-              colour =
-                "Individuals"
-            )
+              colour = "Individuals"
           ) + geom_ribbon(data= stats_iv, aes(x = time, ymin = lower_CI, ymax = higher_CI), fill="red", color = "red", alpha = 0.3)+
           geom_point(data = tbl_in_external_data, mapping = aes(x = time, y = conc, colour = "external data"))
         
@@ -6294,21 +6326,337 @@ if(input$METAB_present == TRUE){
           ) +
           ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
           labs(
-            list(
               x = "Time [h]",
               y = "Log 10 Concentration in venous plasma [mg/L]",
-              colour =
-                "Individuals"
-            )
+              colour = "Individuals"
           ) + geom_ribbon(data= stats_iv, aes(x = time, ymin = lower_CI, ymax = higher_CI), fill="red", color = "red", alpha = 0.3)+
           geom_point(data = tbl_in_external_data, mapping = aes(x = time, y = conc, colour = "external data"))
         
       })
       
+      ### Helper functions to downloadHandler
+      
+      plot_res_log_conc_in_venous_plasma <- function(data_to_plot, external_data){
+        
+        tbl_in_external_data <- external_data
+        
+        ggplot(data_to_plot, aes(time, BL, colour = rn)) +
+          geom_line(size = 1) +
+          theme_classic() +
+          scale_y_log10() + # correct way of presenting the log10 values?
+          theme(
+            panel.grid.major = element_line(colour="grey",size = rel(0.5)),
+            panel.grid.minor = element_blank(),
+            axis.title = element_text(size = 13),
+            axis.text = element_text(size = 13),
+            legend.text = element_text(size = 11),
+            legend.title = element_text(size = 11),
+            legend.position = "right"
+          ) +
+          ggtitle(paste("Log 10 concentration vs. time for ",input$api_plot_caption, sep="")) +
+          labs(
+            x = "Time [h]",
+            y = "log 10 concentration in venous plasma [mg/L]",
+            colour = "Individuals"
+          ) +
+          geom_point(data = tbl_in_external_data, mapping = aes(x = time, y = conc, colour = "external data"))
+      }
+      
+      plot_res_conc_in_venous_plasma <- function(data_to_plot, external_data){
+        
+        tbl_in_external_data <- external_data
+        
+        ggplot(data_to_plot, aes(time, BL, colour = rn)) +
+          geom_line(size = 1) +
+          theme_classic() +
+          theme(
+            panel.grid.major = element_line(colour="grey",size = rel(0.5)),
+            panel.grid.minor = element_blank(),
+            axis.title = element_text(size = 13),
+            axis.text = element_text(size = 13),
+            legend.text = element_text(size = 11),
+            legend.title = element_text(size = 11),
+            legend.position = "right"
+          ) +
+          ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
+          labs(
+            x = "Time [h]",
+            y = "Concentration in venous plasma [mg/L]",
+            colour = "Individuals"
+          )+
+          geom_point(data = tbl_in_external_data, mapping = aes(x = time, y = conc, colour = "external data"))
+      }
+      
+      ######## Stats res plots
+      
+      plot_stats_res_conc_in_venous_plasma <- function(data_to_plot, external_data){
+        
+        tbl_in_external_data <- external_data
+        
+        CI_level <- input$downloadPlot_stats_res_conc_in_venous_plasma_CI
+        
+        CI_low <- (1-(CI_level/100))/2
+        CI_high <- 1 - ((1- (CI_level/100))/2)
+        
+        stats_iv <- plyr::ddply(data_to_plot, .(time), function(data_to_plot) statFunc(data_to_plot$BL,CI_low, CI_high))
+        
+        ggplot(data=stats_iv, aes(x = time, y = median), colour = "red", alpha = 0.8) +
+          geom_line(size = 1) +
+          theme_classic() +
+          theme(
+            panel.grid.major = element_line(colour="grey",size = rel(0.5)),
+            panel.grid.minor = element_blank(),
+            axis.title = element_text(size = 13),
+            axis.text = element_text(size = 13),
+            legend.text = element_text(size = 11),
+            legend.title = element_text(size = 11),
+            legend.position = "right"
+          ) +
+          ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
+          labs(
+            x = "Time [h]",
+            y = "Concentration in venous plasma [mg/L]",
+            colour = "Individuals"
+          ) + geom_ribbon(data= stats_iv, aes(x = time, ymin = lower_CI, ymax = higher_CI), fill="red", color = "red", alpha = 0.3) +
+          geom_point(data = tbl_in_external_data, mapping = aes(x = time, y = conc, colour = "external data"))
+        
+      }
+      
+      plot_stats_res_log_conc_in_venous_plasma <- function(data_to_plot, external_data){
+        
+        tbl_in_external_data <- external_data
+        
+        CI_level <- input$downloadPlot_stats_res_log_conc_in_venous_plasma_CI
+        
+        CI_low <- (1-(CI_level/100))/2
+        CI_high <- 1 - ((1- (CI_level/100))/2)
+        
+        stats_iv <- plyr::ddply(data_to_plot, .(time), function(data_to_plot) statFunc(data_to_plot$BL,CI_low, CI_high))
+        
+        ggplot(data=stats_iv, aes(x = time, y = median), colour = "red", alpha = 0.8) +
+          geom_line(size = 1) +
+          theme_classic() +
+          scale_y_log10() + # correct way of presenting the log10 values
+          theme(
+            panel.grid.major = element_line(colour="grey",size = rel(0.5)),
+            panel.grid.minor = element_blank(),
+            axis.title = element_text(size = 13),
+            axis.text = element_text(size = 13),
+            legend.text = element_text(size = 11),
+            legend.title = element_text(size = 11),
+            legend.position = "right"
+          ) +
+          ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
+          labs(
+            x = "Time [h]",
+            y = "Log 10 Concentration in venous plasma [mg/L]",
+            colour = "Individuals"
+          ) + geom_ribbon(data= stats_iv, aes(x = time, ymin = lower_CI, ymax = higher_CI), fill="red", color = "red", alpha = 0.3) +
+          geom_point(data = tbl_in_external_data, mapping = aes(x = time, y = conc, colour = "external data"))
+      }
+      
+      
+      output$downloadPlot_res_log_conc_in_venous_plasma <- downloadHandler(
+        filename = function() { paste(input$downloadPlot_res_log_conc_in_venous_plasma, '_plot_1.png', sep='') },
+        content = function(file) {
+          ggsave(file, plot = plot_res_log_conc_in_venous_plasma(data_vals, tbl_in_external_data), units = "mm", width = input$downloadPlot_res_log_conc_in_venous_plasma_width,
+                 height = input$downloadPlot_res_log_conc_in_venous_plasma_height, dpi = input$downloadPlot_res_log_conc_in_venous_plasma_dpi,
+                 device = input$downloadPlot_res_log_conc_in_venous_plasma_device)
+        }
+      )
+      
+      output$downloadPlot_res_conc_in_venous_plasma <- downloadHandler(
+        filename = function() { paste(input$downloadPlot_res_conc_in_venous_plasma, '_plot_2.png', sep='') },
+        content = function(file) {
+          ggsave(file, plot = plot_res_conc_in_venous_plasma(data_vals, tbl_in_external_data), units = "mm", width = input$downloadPlot_res_conc_in_venous_plasma_width,
+                 height = input$downloadPlot_res_conc_in_venous_plasma_height, dpi = input$downloadPlot_res_conc_in_venous_plasma_dpi,
+                 device = input$downloadPlot_res_conc_in_venous_plasma_device)
+        }
+      )
+      
+      output$downloadPlot_stats_res_conc_in_venous_plasma <- downloadHandler(
+        filename = function() { paste(input$downloadPlot_stats_res_conc_in_venous_plasma, '_plot_6.png', sep='') },
+        content = function(file) {
+          ggsave(file, plot = plot_stats_res_conc_in_venous_plasma(data_vals, tbl_in_external_data), units = "mm", width = input$downloadPlot_stats_res_conc_in_venous_plasma_width,
+                 height = input$downloadPlot_stats_res_conc_in_venous_plasma_height, dpi = input$downloadPlot_stats_res_conc_in_venous_plasma_dpi,
+                 device = input$downloadPlot_stats_res_conc_in_venous_plasma_device)
+        }
+      )
+      
+      output$downloadPlot_stats_res_log_conc_in_venous_plasma <- downloadHandler(
+        filename = function() { paste(input$downloadPlot_stats_res_log_conc_in_venous_plasma, '_plot_7.png', sep='') },
+        content = function(file) {
+          ggsave(file, plot = plot_stats_res_log_conc_in_venous_plasma(data_vals, tbl_in_external_data), units = "mm", width = input$downloadPlot_stats_res_log_conc_in_venous_plasma_width,
+                 height = input$downloadPlot_stats_res_log_conc_in_venous_plasma_height, dpi = input$downloadPlot_stats_res_log_conc_in_venous_plasma_dpi,
+                 device = input$downloadPlot_stats_res_log_conc_in_venous_plasma_device)
+        }
+      )
+      
+      
+      
     }
     
   })
-
+  
+  observeEvent(input$in_external_data_metab,{
+    
+    ##### if external data METAB is added plot with points
+    
+    if(!is.null(input$in_external_data_metab)){
+      
+      tbl_in_external_data_metab <- read.csv(input$in_external_data_metab$datapath, header = input$in_external_metab_header,
+                                             sep = input$in_external_metab_sep, quote = input$in_external_metab_quote)
+      
+      names(tbl_in_external_data_metab) <- c("rn","time","conc")
+      
+      if(input$METAB_present == TRUE){
+        
+        output$res_conc_metab_in_venous_plasma <- renderPlot({
+          ggplot(data_vals, aes(time, BL_METAB, colour = rn)) +
+            geom_line(size = 1) +
+            theme_classic() +
+            theme(
+              panel.grid.major = element_line(colour="grey",size = rel(0.5)),
+              panel.grid.minor = element_blank(),
+              axis.title = element_text(size = 13),
+              axis.text = element_text(size = 13),
+              legend.text = element_text(size = 11),
+              legend.title = element_text(size = 11),
+              legend.position = "right"
+            ) +
+            ggtitle(paste("Concentration vs. time for ",input$metab_plot_caption, sep="")) +
+            labs(
+              x = "Time [h]",
+              y = "Concentration in venous plasma [mg/L]",
+              colour = "Individuals"
+            ) +
+            geom_point(data = tbl_in_external_data_metab, mapping = aes(x = time, y = conc, colour = "external data"))
+          
+        })
+        
+        
+        output$stats_res_conc_metab_in_venous_plasma <- renderPlot({
+          
+          newDF <- as.data.frame(data_vals)
+          
+          subset <- newDF[is.finite(rowSums(newDF[,2:ncol(newDF)])),]
+          
+          
+          CI_level <- input$downloadPlot_stats_res_conc_metab_in_venous_plasma_CI
+          
+          CI_low <- (1-(CI_level/100))/2
+          CI_high <- 1 - ((1- (CI_level/100))/2)
+          
+          stats_iv <- plyr::ddply(subset, .(time), function(subset) statFunc(subset$BL_METAB, CI_low, CI_high))
+          
+          ggplot(data=stats_iv, aes(x = time, y = median), colour = "red", alpha = 0.8) +
+            geom_line(size = 1) +
+            theme_classic() +
+            theme(
+              panel.grid.major = element_line(colour="grey",size = rel(0.5)),
+              panel.grid.minor = element_blank(),
+              axis.title = element_text(size = 13),
+              axis.text = element_text(size = 13),
+              legend.text = element_text(size = 11),
+              legend.title = element_text(size = 11),
+              legend.position = "right"
+            ) +
+            ggtitle(paste("Concentration vs. time for ",input$metab_plot_caption, sep="")) +
+            labs(
+              x = "Time [h]",
+              y = "Concentration in venous plasma [mg/L]",
+              colour = "Individuals"
+            ) + geom_ribbon(data= stats_iv, aes(x = time, ymin = lower_CI, ymax = higher_CI), fill="red", color = "red", alpha = 0.3)+
+            geom_point(data = tbl_in_external_data_metab, mapping = aes(x = time, y = conc, colour = "external data"))
+          
+        })
+        
+        ### Helper functions to downloadHandler
+        
+        plot_res_metab_conc_in_venous_plasma <- function(data_to_plot, external_data){
+          
+          tbl_in_external_data_metab <- external_data
+          
+          ggplot(data_to_plot, aes(time, BL_METAB, colour = rn)) +
+            geom_line(size = 1) +
+            theme_classic() +
+            theme(
+              panel.grid.major = element_line(colour="grey",size = rel(0.5)),
+              panel.grid.minor = element_blank(),
+              axis.title = element_text(size = 13),
+              axis.text = element_text(size = 13),
+              legend.text = element_text(size = 11),
+              legend.title = element_text(size = 11),
+              legend.position = "right"
+            ) +
+            ggtitle(paste("Concentration vs. time for ",input$metab_plot_caption, sep="")) +
+            labs(
+              x = "Time [h]",
+              y = "Concentration in venous plasma [mg/L]",
+              colour = "Individuals"
+            )+
+            geom_point(data = tbl_in_external_data_metab, mapping = aes(x = time, y = conc, colour = "external data"))
+        }
+        
+        ######## Stats res plots
+        
+        plot_stats_res_metab_conc_in_venous_plasma <- function(data_to_plot, external_data){
+          
+          tbl_in_external_data_metab <- external_data
+          
+          CI_level <- input$downloadPlot_stats_res_metab_conc_in_venous_plasma_CI
+          
+          CI_low <- (1-(CI_level/100))/2
+          CI_high <- 1 - ((1- (CI_level/100))/2)
+          
+          stats_iv <- plyr::ddply(data_to_plot, .(time), function(data_to_plot) statFunc(data_to_plot$BL_METAB,CI_low, CI_high))
+          
+          ggplot(data=stats_iv, aes(x = time, y = median), colour = "red", alpha = 0.8) +
+            geom_line(size = 1) +
+            theme_classic() +
+            theme(
+              panel.grid.major = element_line(colour="grey",size = rel(0.5)),
+              panel.grid.minor = element_blank(),
+              axis.title = element_text(size = 13),
+              axis.text = element_text(size = 13),
+              legend.text = element_text(size = 11),
+              legend.title = element_text(size = 11),
+              legend.position = "right"
+            ) +
+            ggtitle(paste("Concentration vs. time for ",input$metab_plot_caption, sep="")) +
+            labs(
+              x = "Time [h]",
+              y = "Concentration in venous plasma [mg/L]",
+              colour = "Individuals"
+            ) + geom_ribbon(data= stats_iv, aes(x = time, ymin = lower_CI, ymax = higher_CI), fill="red", color = "red", alpha = 0.3) +
+            geom_point(data = tbl_in_external_data_metab, mapping = aes(x = time, y = conc, colour = "external data"))
+          
+        }
+        
+        output$downloadPlot_res_conc_metab_in_venous_plasma <- downloadHandler(
+          filename = function() { paste(input$downloadPlot_res_conc_metab_in_venous_plasma, '_plot_2.png', sep='') },
+          content = function(file) {
+            ggsave(file, plot = plot_res_conc_in_venous_plasma(data_vals, tbl_in_external_data_metab), units = "mm", width = input$downloadPlot_res_conc_metab_in_venous_plasma_width,
+                   height = input$downloadPlot_res_conc_metab_in_venous_plasma_height, dpi = input$downloadPlot_res_conc_metab_in_venous_plasma_dpi,
+                   device = input$downloadPlot_res_conc_metab_in_venous_plasma_device)
+          }
+        )
+        
+        output$downloadPlot_stats_res_conc_metab_in_venous_plasma <- downloadHandler(
+          filename = function() { paste(input$downloadPlot_stats_res_conc_metab_in_venous_plasma, '_plot_6.png', sep='') },
+          content = function(file) {
+            ggsave(file, plot = plot_stats_res_conc_metab_in_venous_plasma(data_vals, tbl_in_external_data_metab), units = "mm", width = input$downloadPlot_stats_res_conc_metab_in_venous_plasma_width,
+                   height = input$downloadPlot_stats_res_conc_metab_in_venous_plasma_height, dpi = input$downloadPlot_stats_res_conc_metab_in_venous_plasma_dpi,
+                   device = input$downloadPlot_stats_res_conc_metab_in_venous_plasma_device)
+          }
+        )
+        
+      }
+      
+    }
+    
+  })
+  
 
 }  
 
