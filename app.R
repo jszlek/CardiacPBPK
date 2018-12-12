@@ -2428,7 +2428,8 @@ server <- function(input, output, session) {
       )
     
     set.seed(pop_vals$seed)
-    cbind(Lnorm(m_lognormal(pop_vals$FaFg_m_lognorm_m, pop_vals$FaFg_m_lognorm_cv))@r(pop_vals$individual_count)) #[h]
+    cbind(Lnorm(m_lognormal(pop_vals$FaFg_m_lognorm_m, pop_vals$FaFg_m_lognorm_cv))@r(pop_vals$individual_count))
+    #[h]
   })
 
   fup <- reactive({
@@ -2651,6 +2652,12 @@ server <- function(input, output, session) {
                     pageLength = 20,
                     lengthMenu = list(c(10, 15, -1), c('10', '15', 'All')),
                     scrollX = TRUE) ) %>% formatRound(columns=c(6:56), digits=4, mark = "")
+    
+    #### Check if FaFg is not smaller than Bioavialability, and substitute any FaFg < Bioav, by FaFg = Bioavail
+    
+    a$x$data$FaFg[which(a$x$data$Bioavailability > a$x$data$FaFg)] <- a$x$data$Bioavailability[which(a$x$data$Bioavailability > a$x$data$FaFg)]
+    
+    
     a$rn <- as.numeric(as.character(a$rn))
     return(a)
   })
@@ -5200,7 +5207,7 @@ if(input$METAB_present == TRUE){
       Aar = 0,
       Are = 0,
       D = PODOSE * Bioavailability,
-      METAB = PODOSE * (1 - Bioavailability/FaFg) * MW_metab/MW_api,
+      METAB = PODOSE * (1 - Bioavailability/FaFg) * MW_metab/MW_api * FaFg,
       Ali_metab = 0,
       Cbl_metab = 0,
       Cre_metab = 0,
