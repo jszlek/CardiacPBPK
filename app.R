@@ -6236,8 +6236,8 @@ if(input$METAB_present == TRUE){
               y = "Concentration in venous plasma [mg/L]",
               colour = "Individuals"
           ) +
-          geom_point(data = tbl_in_external_data, mapping = aes(x = time, y = conc, colour = "external data"))
-        
+          geom_point(shape = 21, colour = "black", fill = "#56B4E9", size = 1.5, stroke = 0.9,
+                     data = tbl_in_external_data, mapping = aes(x = time, y = conc, colour = "external data"))
       })
       
       output$res_log_conc_in_venous_plasma <- renderPlot({
@@ -6252,7 +6252,8 @@ if(input$METAB_present == TRUE){
               y = "log 10 concentration in venous plasma [mg/L]",
               legend = "Individuals"
             ) +
-          geom_point(data = tbl_in_external_data, mapping = aes(x = time, y = conc, colour = "external data"))+
+          geom_point(shape = 21, colour = "black", fill = "#56B4E9", size = 1.5, stroke = 0.9,
+                     data = tbl_in_external_data, mapping = aes(x = time, y = conc, colour = "external data")) +
           theme(
             panel.grid.major = element_line(colour="grey",size = rel(0.5)),
             panel.grid.minor = element_blank(),
@@ -6298,7 +6299,8 @@ if(input$METAB_present == TRUE){
               y = "Concentration in venous plasma [mg/L]",
               colour = "Individuals"
           ) + geom_ribbon(data= stats_iv, aes(x = time, ymin = lower_CI, ymax = higher_CI), fill="red", color = "red", alpha = 0.3)+
-          geom_point(data = tbl_in_external_data, mapping = aes(x = time, y = conc, colour = "external data"))
+          geom_point(shape = 21, colour = "black", fill = "#56B4E9", size = 1.5, stroke = 0.9,
+                     data = tbl_in_external_data, mapping = aes(x = time, y = conc, colour = "external data"))
         
       })
       
@@ -6337,7 +6339,8 @@ if(input$METAB_present == TRUE){
               y = "Log 10 Concentration in venous plasma [mg/L]",
               colour = "Individuals"
           ) + geom_ribbon(data= stats_iv, aes(x = time, ymin = lower_CI, ymax = higher_CI), fill="red", color = "red", alpha = 0.3)+
-          geom_point(data = tbl_in_external_data, mapping = aes(x = time, y = conc, colour = "external data"))
+          geom_point(shape = 21, colour = "black", fill = "#56B4E9", size = 1.5, stroke = 0.9,
+                     data = tbl_in_external_data, mapping = aes(x = time, y = conc, colour = "external data"))
         
       })
       
@@ -6366,7 +6369,8 @@ if(input$METAB_present == TRUE){
             y = "log 10 concentration in venous plasma [mg/L]",
             colour = "Individuals"
           ) +
-          geom_point(data = tbl_in_external_data, mapping = aes(x = time, y = conc, colour = "external data"))
+          geom_point(shape = 21, colour = "black", fill = "#56B4E9", size = 1.5, stroke = 0.9,
+                     data = tbl_in_external_data, mapping = aes(x = time, y = conc, colour = "external data"))
       }
       
       plot_res_conc_in_venous_plasma <- function(data_to_plot, external_data){
@@ -6391,7 +6395,8 @@ if(input$METAB_present == TRUE){
             y = "Concentration in venous plasma [mg/L]",
             colour = "Individuals"
           )+
-          geom_point(data = tbl_in_external_data, mapping = aes(x = time, y = conc, colour = "external data"))
+          geom_point(shape = 21, colour = "black", fill = "#56B4E9", size = 1.5, stroke = 0.9,
+                     data = tbl_in_external_data, mapping = aes(x = time, y = conc, colour = "external data"))
       }
       
       ######## Stats res plots
@@ -6425,7 +6430,8 @@ if(input$METAB_present == TRUE){
             y = "Concentration in venous plasma [mg/L]",
             colour = "Individuals"
           ) + geom_ribbon(data= stats_iv, aes(x = time, ymin = lower_CI, ymax = higher_CI), fill="red", color = "red", alpha = 0.3) +
-          geom_point(data = tbl_in_external_data, mapping = aes(x = time, y = conc, colour = "external data"))
+          geom_point(shape = 21, colour = "black", fill = "#56B4E9", size = 1.5, stroke = 0.9,
+                     data = tbl_in_external_data, mapping = aes(x = time, y = conc, colour = "external data"))
         
       }
       
@@ -6459,7 +6465,8 @@ if(input$METAB_present == TRUE){
             y = "Log 10 Concentration in venous plasma [mg/L]",
             colour = "Individuals"
           ) + geom_ribbon(data= stats_iv, aes(x = time, ymin = lower_CI, ymax = higher_CI), fill="red", color = "red", alpha = 0.3) +
-          geom_point(data = tbl_in_external_data, mapping = aes(x = time, y = conc, colour = "external data"))
+          geom_point(shape = 21, colour = "black", fill = "#56B4E9", size = 1.5, stroke = 0.9,
+                     data = tbl_in_external_data, mapping = aes(x = time, y = conc, colour = "external data"))
       }
       
       
@@ -6537,8 +6544,9 @@ if(input$METAB_present == TRUE){
               y = "Concentration in venous plasma [mg/L]",
               colour = "Individuals"
             ) +
-            geom_point(data = tbl_in_external_data_metab, mapping = aes(x = time, y = conc, colour = "external data"))
-          
+            geom_point(shape = 21, colour = "black", fill = "#56B4E9", size = 1.5, stroke = 0.9,
+                       data = tbl_in_external_data_metab, mapping = aes(x = time, y = conc, colour = "external data"))
+
         })
         
         
@@ -6574,8 +6582,8 @@ if(input$METAB_present == TRUE){
               y = "Concentration in venous plasma [mg/L]",
               colour = "Individuals"
             ) + geom_ribbon(data= stats_iv, aes(x = time, ymin = lower_CI, ymax = higher_CI), fill="red", color = "red", alpha = 0.3)+
-            geom_point(data = tbl_in_external_data_metab, mapping = aes(x = time, y = conc, colour = "external data"))
-          
+            geom_point(shape = 21, colour = "black", fill = "#56B4E9", size = 1.5, stroke = 0.9,
+                       data = tbl_in_external_data_metab, mapping = aes(x = time, y = conc, colour = "external data"))
         })
         
         ### Helper functions to downloadHandler
@@ -6602,7 +6610,8 @@ if(input$METAB_present == TRUE){
               y = "Concentration in venous plasma [mg/L]",
               colour = "Individuals"
             )+
-            geom_point(data = tbl_in_external_data_metab, mapping = aes(x = time, y = conc, colour = "external data"))
+            geom_point(shape = 21, colour = "black", fill = "#56B4E9", size = 1.5, stroke = 0.9,
+                       data = tbl_in_external_data_metab, mapping = aes(x = time, y = conc, colour = "external data"))
         }
         
         ######## Stats res plots
@@ -6636,8 +6645,9 @@ if(input$METAB_present == TRUE){
               y = "Concentration in venous plasma [mg/L]",
               colour = "Individuals"
             ) + geom_ribbon(data= stats_iv, aes(x = time, ymin = lower_CI, ymax = higher_CI), fill="red", color = "red", alpha = 0.3) +
-            geom_point(data = tbl_in_external_data_metab, mapping = aes(x = time, y = conc, colour = "external data"))
-          
+            geom_point(shape = 21, colour = "black", fill = "#56B4E9", size = 1.5, stroke = 0.9,
+                       data = tbl_in_external_data_metab, mapping = aes(x = time, y = conc, colour = "external data"))
+
         }
         
         output$downloadPlot_res_conc_metab_in_venous_plasma <- downloadHandler(
