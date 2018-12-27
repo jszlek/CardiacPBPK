@@ -102,11 +102,13 @@ busyIndicator <- function(text = "Calculation in progress..",img = "ajax-loader.
 # Define UI for application
 ui <- navbarPage(
 
+
+  
 # Application title
   "PBPK-QSTS v0.8",
+  
   tabPanel("Welcome",
            shinyjs::useShinyjs(),
-           titlePanel(h4("Introduction")),
            mainPanel(
              tags$br(),
              includeHTML("Help.html"),
@@ -4076,6 +4078,14 @@ observeEvent(input$run_sim, {
   shinyjs::disable("res_data_rownames")
   shinyjs::disable("res_data_sep")
   shinyjs::disable("downloadResults")
+  shinyjs::disable("in_external_data")
+  shinyjs::disable("in_external_quote")
+  shinyjs::disable("in_external_sep")
+  shinyjs::disable("in_external_header")
+  shinyjs::disable("in_external_data_metab")
+  shinyjs::disable("in_external_metab_quote")
+  shinyjs::disable("in_external_metab_sep")
+  shinyjs::disable("in_external_metab_header")
   shinyjs::disable("downloadData")
   shinyjs::disable("downloadPlot_pop_age")
   shinyjs::disable("downloadPlot_pop_age_height")
@@ -4097,31 +4107,71 @@ observeEvent(input$run_sim, {
   shinyjs::disable("downloadPlot_pop_mean_CO_Tanner_width")
   shinyjs::disable("downloadPlot_pop_mean_CO_Tanner_dpi")
   shinyjs::disable("downloadPlot_pop_mean_CO_Tanner_device")
+  
   shinyjs::disable("downloadPlot_res_log_conc_in_venous_plasma")
   shinyjs::disable("downloadPlot_res_log_conc_in_venous_plasma_height")
   shinyjs::disable("downloadPlot_res_log_conc_in_venous_plasma_width")
   shinyjs::disable("downloadPlot_res_log_conc_in_venous_plasma_dpi")
   shinyjs::disable("downloadPlot_res_log_conc_in_venous_plasma_device")
+  
   shinyjs::disable("downloadPlot_res_conc_in_venous_plasma")
   shinyjs::disable("downloadPlot_res_conc_in_venous_plasma_height")
   shinyjs::disable("downloadPlot_res_conc_in_venous_plasma_width")
   shinyjs::disable("downloadPlot_res_conc_in_venous_plasma_dpi")
   shinyjs::disable("downloadPlot_res_conc_in_venous_plasma_device")
+  
   shinyjs::disable("downloadPlot_res_conc_metab_in_venous_plasma")
   shinyjs::disable("downloadPlot_res_conc_metab_in_venous_plasma_height")
   shinyjs::disable("downloadPlot_res_conc_metab_in_venous_plasma_width")
   shinyjs::disable("downloadPlot_res_conc_metab_in_venous_plasma_dpi")
   shinyjs::disable("downloadPlot_res_conc_metab_in_venous_plasma_device")
+  
   shinyjs::disable("downloadPlot_res_conc_in_heart")
   shinyjs::disable("downloadPlot_res_conc_in_heart_height")
   shinyjs::disable("downloadPlot_res_conc_in_heart_width")
   shinyjs::disable("downloadPlot_res_conc_in_heart_dpi")
   shinyjs::disable("downloadPlot_res_conc_in_heart_device")
+  
   shinyjs::disable("downloadPlot_res_conc_metab_in_heart")
   shinyjs::disable("downloadPlot_res_conc_metab_in_heart_height")
   shinyjs::disable("downloadPlot_res_conc_metab_in_heart_width")
   shinyjs::disable("downloadPlot_res_conc_metab_in_heart_dpi")
   shinyjs::disable("downloadPlot_res_conc_metab_in_heart_device")
+  
+  shinyjs::disable("downloadPlot_stats_res_conc_metab_in_venous_plasma_CI")
+  shinyjs::disable("downloadPlot_stats_res_conc_metab_in_venous_plasma_width")
+  shinyjs::disable("downloadPlot_stats_res_conc_metab_in_venous_plasma_height")
+  shinyjs::disable("downloadPlot_stats_res_conc_metab_in_venous_plasma_dpi")
+  shinyjs::disable("downloadPlot_stats_res_conc__metab_in_venous_plasma_device")
+  shinyjs::disable("downloadPlot_stats_res_conc_metab_in_venous_plasma")
+  
+  shinyjs::disable("downloadPlot_stats_res_conc_metab_in_heart_CI")
+  shinyjs::disable("downloadPlot_stats_res_conc_metab_in_heart_width")
+  shinyjs::disable("downloadPlot_stats_res_conc_metab_in_heart_height")
+  shinyjs::disable("downloadPlot_stats_res_conc_metab_in_heart_dpi")
+  shinyjs::disable("downloadPlot_stats_res_conc_metab_in_heart_device")
+  shinyjs::disable("downloadPlot_stats_res_conc_metab_in_heart")
+  
+  shinyjs::disable("downloadPlot_stats_res_log_conc_in_venous_plasma_CI")
+  shinyjs::disable("downloadPlot_stats_res_log_conc_in_venous_plasma_width")
+  shinyjs::disable("downloadPlot_stats_res_log_conc_in_venous_plasma_height")
+  shinyjs::disable("downloadPlot_stats_res_log_conc_in_venous_plasma_dpi")
+  shinyjs::disable("downloadPlot_stats_res_log_conc_in_venous_plasma_device")
+  shinyjs::disable("downloadPlot_stats_res_log_conc_in_venous_plasma")
+                   
+  shinyjs::disable("downloadPlot_stats_res_conc_in_venous_plasma_CI")
+  shinyjs::disable("downloadPlot_stats_res_conc_in_venous_plasma_width")
+  shinyjs::disable("downloadPlot_stats_res_conc_in_venous_plasma_height")
+  shinyjs::disable("downloadPlot_stats_res_conc_in_venous_plasma_dpi")
+  shinyjs::disable("downloadPlot_stats_res_conc_in_venous_plasma_device")
+  shinyjs::disable("downloadPlot_stats_res_conc_in_venous_plasma")
+                     
+  shinyjs::disable("downloadPlot_stats_res_conc_in_heart_CI")
+  shinyjs::disable("downloadPlot_stats_res_conc_in_heart_width")
+  shinyjs::disable("downloadPlot_stats_res_conc_in_heart_height")
+  shinyjs::disable("downloadPlot_stats_res_conc_in_heart_dpi")
+  shinyjs::disable("downloadPlot_stats_res_conc_in_heart_device")
+  shinyjs::disable("downloadPlot_stats_res_conc_in_heart")
   # Disable all buttons/sliders/checkboxes/textinput etc. when running simulations (END)
   
   pop3 <- as.data.frame(pop3()$x$data)
@@ -4776,7 +4826,14 @@ if(input$METAB_present == TRUE){
   shinyjs::enable("res_data_rownames")
   shinyjs::enable("res_data_sep")
   shinyjs::enable("downloadResults")
-  shinyjs::enable("downloadResults")
+  shinyjs::enable("in_external_data")
+  shinyjs::enable("in_external_quote")
+  shinyjs::enable("in_external_sep")
+  shinyjs::enable("in_external_header")
+  shinyjs::enable("in_external_data_metab")
+  shinyjs::enable("in_external_metab_quote")
+  shinyjs::enable("in_external_metab_sep")
+  shinyjs::enable("in_external_metab_header")
   shinyjs::enable("downloadData")
   shinyjs::enable("downloadPlot_pop_age")
   shinyjs::enable("downloadPlot_pop_age_height")
@@ -4793,36 +4850,77 @@ if(input$METAB_present == TRUE){
   shinyjs::enable("downloadPlot_pop_height_width")
   shinyjs::enable("downloadPlot_pop_height_dpi")
   shinyjs::enable("downloadPlot_pop_height_device")
+  
   shinyjs::enable("downloadPlot_pop_mean_CO_Tanner")
   shinyjs::enable("downloadPlot_pop_mean_CO_Tanner_height")
   shinyjs::enable("downloadPlot_pop_mean_CO_Tanner_width")
   shinyjs::enable("downloadPlot_pop_mean_CO_Tanner_dpi")
   shinyjs::enable("downloadPlot_pop_mean_CO_Tanner_device")
+  
   shinyjs::enable("downloadPlot_res_log_conc_in_venous_plasma")
   shinyjs::enable("downloadPlot_res_log_conc_in_venous_plasma_height")
   shinyjs::enable("downloadPlot_res_log_conc_in_venous_plasma_width")
   shinyjs::enable("downloadPlot_res_log_conc_in_venous_plasma_dpi")
   shinyjs::enable("downloadPlot_res_log_conc_in_venous_plasma_device")
+  
   shinyjs::enable("downloadPlot_res_conc_in_venous_plasma")
   shinyjs::enable("downloadPlot_res_conc_in_venous_plasma_height")
   shinyjs::enable("downloadPlot_res_conc_in_venous_plasma_width")
   shinyjs::enable("downloadPlot_res_conc_in_venous_plasma_dpi")
   shinyjs::enable("downloadPlot_res_conc_in_venous_plasma_device")
+  
   shinyjs::enable("downloadPlot_res_conc_metab_in_venous_plasma")
   shinyjs::enable("downloadPlot_res_conc_metab_in_venous_plasma_height")
   shinyjs::enable("downloadPlot_res_conc_metab_in_venous_plasma_width")
   shinyjs::enable("downloadPlot_res_conc_metab_in_venous_plasma_dpi")
   shinyjs::enable("downloadPlot_res_conc_metab_in_venous_plasma_device")
+  
   shinyjs::enable("downloadPlot_res_conc_in_heart")
   shinyjs::enable("downloadPlot_res_conc_in_heart_height")
   shinyjs::enable("downloadPlot_res_conc_in_heart_width")
   shinyjs::enable("downloadPlot_res_conc_in_heart_dpi")
   shinyjs::enable("downloadPlot_res_conc_in_heart_device")
+  
   shinyjs::enable("downloadPlot_res_conc_metab_in_heart")
   shinyjs::enable("downloadPlot_res_conc_metab_in_heart_height")
   shinyjs::enable("downloadPlot_res_conc_metab_in_heart_width")
   shinyjs::enable("downloadPlot_res_conc_metab_in_heart_dpi")
   shinyjs::enable("downloadPlot_res_conc_metab_in_heart_device")
+  
+  shinyjs::enable("downloadPlot_stats_res_conc_metab_in_venous_plasma_CI")
+  shinyjs::enable("downloadPlot_stats_res_conc_metab_in_venous_plasma_width")
+  shinyjs::enable("downloadPlot_stats_res_conc_metab_in_venous_plasma_height")
+  shinyjs::enable("downloadPlot_stats_res_conc_metab_in_venous_plasma_dpi")
+  shinyjs::enable("downloadPlot_stats_res_conc__metab_in_venous_plasma_device")
+  shinyjs::enable("downloadPlot_stats_res_conc_metab_in_venous_plasma")
+  
+  shinyjs::enable("downloadPlot_stats_res_conc_metab_in_heart_CI")
+  shinyjs::enable("downloadPlot_stats_res_conc_metab_in_heart_width")
+  shinyjs::enable("downloadPlot_stats_res_conc_metab_in_heart_height")
+  shinyjs::enable("downloadPlot_stats_res_conc_metab_in_heart_dpi")
+  shinyjs::enable("downloadPlot_stats_res_conc_metab_in_heart_device")
+  shinyjs::enable("downloadPlot_stats_res_conc_metab_in_heart")
+  
+  shinyjs::enable("downloadPlot_stats_res_log_conc_in_venous_plasma_CI")
+  shinyjs::enable("downloadPlot_stats_res_log_conc_in_venous_plasma_width")
+  shinyjs::enable("downloadPlot_stats_res_log_conc_in_venous_plasma_height")
+  shinyjs::enable("downloadPlot_stats_res_log_conc_in_venous_plasma_dpi")
+  shinyjs::enable("downloadPlot_stats_res_log_conc_in_venous_plasma_device")
+  shinyjs::enable("downloadPlot_stats_res_log_conc_in_venous_plasma")
+  
+  shinyjs::enable("downloadPlot_stats_res_conc_in_venous_plasma_CI")
+  shinyjs::enable("downloadPlot_stats_res_conc_in_venous_plasma_width")
+  shinyjs::enable("downloadPlot_stats_res_conc_in_venous_plasma_height")
+  shinyjs::enable("downloadPlot_stats_res_conc_in_venous_plasma_dpi")
+  shinyjs::enable("downloadPlot_stats_res_conc_in_venous_plasma_device")
+  shinyjs::enable("downloadPlot_stats_res_conc_in_venous_plasma")
+  
+  shinyjs::enable("downloadPlot_stats_res_conc_in_heart_CI")
+  shinyjs::enable("downloadPlot_stats_res_conc_in_heart_width")
+  shinyjs::enable("downloadPlot_stats_res_conc_in_heart_height")
+  shinyjs::enable("downloadPlot_stats_res_conc_in_heart_dpi")
+  shinyjs::enable("downloadPlot_stats_res_conc_in_heart_device")
+  shinyjs::enable("downloadPlot_stats_res_conc_in_heart")
   # Enable all buttons/sliders/checkboxes/textinput etc. when simulations is finished (END)
   
   

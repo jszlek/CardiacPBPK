@@ -34,9 +34,6 @@ REQUIREMENTS
 2) Additional R packages: shiny, shinyjs, DT, shinyBS, dplyr, plyr, ggplot2, ggthemes, distr, data.table, deSolve
 
 
-Note: Please ensure that nlopt libraries (https://nlopt.readthedocs.io/en/latest/) are installed on your system.
-If you encounter troubles installing nlopt please read the StackOverflow question https://stackoverflow.com/questions/29716857/installing-nloptr-on-linux
-
 ========================
 INSTALLATION AND RUNNING
 ========================

@@ -3,40 +3,447 @@
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
 	<title></title>
-	<meta name="generator" content="LibreOffice 6.0.5.2 (Linux)"/>
+	<meta name="generator" content="LibreOffice 6.1.3.2 (Linux)"/>
 	<meta name="author" content="Jakub Szlęk"/>
 	<meta name="created" content="2018-08-24T11:44:36.867045910"/>
-	<meta name="changedby" content="Jakub Szlęk"/>
-	<meta name="changed" content="2018-08-24T11:47:36.583836421"/>
+	<meta name="changed" content="2018-12-27T17:20:47.418430910"/>
 	<style type="text/css">
-		@page { margin: 2cm }
-		p { margin-bottom: 0.25cm; line-height: 115% }
+		@page { size: 21cm 29.7cm; margin: 2cm }
+		p { margin-bottom: 0.25cm; background: transparent; line-height: 115%; background: transparent }
+		h1 { margin-bottom: 0.21cm; background: transparent; background: transparent; page-break-after: avoid }
+		h1.western { font-family: "Cantarell"; font-size: 24pt; font-weight: bold }
+		h1.cjk { font-family: "Droid Sans Fallback"; font-size: 24pt; font-weight: bold }
+		h1.ctl { font-family: "Droid Sans Devanagari"; font-size: 24pt; font-weight: bold }
+		h2 { margin-top: 0.35cm; margin-bottom: 0.21cm; background: transparent; background: transparent; page-break-after: avoid }
+		h2.western { font-family: "Albany", sans-serif; font-size: 16pt; font-weight: bold }
+		h2.cjk { font-family: "Droid Sans Fallback"; font-size: 16pt; font-weight: bold }
+		h2.ctl { font-family: "Droid Sans Devanagari"; font-size: 16pt; font-weight: bold }
 	</style>
 </head>
-<body lang="en-US" dir="ltr">
-<p style="margin-bottom: 0cm; line-height: 100%"><font face="Cantarell">PBPK-QSTS
-Project Help</font></p>
-<p style="margin-bottom: 0cm; line-height: 100%"><br/>
+<body lang="en-US" link="#000080" vlink="#800000" dir="ltr"><h1 class="western" align="justify" style="text-decoration: none">
+<font color="#000000"><font face="Cantarell">PBPK-QSTS v0.8</font></font></h1>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
-<p style="margin-bottom: 0cm; line-height: 100%"><font face="Cantarell">Authors:</font></p>
-<p style="margin-bottom: 0cm; line-height: 100%"><font face="Cantarell">License:</font></p>
-<p style="margin-bottom: 0cm; line-height: 100%"><font face="Cantarell">etc.</font></p>
-<p style="margin-bottom: 0cm; line-height: 100%"><br/>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%; text-decoration: none">
+<font color="#000000"><font face="Cantarell"><b>Authors:</b> Zofia
+Tylutki, Jakub Szlęk</font></font></p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%"><font color="#000000"><span style="text-decoration: none"><font face="Cantarell"><b>License:</b></font></span></font><font color="#000000"><span style="text-decoration: none">
+</span></font><a href="https://www.gnu.org/licenses/gpl-3.0.en.html"><font color="#000000"><span style="text-decoration: none"><font face="Cantarell">GNU
+GPLv3</font></span></font></a></p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
-<p style="margin-bottom: 0cm; line-height: 100%"><font face="Cantarell">1.
-Introduction</font></p>
-<p style="margin-bottom: 0cm; line-height: 100%"><font face="Cantarell">2.
-Installation</font></p>
-<p style="margin-bottom: 0cm; line-height: 100%"><font face="Cantarell">3.
-Running simulations</font></p>
-<p style="margin-bottom: 0cm; line-height: 100%"><font face="Cantarell">4.
-Known bugs, issues</font></p>
-<p style="margin-bottom: 0cm; line-height: 100%"><br/>
+<h1 class="western" align="justify" style="margin-top: 0cm; margin-bottom: 0.25cm; text-decoration: none">
+<font color="#000000"><font face="Cantarell">1. Introduction</font></font></h1>
+<p align="justify"><a name="_GoBack"></a><font color="#000000"><span style="text-decoration: none"><font face="Cantarell"><span lang="en-US">Prediction
+of drug effect is valuable in terms of both safety and efficacy.
+Modern model-based approaches can be useful in drug
+concentration-effect establishment, preceded by the estimation of
+active concentrations of drugs. With specifically cardiac safety and
+efficacy assessment in mind, we developed a mechanistic
+physiologically based pharmacokinetic (PBPK) model of the heart
+useful in assessment of the cardiac active drug fraction surrogate
+responsible for the clinically observed drug-related
+electrophysiological response in humans. The PBPK models were
+developed for a parent compound and its metabolite and include
+inter-subject variability. The models were written in R v.3.4.0. The
+detailed description of the models and the R code were published in
+<a href="https://www.sciencedirect.com/science/article/pii/S0022354917308341?via%3Dihub">Tylutki
+Z., Mendyk A., Polak S. J Pharm Sci, 2018, 107(4):1167-1177.</a></span></font></span></font><font color="#000000"><span style="text-decoration: none">
+</span></font><font color="#000000"><span style="text-decoration: none"><font face="Cantarell"><span lang="en-US">Model
+performance verification was done for amitriptyline and its main
+metabolite – nortriptyline by a physiologically based
+pharmacokinetic-quantitative systems toxicology and safety
+(PBPK-QSTS) modeling approach. The results of this PBPK-QSTS modeling
+were published in <a href="https://link.springer.com/article/10.1007/s10928-018-9597-6">Tylutki
+Z, Mendyk A, Polak S. J Pharmacokinet Pharmacodyn, 2018,
+45(5):663-677.</a></span></font></span></font><font color="#000000"><span style="text-decoration: none">
+</span></font><font color="#000000"><span style="text-decoration: none"><font face="Cantarell"><span lang="en-US">Now
+we have decided to share the model as an web application to allow its
+further testing and usage as we hope that it would be useful for
+other users. However the application is distributed without any
+warranty of merchantability or fitness for a particular purpose. </span></font></span></font>
+</p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%; text-decoration: none">
+<font color="#000000"><font face="Cantarell">The model is the result
+of a PhD project defended by Zofia Tylutki at the Jagiellonian
+University, Krakow, Poland written under the supervision of Sebastian
+Polak, PhD. </font></font>
+</p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%"><font color="#000000"><span style="text-decoration: none"><font face="Cantarell">This
+is a User Interface (ui) application which implements PBPK-QSTS
+models. Please visit the page, <a href="https://github.com/jszlek/PBPK-QSTS">https://github.com/jszlek/PBPK-QSTS</a>
+for more information on the application.</font></span></font></p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
-<p style="margin-bottom: 0cm; line-height: 100%"><font face="Cantarell">Document
-prepared in LO 6.0.5.2</font></p>
+<h1 class="western" align="justify" style="text-decoration: none"><font color="#000000"><font face="Cantarell">2.
+Installation</font></font></h1>
+<h2 class="western" align="justify" style="text-decoration: none"><font color="#000000"><font face="Cantarell">Requirements:
+</font></font>
+</h2>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%"><font color="#000000"><span style="text-decoration: none"><font face="Cantarell">1)
+<a href="https://cran.r-project.org/">R environment</a> version &gt;=
+3.3.0 (please follow the instructions devoted to your OS in order to
+install R), </font></span></font>
+</p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%"><font color="#000000"><span style="text-decoration: none"><font face="Cantarell">2)
+Additional R packages: <a href="https://cran.r-project.org/package=shiny">shiny</a>,
+<a href="https://cran.r-project.org/package=shinyjs">shinyjs</a>, <a href="https://cran.r-project.org/package=DT">DT</a>,
+<a href="https://cran.r-project.org/package=shinyBS">shinyBS</a>,
+<a href="https://cran.r-project.org/package=dplyr">dplyr</a>, <a href="https://cran.r-project.org/package=plyr">plyr</a>,
+<a href="https://cran.r-project.org/package=ggplot2">ggplot2</a>,
+<a href="https://cran.r-project.org/package=ggthemes">ggthemes</a>,
+<a href="https://cran.r-project.org/package=distr">distr</a>,
+<a href="https://cran.r-project.org/package=data.table">data.table</a>,
+<a href="https://cran.r-project.org/package=deSolve">deSolve</a>
+(please follow the instructions at <a href="https://www.r-bloggers.com/how-to-install-packages-on-r-screenshots/">r-bloggers.com</a>)</font></span></font></p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<h2 class="western" align="justify" style="text-decoration: none"><font color="#000000"><font face="Cantarell">Installing
+PBPK-QSTS:</font></font></h2>
+<p align="justify"><font color="#000000"><span style="text-decoration: none"><font face="Cantarell">1)
+Download the tar.gz archive from the
+<a href="https://sourceforge.net/projects/">https://sourceforge.net/projects/</a></font></span></font><font color="#000000"><span style="text-decoration: none">
+</span></font><font color="#000000"><span style="text-decoration: none"><font face="Cantarell">or
+clone github repository (if you have git packages installed in
+konsole/terminal type ‘</font></span></font><font color="#000000"><span style="text-decoration: none"><font face="Cantarell"><i>git
+clone <a href="https://github.com/jszlek/PBPK-QSTS.git">https://github.com/jszlek/PBPK-QSTS.git</a></i></font></span></font><font color="#000000"><span style="text-decoration: none">’</span></font><font color="#000000"><span style="text-decoration: none"><font face="Cantarell">).
+It is also possible to download master branch from github
+(<a href="https://github.com/jszlek/PBPK-QSTS/archive/master.zip">https://github.com/jszlek/PBPK-QSTS/archive/master.zip</a>),</font></span></font></p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%; text-decoration: none">
+<font color="#000000"><font face="Cantarell">2) Unpack/decompress
+downloaded package (on linux-like systems type ‘<i>tar xzvf
+(...).tar.gz -C /path/to/my/.../folder</i>’),</font></font></p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%; text-decoration: none">
+<font color="#000000"><font face="Cantarell">3) Run the
+konsole/terminal or cmd.exe,</font></font></p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%; text-decoration: none">
+<font color="#000000"><font face="Cantarell">4) Navigate to the
+folder (on linux-like systems use ‘<i>cd /path/to/my/.../folder</i>’),</font></font></p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%; text-decoration: none">
+<font color="#000000"><font face="Cantarell">5) On Windows run the
+run_R.bat file or on linux-like systems run run_R.sh (make sure the
+*.bat or *.sh files are executable and R installation folder is in
+the $PATH environment variable)</font></font></p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%; text-decoration: none">
+<font color="#000000"><font face="Cantarell">Alternatively:</font></font></p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%; text-decoration: none">
+<font color="#000000"><font face="Cantarell">5) Run R console (on
+linux type ‘R’, on Windows look for R in Start menu)</font></font></p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%; text-decoration: none">
+<font color="#000000"><font face="Cantarell">6) Check if you are in
+the folder by typing ‘getwd()’ in R console</font></font></p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%; text-decoration: none">
+<font color="#000000"><font face="Cantarell">7) Load shiny library by
+typing ‘library(shiny)’ - if you do not have it installed please
+do so.</font></font></p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%; text-decoration: none">
+<font color="#000000"><font face="Cantarell">8) Run the shiny
+application by typing ‘runApp()’</font></font></p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%; text-decoration: none">
+<font color="#000000"><font face="Cantarell">9) This command should
+run the app in a browser</font></font></p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<h1 class="western" align="justify" style="text-decoration: none"><font color="#000000"><font face="Cantarell">3.
+Running simulations</font></font></h1>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%; text-decoration: none">
+<font color="#000000"><font face="Cantarell">The main window of the
+program is divided into six tabs: Welcome, Population, Study, API,
+Run, About. Welcome and About tabs contain general information on the
+program usage as well as license.</font></font></p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%"><img src="Help_html_48a6312a131f60e7.jpg" name="Obraz1" align="left" width="563" height="491">
+  <br clear="left"/>
+</img>
+<br/>
+
+</p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%; text-decoration: none">
+<font color="#000000"><font face="Cantarell">Before running
+simulations you must carefully chose the parameters gathered in tabs
+<font face="Cantarell">Population, Study and API. Tab Run is used to
+start simulations, view and save the results.</font></font></font></p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%"><font face="Cantarell">Population
+tab is divided into three sub-tabs: Settings, Dataset, Plots. The
+last two are for viewing and saving the dataset. Moreover the
+histograms of basic population parameters are shown. The Population
+settings tab is ordered into three columns: General parameters,
+Absorption parameters and Distribution parameters. General parameters
+are responsible for  setting: seed, which will be used through whole
+simulation, number of individuals, female percentage, age range,
+scale and shape parameters for age distribution. It is also possible
+to set liver and heart density together with pericardium blood flow.</font></p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%"><img src="Help_html_3d80d0112fd5bbb.jpg" name="Obraz2" align="left" width="563" height="490">
+  <br clear="left"/>
+</img>
+<br/>
+
+</p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%"><font face="Cantarell">Study
+tab is used to modify the parameters such as: the amount and number
+of doses. Moreover here you can select the duration of simulation.</font></p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%"><img src="Help_html_618791d606b3d969.jpg" name="Obraz3" align="left" width="563" height="490">
+  <br clear="left"/>
+</img>
+<br/>
+
+</p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%"><font face="Cantarell">API
+tab is designed to modify drug parameters such as: physico-chemical,
+distribution and elimination related. This tab is suitable to set
+partition coefficients for various tissues, elimination constant (Km)
+and volume of distribution (Vmax). Here you can also chose if the
+simulations should include calculations for metabolite of the drug.</font></p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%"><img src="Help_html_c17491d813d54e49.jpg" name="Obraz4" align="left" width="563" height="438">
+  <br clear="left"/>
+</img>
+<br/>
+
+</p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%"><font face="Cantarell"><font color="#000000"><span style="text-decoration: none"><font face="Cantarell">The
+last tab – Run – contains the button ‘Run’ which starts the
+simulation process. After a while, considering the number of subjects
+used, the plots of concentrations vs. time in different compartments
+and results table are shown.</font></span></font></font></p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%"><img src="Help_html_c17491d813d54e49.jpg" name="Obraz5" align="left" width="563" height="438">
+  <br clear="left"/>
+</img>
+<br/>
+
+</p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%; text-decoration: none">
+<font color="#000000"><font face="Cantarell">In order to add points
+to the existing plots please create external file which will contain
+data formatted as follows, the table must contain three columns
+(header is not necessary) – the first column the subject index –
+the second the time [h] – and the last concentration [µg/mL];
+please consider below example.</font></font></p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<table width="213" cellpadding="6" cellspacing="0">
+	<col width="69"/>
+
+	<col width="61"/>
+
+	<col width="84"/>
+
+	<tr valign="bottom">
+		<td width="69" height="13" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0.1cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">rn</font></p>
+		</td>
+		<td width="61" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0.1cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">time</font></p>
+		</td>
+		<td width="84" style="border: 1px solid #000000; padding: 0.1cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">conc</font></p>
+		</td>
+	</tr>
+	<tr valign="bottom">
+		<td width="69" height="7" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">1</font></p>
+		</td>
+		<td width="61" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">2.4</font></p>
+		</td>
+		<td width="84" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0.1cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">0.057</font></p>
+		</td>
+	</tr>
+	<tr valign="bottom">
+		<td width="69" height="7" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">1</font></p>
+		</td>
+		<td width="61" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">5.6</font></p>
+		</td>
+		<td width="84" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0.1cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">0.042</font></p>
+		</td>
+	</tr>
+	<tr valign="bottom">
+		<td width="69" height="7" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">1</font></p>
+		</td>
+		<td width="61" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">7.4</font></p>
+		</td>
+		<td width="84" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0.1cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">0.035</font></p>
+		</td>
+	</tr>
+	<tr valign="bottom">
+		<td width="69" height="7" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">1</font></p>
+		</td>
+		<td width="61" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">9.5</font></p>
+		</td>
+		<td width="84" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0.1cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">0.028</font></p>
+		</td>
+	</tr>
+	<tr valign="bottom">
+		<td width="69" height="7" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">1</font></p>
+		</td>
+		<td width="61" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">12</font></p>
+		</td>
+		<td width="84" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0.1cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">0.022</font></p>
+		</td>
+	</tr>
+	<tr valign="bottom">
+		<td width="69" height="7" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">1</font></p>
+		</td>
+		<td width="61" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">15</font></p>
+		</td>
+		<td width="84" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0.1cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">0.017</font></p>
+		</td>
+	</tr>
+	<tr valign="bottom">
+		<td width="69" height="7" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">1</font></p>
+		</td>
+		<td width="61" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">20</font></p>
+		</td>
+		<td width="84" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0.1cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">0.011</font></p>
+		</td>
+	</tr>
+	<tr valign="bottom">
+		<td width="69" height="7" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">1</font></p>
+		</td>
+		<td width="61" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">24</font></p>
+		</td>
+		<td width="84" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0.1cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">0.008</font></p>
+		</td>
+	</tr>
+	<tr valign="bottom">
+		<td width="69" height="7" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">2</font></p>
+		</td>
+		<td width="61" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">2.4</font></p>
+		</td>
+		<td width="84" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0.1cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">0.057</font></p>
+		</td>
+	</tr>
+	<tr valign="bottom">
+		<td width="69" height="7" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">2</font></p>
+		</td>
+		<td width="61" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">5.6</font></p>
+		</td>
+		<td width="84" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0.1cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">0.043</font></p>
+		</td>
+	</tr>
+	<tr valign="bottom">
+		<td width="69" height="7" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">2</font></p>
+		</td>
+		<td width="61" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">7.4</font></p>
+		</td>
+		<td width="84" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0.1cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">0.035</font></p>
+		</td>
+	</tr>
+	<tr valign="bottom">
+		<td width="69" height="7" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">2</font></p>
+		</td>
+		<td width="61" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">9.5</font></p>
+		</td>
+		<td width="84" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0.1cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">0.028</font></p>
+		</td>
+	</tr>
+	<tr valign="bottom">
+		<td width="69" height="7" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">2</font></p>
+		</td>
+		<td width="61" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">12</font></p>
+		</td>
+		<td width="84" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0.1cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">0.022</font></p>
+		</td>
+	</tr>
+	<tr valign="bottom">
+		<td width="69" height="7" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">2</font></p>
+		</td>
+		<td width="61" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">15</font></p>
+		</td>
+		<td width="84" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0.1cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">0.017</font></p>
+		</td>
+	</tr>
+	<tr valign="bottom">
+		<td width="69" height="7" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">2</font></p>
+		</td>
+		<td width="61" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">20</font></p>
+		</td>
+		<td width="84" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0.1cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">0.011</font></p>
+		</td>
+	</tr>
+	<tr valign="bottom">
+		<td width="69" height="13" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">2</font></p>
+		</td>
+		<td width="61" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">24</font></p>
+		</td>
+		<td width="84" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0.1cm"><p align="justify" style="background: transparent">
+			<font face="Cantarell">0.008</font></p>
+		</td>
+	</tr>
+</table>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p align="justify" style="margin-bottom: 0.35cm; line-height: 100%"><br/>
+<br/>
+
+</p>
 </body>
 </html>
