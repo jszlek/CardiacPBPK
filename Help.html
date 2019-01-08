@@ -7,7 +7,7 @@
 	<meta name="author" content="Jakub Szlęk"/>
 	<meta name="created" content="2018-08-24T11:44:36.867045910"/>
 	<meta name="changedby" content="Jakub Szlęk"/>
-	<meta name="changed" content="2019-01-04T14:23:32.757378733"/>
+	<meta name="changed" content="2019-01-08T13:30:11.967435490"/>
 	<style type="text/css">
 		@page { size: 21cm 150cm; margin: 2cm }
 		p { margin-bottom: 0.25cm; background: transparent; line-height: 115% }
@@ -31,9 +31,8 @@ v0.8</font></font></h1>
 <p align="justify" style="margin-bottom: 0cm; line-height: 100%; text-decoration: none">
 <font color="#000000"><font face="Cantarell"><b>Authors:</b> Zofia
 Tylutki, Jakub Szlęk</font></font></p>
-<p align="justify" style="margin-bottom: 0cm; line-height: 100%"><font color="#000000"><span style="text-decoration: none"><font face="Cantarell"><b>License:</b></font></span></font><font color="#000000"><span style="text-decoration: none">
-</span></font><a href="https://www.gnu.org/licenses/gpl-3.0.en.html"><font color="#000000"><span style="text-decoration: none"><font face="Cantarell">GNU
-GPLv3</font></span></font></a></p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%"><font color="#000000"><span style="text-decoration: none"><font face="Cantarell"><b>License:</b></font></span></font><font color="#000000"><span style="text-decoration: none"><font face="Cantarell">
+<a href="https://www.gnu.org/licenses/gpl-3.0.en.html">GNU GPLv3</a></font></span></font></p>
 <p align="justify" style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
@@ -53,16 +52,16 @@ developed for a parent compound and its metabolite and include
 inter-subject variability. The models were written in R v.3.4.0. The
 detailed description of the models and the R code were published in
 <a href="https://www.sciencedirect.com/science/article/pii/S0022354917308341?via%3Dihub">Tylutki
-Z., Mendyk A., Polak S. J Pharm Sci, 2018, 107(4):1167-1177.</a></span></font></span></font><font color="#000000"><span style="text-decoration: none">
-</span></font><font color="#000000"><span style="text-decoration: none"><font face="Cantarell"><span lang="en-US">Model
+Z., Mendyk A., Polak S. J Pharm Sci, 2018, 107(4):1167-1177.</a></span></font></span></font><font color="#000000"><span style="text-decoration: none"><font face="Cantarell">
+</font></span></font><font color="#000000"><span style="text-decoration: none"><font face="Cantarell"><span lang="en-US">Model
 performance verification was done for amitriptyline and its main
 metabolite – nortriptyline by a physiologically based
 pharmacokinetic-quantitative systems toxicology and safety
 (PBPK-QSTS) modeling approach. The results of this PBPK-QSTS modeling
 were published in <a href="https://link.springer.com/article/10.1007/s10928-018-9597-6">Tylutki
 Z, Mendyk A, Polak S. J Pharmacokinet Pharmacodyn, 2018,
-45(5):663-677.</a></span></font></span></font><font color="#000000"><span style="text-decoration: none">
-</span></font><font color="#000000"><span style="text-decoration: none"><font face="Cantarell"><span lang="en-US">Now
+45(5):663-677.</a></span></font></span></font><font color="#000000"><span style="text-decoration: none"><font face="Cantarell">
+</font></span></font><font color="#000000"><span style="text-decoration: none"><font face="Cantarell"><span lang="en-US">Now
 we have decided to share the model as an web application to allow its
 further testing and usage as we hope that it would be useful for
 other users. However the application is distributed without any
@@ -109,11 +108,10 @@ Additional R packages: <a href="https://cran.r-project.org/package=shiny">shiny<
 PBPK-QSTS:</font></font></h2>
 <p align="justify"><font color="#000000"><span style="text-decoration: none"><font face="Cantarell">1)
 Download the tar.gz archive from the
-<a href="https://sourceforge.net/projects/">https://sourceforge.net/projects/</a></font></span></font><font color="#000000"><span style="text-decoration: none">
-</span></font><font color="#000000"><span style="text-decoration: none"><font face="Cantarell">or
-clone github repository (if you have git packages installed in
+<a href="https://sourceforge.net/projects/">https://sourceforge.net/projects/</a>
+or clone github repository (if you have git packages installed in
 konsole/terminal type ‘</font></span></font><font color="#000000"><span style="text-decoration: none"><font face="Cantarell"><i>git
-clone <a href="https://github.com/jszlek/PBPK-QSTS.git">https://github.com/jszlek/PBPK-QSTS.git</a></i></font></span></font><font color="#000000"><span style="text-decoration: none">’</span></font><font color="#000000"><span style="text-decoration: none"><font face="Cantarell">).
+clone <a href="https://github.com/jszlek/PBPK-QSTS.git">https://github.com/jszlek/PBPK-QSTS.git</a></i></font></span></font><font color="#000000"><span style="text-decoration: none"><font face="Cantarell">’).
 It is also possible to download master branch from github
 (<a href="https://github.com/jszlek/PBPK-QSTS/archive/master.zip">https://github.com/jszlek/PBPK-QSTS/archive/master.zip</a>),</font></span></font></p>
 <p align="justify" style="margin-bottom: 0cm; line-height: 100%; text-decoration: none">
@@ -187,7 +185,9 @@ simulation, number of individuals, female percentage, age range,
 scale and shape parameters for age distribution. It is also possible
 to set liver and heart density together with pericardium blood flow.
 ‘Default settings’ buttons will return values in specific column
-to the settings for amitriptyline/nortriptyline.</font></p>
+to the settings for amitriptyline (a parent compound) / nortriptyline
+(a metabolite) as described in the publications listed in the
+Introduction section.</font></p>
 <p align="justify" style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
@@ -199,7 +199,7 @@ to the settings for amitriptyline/nortriptyline.</font></p>
 </p>
 <p align="justify" style="margin-bottom: 0cm; line-height: 100%"><font face="Cantarell">Study
 tab is used to modify the parameters such as: the amount and number
-of doses. Moreover here you can select the duration of simulation.</font></p>
+of doses. Moreover here you can set the duration of simulation.</font></p>
 <p align="justify" style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
@@ -212,16 +212,59 @@ of doses. Moreover here you can select the duration of simulation.</font></p>
 <p align="justify" style="margin-bottom: 0cm; line-height: 100%"><font face="Cantarell">API
 tab is designed to modify drug parameters such as: physico-chemical,
 distribution and elimination related. This tab is suitable to set
-partition coefficients for various tissues, elimination constant (Km)
-and volume of distribution (Vmax). Here you can also chose if the
-simulations should include calculations for metabolite of the drug.</font></p>
+partition coefficients for various tissues, and pairs of parameters
+describing drug elimination kinetics: maximal rate of particular
+elimination process at saturating substrate concentration (Vmax) and
+Michaelis constant (Km) for that process. Here you can also chose if
+the simulations should include calculations for metabolite of the
+drug.</font></p>
 <p align="justify" style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
 <p align="justify" style="margin-bottom: 0cm; line-height: 100%"><img src="Help_html_c17491d813d54e49.jpg" name="Obraz4" align="left" width="563" height="438">
   <br clear="left"/>
 </img>
-<img src="Help_html_c17491d813d54e49.jpg" name="Obraz5" align="left" width="563" height="438">
+<br/>
+
+</p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%"><font face="Cantarell">In
+most of the cases when you point mouse cursor on the parameters you
+will find tool-tips in black rectangle.</font></p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%"><img src="Help_html_80e17cfa5a571336.png" name="Obraz6" align="left" width="563" height="368">
+  <br clear="left"/>
+</img>
+<br/>
+
+</p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%"><font face="Cantarell">Though,
+description for few parameters is presented below:</font></p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%"><font face="Cantarell"><i>CLrenal</i>
+- renal clearance of API [L/h]</font></p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%"><font face="Cantarell"><i>CLrenal_metab</i>
+- renal clearance of API's metabolite [L/h]</font></p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%"><font face="Cantarell"><i>fuha</i>
+- the fraction of API actively transported to hepatocytes</font></p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%"><font face="Cantarell"><i>fuhn</i>
+- the fraction of API's metabolite actively transported to
+hepatocytes</font></p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%"><font face="Cantarell"><i>Kpre_metab</i>
+- Metabolite's rest of the body partition coefficient</font></p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%"><font face="Cantarell"><i>CLefflux</i>
+- the active efflux transport of API at the membranes of
+cardiomyocyte (intracellular) compartments [L/h]</font></p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%"><font face="Cantarell"><i>CLuptake</i>
+- the active uptake transport of API at the membranes of
+cardiomyocyte (intracellular) compartments [L/h]</font></p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p align="justify" style="margin-bottom: 0cm; line-height: 100%"><img src="Help_html_c17491d813d54e49.jpg" name="Obraz5" align="left" width="563" height="438">
   <br clear="left"/>
 </img>
 <br/>
@@ -249,7 +292,7 @@ data formatted as follows, the table must contain three columns
 (header is not necessary) – the first column the subject index –
 the second the time [h] – and the last concentration [µg/mL];
 please consider below example. There is also an example file on
-GitHub  called ‘external_data.csv’.</font></font></p>
+GitHub called ‘external_data.csv’.</font></font></p>
 <p align="justify" style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>

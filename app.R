@@ -1107,7 +1107,7 @@ ui <- navbarPage(
                       checkboxInput("CYP2C19_API_dm","CYP2C19_API", TRUE),
                       conditionalPanel(condition = "input.CYP2C19_API_dm==true",
                         numericInput(inputId = "Vmax_2C19_api_dm",
-                                     label = "Vmax for API [µM] CYP2C19", #
+                                     label = "Vmax for API [pmol/min/pmol] CYP2C19", #
                                      value = 4.22,
                                      min=0),
                         # bsAlert
@@ -1125,14 +1125,14 @@ ui <- navbarPage(
                       checkboxInput("CYP2D6_API_dm","CYP2D6_API", TRUE),
                       conditionalPanel(condition = "input.CYP2D6_API_dm==true",
                         numericInput(inputId = "Vmax_2D6_api_dm",
-                                     label = "Vmax for API [µM] CYP2D6", #
+                                     label = "Vmax for API [pmol/min/pmol] CYP2D6", #
                                      value = 1.49,
                                      min=0),
                         # bsAlert
                         bsAlert("Vmax_2D6_api_dm_alert"),
                         
                         numericInput(inputId = "Km_2D6_api_dm",
-                                     label = "Km for API [µM] CYP2C9", #
+                                     label = "Km for API [µM] CYP2D6", #
                                      value = 7.12,
                                      min=0),
                         # bsAlert
@@ -1143,7 +1143,7 @@ ui <- navbarPage(
                       checkboxInput("CYP3A4_API_dm","CYP3A4_API", TRUE),
                       conditionalPanel(condition = "input.CYP3A4_API_dm==true",
                         numericInput(inputId = "Vmax_3A4_api_dm",
-                                     label = "Vmax for API [µM] CYP3A4", #
+                                     label = "Vmax for API [pmol/min/pmol] CYP3A4", #
                                      value = 3.37,
                                      min=0),
                         # bsAlert
@@ -1163,7 +1163,7 @@ ui <- navbarPage(
                       checkboxInput("CYP2B6_API_h","CYP2B6_API_hydroxylation", TRUE),
                       conditionalPanel(condition = "input.CYP2B6_API_h==true",
                         numericInput(inputId = "Vmax_2B6_api_h",
-                                     label = "Vmax for API [µM] CYP2B6 (hydroxylation)", #
+                                     label = "Vmax for API [pmol/min/pmol] CYP2B6 (hydroxylation)", #
                                      value = 0.13,
                                      min=0),
                         # bsAlert
@@ -1181,7 +1181,7 @@ ui <- navbarPage(
                       checkboxInput("CYP2D6_API_h","CYP2D6_API_hydroxylation", TRUE),
                       conditionalPanel(condition = "input.CYP2D6_API_h==true",
                         numericInput(inputId = "Vmax_2D6_api_h",
-                                     label = "Vmax for API [µM] CYP2D6  (hydroxylation)", #
+                                     label = "Vmax for API [pmol/min/pmol] CYP2D6  (hydroxylation)", #
                                      value = 2.71,
                                      min=0),
                         # bsAlert
@@ -1199,7 +1199,7 @@ ui <- navbarPage(
                       checkboxInput("CYP3A4_API_h","CYP3A4_API_hydroxylation", TRUE),
                       conditionalPanel(condition = "input.CYP3A4_API_h==true",
                         numericInput(inputId = "Vmax_3A4_api_h",
-                                     label = "Vmax for API [µM] CYP3A4  (hydroxylation)", #
+                                     label = "Vmax for API [pmol/min/pmol] CYP3A4  (hydroxylation)", #
                                      value = 0.4,
                                      min=0),
                         # bsAlert
@@ -1238,7 +1238,7 @@ ui <- navbarPage(
                       checkboxInput("CYP1A2_METAB_dm","CYP1A2_METAB",FALSE),
                       conditionalPanel(condition = "input.CYP1A2_METAB_dm==true & input.METAB_present==true",
                         numericInput(inputId = "Vmax_1A2_metab_dm",
-                                     label = "Vmax for METABOLITE [µM] CYP1A2", #
+                                     label = "Vmax for METABOLITE [pmol/min/pmol] CYP1A2", #
                                      value = 6.8,
                                      min=0),
                         # bsAlert
@@ -1256,7 +1256,7 @@ ui <- navbarPage(
                       checkboxInput("CYP2C19_METAB_dm","CYP2C19_METAB",FALSE),
                       conditionalPanel(condition = "input.CYP2C19_METAB_dm==true & input.METAB_present==true",
                         numericInput(inputId = "Vmax_2C19_metab_dm",
-                                     label = "Vmax for METABOLITE [µM] CYP2C19", #
+                                     label = "Vmax for METABOLITE [pmol/min/pmol] CYP2C19", #
                                      value = 93.1,
                                      min=0),
                         # bsAlert
@@ -1274,7 +1274,7 @@ ui <- navbarPage(
                       checkboxInput("CYP2D6_METAB_dm","CYP2D6_METAB",FALSE),
                       conditionalPanel(condition = "input.CYP2D6_METAB_dm==true & input.METAB_present==true",
                         numericInput(inputId = "Vmax_2D6_metab_dm",
-                                     label = "Vmax for METABOLITE [µM] CYP2D6", #
+                                     label = "Vmax for METABOLITE [pmol/min/pmol] CYP2D6", #
                                      value = 19.4,
                                      min=0),
                         # bsAlert
@@ -1293,7 +1293,7 @@ ui <- navbarPage(
                       checkboxInput("CYP2D6_METAB_h","CYP2D6_METAB_hydroxylation",FALSE),
                       conditionalPanel(condition = "input.CYP2D6_METAB_h==true & input.METAB_present==true",
                         numericInput(inputId = "Vmax_2D6_metab_h",
-                                     label = "Vmax for METABOLITE [µM] CYP2D6  (hydroxylation)", #
+                                     label = "Vmax for METABOLITE [pmol/min/pmol] CYP2D6  (hydroxylation)", #
                                      value = 130,
                                      min=0),
                         # bsAlert
@@ -1320,7 +1320,96 @@ ui <- navbarPage(
                                 options = NULL),
                       bsTooltip("fuhn", "the fraction of API\\'s metabolite actively transported to hepatocytes",
                                 placement = "bottom", trigger = "hover",
+                                options = NULL),
+
+                      
+                      bsTooltip("Vmax_1A2_api_dm", "Maximal rate of pathway 1 by CYP1A2 at saturating substrate concentration [pmol/min/pmol]",
+                                placement = "bottom", trigger = "hover",
+                                options = NULL),
+                      bsTooltip("Km_1A2_api_dm", "Michaelis constant for pathway 1 by CYP1A2 [µM]",
+                                placement = "bottom", trigger = "hover",
+                                options = NULL),
+                      bsTooltip("Vmax_2B6_api_dm", "Maximal rate of pathway 1 by CYP2B6 at saturating substrate concentration [pmol/min/pmol]",
+                                placement = "bottom", trigger = "hover",
+                                options = NULL),
+                      bsTooltip("Km_2B6_api_dm","Michaelis constant for pathway 1 by CYP2B6 [µM]", 
+                                placement = "bottom", trigger = "hover",
+                                options = NULL),
+                      bsTooltip("Vmax_2C8_api_dm", "Maximal rate of pathway 1 by CYP2C8 at saturating substrate concentration [pmol/min/pmol]",
+                                placement = "bottom", trigger = "hover",
+                                options = NULL),
+                      bsTooltip("Km_2C8_api_dm", "Michaelis constant for pathway 1 by CYP2C8 [µM]",
+                                placement = "bottom", trigger = "hover",
+                                options = NULL),
+                      bsTooltip("Vmax_2C9_api_dm", "Maximal rate of pathway 1 by CYP2C9 at saturating substrate concentration [pmol/min/pmol]", 
+                                placement = "bottom", trigger = "hover",
+                                options = NULL),
+                      bsTooltip("Km_2C9_api_dm", "Michaelis constant for pathway 1 by CYP2C9 [µM]", 
+                                placement = "bottom", trigger = "hover",
+                                options = NULL),
+                      bsTooltip("Vmax_2C19_api_dm", "Maximal rate of pathway 1 by CYP2C19 at saturating substrate concentration [pmol/min/pmol]", 
+                                placement = "bottom", trigger = "hover",
+                                options = NULL),
+                      bsTooltip("Km_2C19_api_dm", "Michaelis constant for pathway 1 by CYP2C19 [µM]", 
+                                placement = "bottom", trigger = "hover",
+                                options = NULL),
+                      bsTooltip("Vmax_2D6_api_dm", "Maximal rate of pathway 1 by CYP2D6 at saturating substrate concentration [pmol/min/pmol]",
+                                placement = "bottom", trigger = "hover",
+                                options = NULL),
+                      bsTooltip("Km_2D6_api_dm", "Michaelis constant for pathway 1 by CYP2D6 [µM]", 
+                                placement = "bottom", trigger = "hover",
+                                options = NULL),
+                      bsTooltip("Vmax_3A4_api_dm", "Maximal rate of pathway 1 by CYP3A4 at saturating substrate concentration [pmol/min/pmol]",
+                                placement = "bottom", trigger = "hover",
+                                options = NULL),
+                      bsTooltip("Km_3A4_api_dm", "Michaelis constant for pathway 1 by CYP3A4 [µM]",
+                                placement = "bottom", trigger = "hover",
+                                options = NULL),
+                      
+                      bsTooltip("Vmax_2B6_api_h", "Maximal rate of pathway 2 by CYP2B6 at saturating substrate concentration [pmol/min/pmol]", 
+                                placement = "bottom", trigger = "hover",
+                                options = NULL),
+                      bsTooltip("Km_2B6_api_h", "Michaelis constant for pathway 2 by CYP2B6 [µM]", 
+                                placement = "bottom", trigger = "hover",
+                                options = NULL),
+                      bsTooltip("Vmax_2D6_api_h", "Maximal rate of pathway 2 by CYP2D6 at saturating substrate concentration [pmol/min/pmol]", 
+                                placement = "bottom", trigger = "hover",
+                                options = NULL),
+                      bsTooltip("Km_2D6_api_h", "Michaelis constant for pathway 2 by CYP2D6 [µM]", 
+                                placement = "bottom", trigger = "hover",
+                                options = NULL),
+                      bsTooltip("Vmax_3A4_api_h", "Maximal rate of pathway 2 by CYP3A4 at saturating substrate concentration [pmol/min/pmol]", 
+                                placement = "bottom", trigger = "hover",
+                                options = NULL),
+                      bsTooltip("Km_3A4_api_h", "Michaelis constant for pathway 2 by CYP3A4 [µM]", 
+                                placement = "bottom", trigger = "hover",
+                                options = NULL),
+                      
+                      bsTooltip("Vmax_1A2_metab_dm", "Maximal rate of pathway 1 by CYP1A2 at saturating substrate concentration for METABOLITE [pmol/min/pmol]", 
+                                placement = "bottom", trigger = "hover",
+                                options = NULL),
+                      bsTooltip("Km_1A2_metab_dm", "Michaelis constant for pathway 1 by CYP1A2 for METABOLITE [µM]", 
+                                placement = "bottom", trigger = "hover",
+                                options = NULL),
+                      bsTooltip("Vmax_2C19_metab_dm", "Maximal rate of pathway 1 by CYP2C19 at saturating substrate concentration for METABOLITE [pmol/min/pmol]", 
+                                placement = "bottom", trigger = "hover",
+                                options = NULL),
+                      bsTooltip("Km_2C19_metab_dm", "Michaelis constant for pathway 1 by CYP2C19 for METABOLITE [µM]",
+                                placement = "bottom", trigger = "hover",
+                                options = NULL),
+                      bsTooltip("Vmax_2D6_metab_dm", "Maximal rate of pathway 1 by CYP2D6 at saturating substrate concentration for METABOLITE [pmol/min/pmol]",
+                                placement = "bottom", trigger = "hover",
+                                options = NULL),
+                      bsTooltip("Km_2D6_metab_dm", "Michaelis constant for pathway 1 by CYP2D6 for METABOLITE [µM]",
+                                placement = "bottom", trigger = "hover",
+                                options = NULL),
+                      bsTooltip("Vmax_2D6_metab_h", "Maximal rate of pathway 2 by CYP2D6 at saturating substrate concentration for METABOLITE [pmol/min/pmol]", 
+                                placement = "bottom", trigger = "hover",
+                                options = NULL),
+                      bsTooltip("Km_2D6_metab_h", "Michaelis constant for pathway 2 by CYP2D6 for METABOLITE [µM]",
+                                placement = "bottom", trigger = "hover",
                                 options = NULL)
+                      
 
                       
                       )
@@ -1370,6 +1459,8 @@ ui <- navbarPage(
                                                "Double Quote" = '"',
                                                "Single Quote" = "'"),
                                    selected = '"'),
+                      sliderInput("in_external_slider", "point size", min = 1, max = 10, value = 2, step = 0.1),
+                      
                       conditionalPanel(condition = "input.METAB_present==true",
                                        tags$hr(),
                                        # Input: Select a file ----
@@ -1395,7 +1486,8 @@ ui <- navbarPage(
                                                     choices = c(None = "",
                                                                 "Double Quote" = '"',
                                                                 "Single Quote" = "'"),
-                                                    selected = '"')
+                                                    selected = '"'),
+                                       sliderInput("in_external_metab_slider", "point size", min = 1, max = 10, value = 2, step = 0.1)
                                        ),
                       tags$hr(),
                       h4("Save results dataset as csv"),
@@ -6334,7 +6426,7 @@ if(input$METAB_present == TRUE){
               y = "Concentration in venous plasma [mg/L]",
               colour = "Individuals"
           ) +
-          geom_point(shape = 21, colour = "black", fill = "#56B4E9", size = 1.5, stroke = 0.9,
+          geom_point(shape = 21, colour = "black", fill = "#56B4E9", size = input$in_external_slider, stroke = 0.9,
                      data = tbl_in_external_data, mapping = aes(x = time, y = conc, colour = "external data"))
       })
       
@@ -6350,7 +6442,7 @@ if(input$METAB_present == TRUE){
               y = "log 10 concentration in venous plasma [mg/L]",
               legend = "Individuals"
             ) +
-          geom_point(shape = 21, colour = "black", fill = "#56B4E9", size = 1.5, stroke = 0.9,
+          geom_point(shape = 21, colour = "black", fill = "#56B4E9", size = input$in_external_slider, stroke = 0.9,
                      data = tbl_in_external_data, mapping = aes(x = time, y = conc, colour = "external data")) +
           theme(
             panel.grid.major = element_line(colour="grey",size = rel(0.5)),
@@ -6397,7 +6489,7 @@ if(input$METAB_present == TRUE){
               y = "Concentration in venous plasma [mg/L]",
               colour = "Individuals"
           ) + geom_ribbon(data= stats_iv, aes(x = time, ymin = lower_CI, ymax = higher_CI), fill="red", color = "red", alpha = 0.3)+
-          geom_point(shape = 21, colour = "black", fill = "#56B4E9", size = 1.5, stroke = 0.9,
+          geom_point(shape = 21, colour = "black", fill = "#56B4E9", size = input$in_external_slider, stroke = 0.9,
                      data = tbl_in_external_data, mapping = aes(x = time, y = conc, colour = "external data"))
         
       })
@@ -6437,7 +6529,7 @@ if(input$METAB_present == TRUE){
               y = "Log 10 Concentration in venous plasma [mg/L]",
               colour = "Individuals"
           ) + geom_ribbon(data= stats_iv, aes(x = time, ymin = lower_CI, ymax = higher_CI), fill="red", color = "red", alpha = 0.3)+
-          geom_point(shape = 21, colour = "black", fill = "#56B4E9", size = 1.5, stroke = 0.9,
+          geom_point(shape = 21, colour = "black", fill = "#56B4E9", size = input$in_external_slider, stroke = 0.9,
                      data = tbl_in_external_data, mapping = aes(x = time, y = conc, colour = "external data"))
         
       })
@@ -6467,7 +6559,7 @@ if(input$METAB_present == TRUE){
             y = "log 10 concentration in venous plasma [mg/L]",
             colour = "Individuals"
           ) +
-          geom_point(shape = 21, colour = "black", fill = "#56B4E9", size = 1.5, stroke = 0.9,
+          geom_point(shape = 21, colour = "black", fill = "#56B4E9", size = input$in_external_slider, stroke = 0.9,
                      data = tbl_in_external_data, mapping = aes(x = time, y = conc, colour = "external data"))
       }
       
@@ -6493,7 +6585,7 @@ if(input$METAB_present == TRUE){
             y = "Concentration in venous plasma [mg/L]",
             colour = "Individuals"
           )+
-          geom_point(shape = 21, colour = "black", fill = "#56B4E9", size = 1.5, stroke = 0.9,
+          geom_point(shape = 21, colour = "black", fill = "#56B4E9", size = input$in_external_slider, stroke = 0.9,
                      data = tbl_in_external_data, mapping = aes(x = time, y = conc, colour = "external data"))
       }
       
@@ -6528,7 +6620,7 @@ if(input$METAB_present == TRUE){
             y = "Concentration in venous plasma [mg/L]",
             colour = "Individuals"
           ) + geom_ribbon(data= stats_iv, aes(x = time, ymin = lower_CI, ymax = higher_CI), fill="red", color = "red", alpha = 0.3) +
-          geom_point(shape = 21, colour = "black", fill = "#56B4E9", size = 1.5, stroke = 0.9,
+          geom_point(shape = 21, colour = "black", fill = "#56B4E9", size = input$in_external_slider, stroke = 0.9,
                      data = tbl_in_external_data, mapping = aes(x = time, y = conc, colour = "external data"))
         
       }
@@ -6563,7 +6655,7 @@ if(input$METAB_present == TRUE){
             y = "Log 10 Concentration in venous plasma [mg/L]",
             colour = "Individuals"
           ) + geom_ribbon(data= stats_iv, aes(x = time, ymin = lower_CI, ymax = higher_CI), fill="red", color = "red", alpha = 0.3) +
-          geom_point(shape = 21, colour = "black", fill = "#56B4E9", size = 1.5, stroke = 0.9,
+          geom_point(shape = 21, colour = "black", fill = "#56B4E9", size = input$in_external_slider, stroke = 0.9,
                      data = tbl_in_external_data, mapping = aes(x = time, y = conc, colour = "external data"))
       }
       
@@ -6642,7 +6734,7 @@ if(input$METAB_present == TRUE){
               y = "Concentration in venous plasma [mg/L]",
               colour = "Individuals"
             ) +
-            geom_point(shape = 21, colour = "black", fill = "#56B4E9", size = 1.5, stroke = 0.9,
+            geom_point(shape = 21, colour = "black", fill = "#56B4E9", size = input$in_external_metab_slider, stroke = 0.9,
                        data = tbl_in_external_data_metab, mapping = aes(x = time, y = conc, colour = "external data"))
 
         })
@@ -6680,7 +6772,7 @@ if(input$METAB_present == TRUE){
               y = "Concentration in venous plasma [mg/L]",
               colour = "Individuals"
             ) + geom_ribbon(data= stats_iv, aes(x = time, ymin = lower_CI, ymax = higher_CI), fill="red", color = "red", alpha = 0.3)+
-            geom_point(shape = 21, colour = "black", fill = "#56B4E9", size = 1.5, stroke = 0.9,
+            geom_point(shape = 21, colour = "black", fill = "#56B4E9", size = input$in_external_metab_slider, stroke = 0.9,
                        data = tbl_in_external_data_metab, mapping = aes(x = time, y = conc, colour = "external data"))
         })
         
@@ -6708,7 +6800,7 @@ if(input$METAB_present == TRUE){
               y = "Concentration in venous plasma [mg/L]",
               colour = "Individuals"
             )+
-            geom_point(shape = 21, colour = "black", fill = "#56B4E9", size = 1.5, stroke = 0.9,
+            geom_point(shape = 21, colour = "black", fill = "#56B4E9", size = input$in_external_metab_slider, stroke = 0.9,
                        data = tbl_in_external_data_metab, mapping = aes(x = time, y = conc, colour = "external data"))
         }
         
@@ -6743,7 +6835,7 @@ if(input$METAB_present == TRUE){
               y = "Concentration in venous plasma [mg/L]",
               colour = "Individuals"
             ) + geom_ribbon(data= stats_iv, aes(x = time, ymin = lower_CI, ymax = higher_CI), fill="red", color = "red", alpha = 0.3) +
-            geom_point(shape = 21, colour = "black", fill = "#56B4E9", size = 1.5, stroke = 0.9,
+            geom_point(shape = 21, colour = "black", fill = "#56B4E9", size = input$in_external_metab_slider, stroke = 0.9,
                        data = tbl_in_external_data_metab, mapping = aes(x = time, y = conc, colour = "external data"))
 
         }
