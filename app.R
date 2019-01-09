@@ -6398,12 +6398,36 @@ if(input$METAB_present == TRUE){
   
   observeEvent(input$in_external_data,{
     
+    # check the separator if the data yields 3 columns
+    not_3_cols <- function() {
+      
+      tmp_tbl <- read.csv(input$in_external_data$datapath, header = input$in_external_header,
+                                       sep = input$in_external_sep, quote = input$in_external_quote)
+      
+      if (ncol(tmp_tbl) != 3) {
+        showNotification("Wrong separator selected or wrong column number. Please ensure the data has 3 columns and load it again!",
+                         action = NULL, duration = NULL, closeButton = TRUE, type = "error")
+        } else {
+        NULL
+      }
+    }
+    
+    
+    
+    
     ##### if external data API is added plot with points
     
     if(!is.null(input$in_external_data)){
       
+      validate(
+        not_3_cols()
+      )
+      
+      
       tbl_in_external_data <- read.csv(input$in_external_data$datapath, header = input$in_external_header,
                                        sep = input$in_external_sep, quote = input$in_external_quote)
+      
+      
       
       names(tbl_in_external_data) <- c("rn","time","conc")
       
@@ -6704,9 +6728,27 @@ if(input$METAB_present == TRUE){
   
   observeEvent(input$in_external_data_metab,{
     
+    # check if the separator for metab data yields 3 columns
+    not_3_cols_metab <- function() {
+      
+      tmp_tbl_metab <- read.csv(input$in_external_data_metab$datapath, header = input$in_external_metab_header,
+                                sep = input$in_external_metab_sep, quote = input$in_external_metab_quote)
+      
+      if (ncol(tmp_tbl_metab) != 3) {
+        showNotification("Wrong separator selected or wrong column number. Please ensure the data has 3 columns and load it again!",
+                         action = NULL, duration = NULL, closeButton = TRUE, type = "error")
+      } else {
+        NULL
+      }
+    }
+    
     ##### if external data METAB is added plot with points
     
     if(!is.null(input$in_external_data_metab)){
+      
+      validate(
+        not_3_cols_metab()
+      )
       
       tbl_in_external_data_metab <- read.csv(input$in_external_data_metab$datapath, header = input$in_external_metab_header,
                                              sep = input$in_external_metab_sep, quote = input$in_external_metab_quote)
