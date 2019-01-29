@@ -1,4 +1,4 @@
-# PBPK-QSTS shiny v0.8
+# CardiacPBPK shiny v0.8
 # 
 # 
 # Copyright (C) 2018 
@@ -105,7 +105,7 @@ ui <- navbarPage(
 
   
 # Application title
-  "PBPK-QSTS v0.8",
+  "CardiacPBPK v0.9",
   
   tabPanel("Welcome",
            shinyjs::useShinyjs(),
