@@ -155,7 +155,11 @@ ui <- navbarPage(
                                              min = 18,
                                              max = 70,
                                              value = c(18, 70)),
-                                 
+                                 tags$h4(
+                                   tags$b(
+                                     "Weibull distribution"
+                                   )
+                                 ),
                                  numericInput(inputId = "scale_M",
                                               label = "Scale parameter for males' age distribution", # [Simcyp Simulator v.16]
                                               value = 24.7,
@@ -184,6 +188,12 @@ ui <- navbarPage(
                                  # Alerts
                                  bsAlert("shape_F_alert"),
                                  
+                                 tags$h4(
+                                   tags$b(
+                                     "Physiology"
+                                   )
+                                 ),
+                                 
                                  numericInput(inputId = "liver_density",
                                               label = "Liver density [g/L]",
                                               value = 1080),
@@ -197,7 +207,7 @@ ui <- navbarPage(
                                  bsAlert("heart_density_alert"),
                                  
                                  numericInput(inputId = "Qpf",
-                                              label = "Pericaridum blood flow", 
+                                              label = "Pericaridum blood flow [L/h]", 
                                               value = 0.011),
                                  # bsAlert
                                  bsAlert("Qpf_alert"),
@@ -242,13 +252,13 @@ ui <- navbarPage(
                                  bsAlert("ka_alert"),
                                  
                                  numericInput(inputId = "tlag_m_lognorm_m",
-                                              label = "Lag time m_lognormal 1st param (m)", # [Simcyp Simulator v.16]
+                                              label = "Lag time (mean)", # [Simcyp Simulator v.16]
                                               value = 1.3321865),
                                  # Alerts
                                  bsAlert("tlag_m_lognorm_m_alert"),
                                  
                                  numericInput(inputId = "tlag_m_lognorm_cv",
-                                              label = "Lag time m_lognormal 2nd param (cv)", # [Simcyp Simulator v.16]
+                                              label = "Lag time (cv)", # [Simcyp Simulator v.16]
                                               value = 0.3),
                                  # Alerts
                                  bsAlert("tlag_m_lognorm_cv_alert"),
@@ -278,13 +288,13 @@ ui <- navbarPage(
                                  bsAlert("F_upper_alert"),
                                  
                                  numericInput(inputId = "FaFg_m_lognorm_m",
-                                              label = "FaFg m_lognormal 1st param (m) [h]", # [Simcyp Simulator v.16]
+                                              label = "FaFg (mean)", # [Simcyp Simulator v.16]
                                               value = 0.832),
                                  # Alerts
                                  bsAlert("FaFg_m_lognorm_m_alert"),
                                  
                                  numericInput(inputId = "FaFg_m_lognorm_cv",
-                                              label = "FaFg m_lognormal 2nd param (cv) [h]", # [Simcyp Simulator v.16]
+                                              label = "FaFg (cv)", # [Simcyp Simulator v.16]
                                               value = 0.131),
                                  # Alerts
                                  bsAlert("FaFg_m_lognorm_cv_alert"),
@@ -334,51 +344,63 @@ ui <- navbarPage(
                                  actionButton("reset_population_defaults_pharmacokinetics_distribution", "Default settings"), # Reset population pharmacokinetics settings button
                                  tags$hr(),
                                  
+                                 tags$h4(
+                                   tags$b(
+                                     "API"
+                                   )
+                                 ),
+                                 
                                  numericInput(inputId = "fup_m_lognorm_2_m",
-                                              label = "fup m_lognormal_2 and s_lognormal_2 1st param (m)", # [Simcyp Simulator v.16]
+                                              label = "fup (mean)", # [Simcyp Simulator v.16]
                                               value = 0.060),
                                  
                                  # Alerts
                                  bsAlert("fup_m_lognorm_2_m_alert"),
                                  
                                  numericInput(inputId = "fup_m_lognorm_2_cv",
-                                              label = "fup m_lognormal_2 and s_lognormal_2 2nd param (cv)", # [Simcyp Simulator v.16]
+                                              label = "fup (cv)", # [Simcyp Simulator v.16]
                                               value = 0.018),
                                  # Alerts
                                  bsAlert("fup_m_lognorm_2_cv_alert"),
                                  
                                  numericInput(inputId = "BP_m_lognorm_2_m",
-                                              label = "BP m_lognormal_2 and s_lognormal_2 1st param (m)", # [Simcyp Simulator v.16]
+                                              label = "BP (mean)", # [Simcyp Simulator v.16]
                                               value = 0.877),
                                  # Alerts
                                  bsAlert("BP_m_lognorm_2_m_alert"),
                                  
                                  numericInput(inputId = "BP_m_lognorm_2_cv",
-                                              label = "BP m_lognormal_2 and s_lognormal_2 2nd param (cv)", # [Simcyp Simulator v.16]
+                                              label = "BP (cv)", # [Simcyp Simulator v.16]
                                               value = 0.168),
                                  # Alerts
                                  bsAlert("BP_m_lognorm_2_cv_alert"),
                                  
+                                 tags$h4(
+                                   tags$b(
+                                     "Metabolite"
+                                   )
+                                 ),
+                                 
                                  numericInput(inputId = "BP_metab_m_lognorm_2_m",
-                                              label = "BP_metab m_lognormal_2 and s_lognormal_2 1st param (m)", # [Simcyp Simulator v.16]
+                                              label = "BP (mean) - metabolite", # [Simcyp Simulator v.16]
                                               value = 1.97),
                                  # Alerts
                                  bsAlert("BP_metab_m_lognorm_2_m_alert"),
                                  
                                  numericInput(inputId = "BP_metab_m_lognorm_2_cv",
-                                              label = "BP_metab m_lognormal_2 and s_lognormal_2 2nd param (cv)", # [Simcyp Simulator v.16]
+                                              label = "BP (cv) - metabolite", # [Simcyp Simulator v.16]
                                               value = 0.22),
                                  # Alerts
                                  bsAlert("BP_metab_m_lognorm_2_cv_alert"),
                                  
                                  numericInput(inputId = "fup_metab_1",
-                                              label = "fup_metab [a] param (y = a*x +b)", # [Simcyp Simulator v.16]
+                                              label = "fup metabolite [a] param (y = a*x +b)", # [Simcyp Simulator v.16]
                                               value = 0.8231),
                                  # Alerts
                                  bsAlert("fup_metab_1_alert"),
                                  
                                  numericInput(inputId = "fup_metab_2",
-                                              label = "fup_metab [b] param (y = a*x +b)", # [Simcyp Simulator v.16]
+                                              label = "fup metabolite [b] param (y = a*x +b)", # [Simcyp Simulator v.16]
                                               value = 0.0394),
                                  # Alerts
                                  bsAlert("fup_metab_2_alert"),
@@ -808,6 +830,12 @@ ui <- navbarPage(
 
                       tags$hr(),
                       
+                      tags$h4(
+                        tags$b(
+                          "Tissue to plasma partition coefficient"
+                        )
+                      ),
+                      
                       checkboxInput("Kpad_API","Adipose partition coefficient",TRUE),
                       conditionalPanel(condition = "input.Kpad_API==true",
                         numericInput(inputId = "Kpad",
@@ -1160,17 +1188,17 @@ ui <- navbarPage(
                       
                       tags$h5("Pathway 2"),
                       
-                      checkboxInput("CYP2B6_API_h","CYP2B6_API_hydroxylation", TRUE),
+                      checkboxInput("CYP2B6_API_h","CYP2B6_API_pathway_2", TRUE),
                       conditionalPanel(condition = "input.CYP2B6_API_h==true",
                         numericInput(inputId = "Vmax_2B6_api_h",
-                                     label = "Vmax for API [pmol/min/pmol] CYP2B6 (hydroxylation)", #
+                                     label = "Vmax for API [pmol/min/pmol] CYP2B6 (pathway 2)", #
                                      value = 0.13,
                                      min=0),
                         # bsAlert
                         bsAlert("Vmax_2B6_api_h_alert"),
                         
                         numericInput(inputId = "Km_2B6_api_h",
-                                     label = "Km for API [µM] CYP2B6  (hydroxylation)", #
+                                     label = "Km for API [µM] CYP2B6  (pathway 2)", #
                                      value = 98,
                                      min=0),
                         # bsAlert
@@ -1178,17 +1206,17 @@ ui <- navbarPage(
                         
                       ),
                       
-                      checkboxInput("CYP2D6_API_h","CYP2D6_API_hydroxylation", TRUE),
+                      checkboxInput("CYP2D6_API_h","CYP2D6_API_pathway_2", TRUE),
                       conditionalPanel(condition = "input.CYP2D6_API_h==true",
                         numericInput(inputId = "Vmax_2D6_api_h",
-                                     label = "Vmax for API [pmol/min/pmol] CYP2D6  (hydroxylation)", #
+                                     label = "Vmax for API [pmol/min/pmol] CYP2D6  (pathway 2)", #
                                      value = 2.71,
                                      min=0),
                         # bsAlert
                         bsAlert("Vmax_2D6_api_h_alert"),
                         
                         numericInput(inputId = "Km_2D6_api_h",
-                                     label = "Km for API [µM] CYP2D6  (hydroxylation)", #
+                                     label = "Km for API [µM] CYP2D6  (pathway 2)", #
                                      value = 4.75,
                                      min=0),
                         # bsAlert
@@ -1196,17 +1224,17 @@ ui <- navbarPage(
                         
                       ),
                       
-                      checkboxInput("CYP3A4_API_h","CYP3A4_API_hydroxylation", TRUE),
+                      checkboxInput("CYP3A4_API_h","CYP3A4_API_pathway_2", TRUE),
                       conditionalPanel(condition = "input.CYP3A4_API_h==true",
                         numericInput(inputId = "Vmax_3A4_api_h",
-                                     label = "Vmax for API [pmol/min/pmol] CYP3A4  (hydroxylation)", #
+                                     label = "Vmax for API [pmol/min/pmol] CYP3A4  (pathway 2)", #
                                      value = 0.4,
                                      min=0),
                         # bsAlert
                         bsAlert("Vmax_3A4_api_h_alert"),
                         
                         numericInput(inputId = "Km_3A4_api_h",
-                                     label = "Km for API [µM] CYP3A4  (hydroxylation)", #
+                                     label = "Km for API [µM] CYP3A4  (pathway 2)", #
                                      value = 69.3,
                                      min=0),
                         # bsAlert
@@ -1290,17 +1318,17 @@ ui <- navbarPage(
                       ),
                       
                       tags$h5("Pathway 2"),
-                      checkboxInput("CYP2D6_METAB_h","CYP2D6_METAB_hydroxylation",FALSE),
+                      checkboxInput("CYP2D6_METAB_h","CYP2D6_METAB_pathway_2",FALSE),
                       conditionalPanel(condition = "input.CYP2D6_METAB_h==true & input.METAB_present==true",
                         numericInput(inputId = "Vmax_2D6_metab_h",
-                                     label = "Vmax for METABOLITE [pmol/min/pmol] CYP2D6  (hydroxylation)", #
+                                     label = "Vmax for METABOLITE [pmol/min/pmol] CYP2D6  (pathway 2)", #
                                      value = 130,
                                      min=0),
                         # bsAlert
                         bsAlert("Vmax_2D6_metab_h_alert"),
                         
                         numericInput(inputId = "Km_2D6_metab_h",
-                                     label = "Km for METABOLITE [µM] CYP2D6  (hydroxylation)", #
+                                     label = "Km for METABOLITE [µM] CYP2D6  (pathway 2)", #
                                      value = 0.74,
                                      min=0),
                         # bsAlert
@@ -4930,8 +4958,8 @@ if(input$METAB_present == TRUE){
   shinyjs::enable("downloadPlot_pop_age")
   shinyjs::enable("downloadPlot_pop_age_height")
   shinyjs::enable("downloadPlot_pop_age_width")
-  shinyjs::enable("downloadPlot_pop_dpi")
-  shinyjs::enable("downloadPlot_pop_device")
+  shinyjs::enable("downloadPlot_pop_age_dpi")
+  shinyjs::enable("downloadPlot_pop_age_device")
   shinyjs::enable("downloadPlot_pop_weight")
   shinyjs::enable("downloadPlot_pop_weight_height")
   shinyjs::enable("downloadPlot_pop_weight_width")
@@ -5655,6 +5683,7 @@ if(input$METAB_present == TRUE){
       
       ggplot(pop_data_table, aes(x=age, colour=sex)) +
         geom_histogram(fill="lightgrey",alpha=.5, position = "identity", binwidth = function(x) 2 * IQR(x) / (length(x)^(1/3))) +
+        labs(x="Age [years]") +
         theme_classic() +
         theme(
           panel.grid.major = element_line(colour="grey",size = rel(0.5)),
@@ -5672,6 +5701,7 @@ if(input$METAB_present == TRUE){
       
       ggplot(pop_data_table, aes(x=weight, colour=sex)) +
         geom_histogram(fill="lightgrey",alpha=.5, position = "identity", binwidth = function(x) 2 * IQR(x) / (length(x)^(1/3))) +
+        labs(x="Weight [kg]") +
         theme_classic() +
         theme(
           panel.grid.major = element_line(colour="grey",size = rel(0.5)),
@@ -5689,6 +5719,7 @@ if(input$METAB_present == TRUE){
       
       ggplot(pop_data_table, aes(x=height, colour=sex)) +
         geom_histogram(fill="lightgrey",alpha=.5, position = "identity", binwidth = function(x) 2 * IQR(x) / (length(x)^(1/3))) +
+        labs(x="Height [cm]") +
         theme_classic() +
         theme(
           panel.grid.major = element_line(colour="grey",size = rel(0.5)),
@@ -5705,6 +5736,7 @@ if(input$METAB_present == TRUE){
     output$pop_mean_CO_Tanner <- renderPlot({
       
       ggplot(pop_data_table, aes(x=mean.CO.Tanner.formula..L.h., colour=sex)) +
+        labs(x="Mean cardiac output [L/h]") +
         geom_histogram(fill="lightgrey",alpha=.5, position = "identity", binwidth = function(x) 2 * IQR(x) / (length(x)^(1/3))) +
         theme_classic() +
         theme(
@@ -5733,6 +5765,7 @@ if(input$METAB_present == TRUE){
     df <- pop3()$x$data
     ggplot(df, aes(x=age, colour=sex)) +
       geom_histogram(fill="lightgrey",alpha=.5, position = "identity", binwidth = function(x) 2 * IQR(x) / (length(x)^(1/3))) +
+      labs(x="Age [years]") +
       theme_classic() +
       theme(
         panel.grid.major = element_line(colour="grey",size = rel(0.5)),
@@ -5750,6 +5783,7 @@ if(input$METAB_present == TRUE){
     df <- pop3()$x$data
     ggplot(df, aes(x=weight, colour=sex)) +
       geom_histogram(fill="lightgrey",alpha=.5, position = "identity", binwidth = function(x) 2 * IQR(x) / (length(x)^(1/3))) +
+      labs(x="Weight [kg]") +
       theme_classic() +
       theme(
         panel.grid.major = element_line(colour="grey",size = rel(0.5)),
@@ -5767,6 +5801,7 @@ if(input$METAB_present == TRUE){
     df <- pop3()$x$data
     ggplot(df, aes(x=height, colour=sex)) +
       geom_histogram(fill="lightgrey",alpha=.5, position = "identity", binwidth = function(x) 2 * IQR(x) / (length(x)^(1/3))) +
+      labs(x="Height [cm]") +
       theme_classic() +
       theme(
         panel.grid.major = element_line(colour="grey",size = rel(0.5)),
@@ -5783,6 +5818,7 @@ if(input$METAB_present == TRUE){
   plot_pop_mean_CO_Tanner <- reactive({
     df <- pop3()$x$data
     ggplot(df, aes(x=mean.CO.Tanner.formula..L.h., colour=sex)) +
+      labs(x="Mean cardiac output [L/h]") +
       geom_histogram(fill="lightgrey",alpha=.5, position = "identity", binwidth = function(x) 2 * IQR(x) / (length(x)^(1/3))) +
       theme_classic() +
       theme(
