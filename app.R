@@ -6921,7 +6921,7 @@ if(input$METAB_present == TRUE){
         output$downloadPlot_res_conc_metab_in_venous_plasma <- downloadHandler(
           filename = function() { paste(input$downloadPlot_res_conc_metab_in_venous_plasma, '_plot_2.png', sep='') },
           content = function(file) {
-            ggsave(file, plot = plot_res_conc_in_venous_plasma(data_vals, tbl_in_external_data_metab), units = "mm", width = input$downloadPlot_res_conc_metab_in_venous_plasma_width,
+            ggsave(file, plot = plot_res_metab_conc_in_venous_plasma(data_vals, tbl_in_external_data_metab), units = "mm", width = input$downloadPlot_res_conc_metab_in_venous_plasma_width,
                    height = input$downloadPlot_res_conc_metab_in_venous_plasma_height, dpi = input$downloadPlot_res_conc_metab_in_venous_plasma_dpi,
                    device = input$downloadPlot_res_conc_metab_in_venous_plasma_device)
           }
