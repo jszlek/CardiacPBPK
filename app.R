@@ -5448,9 +5448,9 @@ if(input$METAB_present == TRUE){
         Cbrain <- Abr / Vbr		   #brain
         Cgut <- Agu / Vgu			   #gut
         Cheart_ec <- Ahe_ec / Vhe_ec #cardiac extracellular fluid
-        Cendo <- Aendo / Vendo   #endocardium
-        Cmid <- Amid / Vmid      #miocardium
-        Cepi <- Aepi / Vepi      #epicardium
+        Cendo <- Aendo / Vendo_ic   #endocardium  # hotfix 0.91
+        Cmid <- Amid / Vmid_ic      #miocardium   # hotfix 0.91
+        Cepi <- Aepi / Vepi_ic      #epicardium   # hotfix 0.91
         Cpf <- Apf / Vpf         #pericardial fluid
         Ckidney <- Aki / Vki	   #kidney
         Cliver <- Ali / Vli		   #liver
@@ -6888,7 +6888,7 @@ if(input$METAB_present == TRUE){
           
           tbl_in_external_data_metab <- external_data
           
-          CI_level <- input$downloadPlot_stats_res_metab_conc_in_venous_plasma_CI
+          CI_level <- input$downloadPlot_stats_res_conc_metab_in_venous_plasma_CI # hotfix !!!
           
           CI_low <- (1-(CI_level/100))/2
           CI_high <- 1 - ((1- (CI_level/100))/2)
@@ -6930,7 +6930,7 @@ if(input$METAB_present == TRUE){
         output$downloadPlot_stats_res_conc_metab_in_venous_plasma <- downloadHandler(
           filename = function() { paste(input$downloadPlot_stats_res_conc_metab_in_venous_plasma, '_plot_6.png', sep='') },
           content = function(file) {
-            ggsave(file, plot = plot_stats_res_conc_metab_in_venous_plasma(data_vals, tbl_in_external_data_metab), units = "mm", width = input$downloadPlot_stats_res_conc_metab_in_venous_plasma_width,
+            ggsave(file, plot = plot_stats_res_metab_conc_in_venous_plasma(data_vals, tbl_in_external_data_metab), units = "mm", width = input$downloadPlot_stats_res_conc_metab_in_venous_plasma_width,
                    height = input$downloadPlot_stats_res_conc_metab_in_venous_plasma_height, dpi = input$downloadPlot_stats_res_conc_metab_in_venous_plasma_dpi,
                    device = input$downloadPlot_stats_res_conc_metab_in_venous_plasma_device)
           }
