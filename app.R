@@ -1015,7 +1015,7 @@ ui <- navbarPage(
                       checkboxInput("Kphe_METAB","Heart partition coefficient",FALSE),
                       conditionalPanel(condition = "input.Kphe_METAB==true & input.METAB_present==true",
                         numericInput(inputId = "Kphe_metab",
-                                     label = "Metabolite's kidney partition coefficient", #
+                                     label = "Metabolite's heart partition coefficient", #
                                      value = 35.63,
                                      min=0),
                         # bsAlert
