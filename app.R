@@ -1463,6 +1463,13 @@ ui <- navbarPage(
                         textInput("metab_plot_caption", "Metabolite name", value = "Nortryptyline")
                       ),
                       tags$hr(),
+                      h4("Caption resize"),
+                      sliderInput("title_size_slider", "Plot title resize", min = -20, max = 20, value = 0, step = 1),
+                      sliderInput("axis_title_slider", "Axis title resize", min = -20, max = 20, value = 0, step = 1),
+                      sliderInput("axis_text_slider", "Axis text resize", min = -20, max = 20, value = 0, step = 1),
+                      sliderInput("legend_title_slider", "Legend title resize", min = -20, max = 20, value = 0, step = 1),
+                      sliderInput("legend_text_slider", "Legend text resize", min = -20, max = 20, value = 0, step = 1),
+                      tags$hr(),
                       # Input: Select a file ----
                       h4("Add data to API plots"),
                       fileInput("in_external_data", "Choose CSV File",
@@ -4387,9 +4394,11 @@ observeEvent(input$run_sim, {
         theme(
           panel.grid.major = element_line(colour="grey",size = rel(0.5)),
           panel.grid.minor = element_blank(),
-          axis.title = element_text(size = 13),
-          axis.text = element_text(size = 13),
-          legend.title = element_text(size = 11),
+          plot.title = element_text(size = 16 + input$title_size_slider),
+          axis.title = element_text(size = 13 + input$axis_title_slider),
+          axis.text = element_text(size = 13 + input$axis_text_slider),
+          legend.text = element_text(size = 11 + input$legend_text_slider),
+          legend.title = element_text(size = 11 + input$legend_title_slider),
           legend.position = "right"
         ) +
         ggtitle(paste("Log 10 concentration vs. time for ",input$api_plot_caption, sep="")) +
@@ -4409,10 +4418,11 @@ observeEvent(input$run_sim, {
       theme(
         panel.grid.major = element_line(colour="grey",size = rel(0.5)),
         panel.grid.minor = element_blank(),
-        axis.title = element_text(size = 13),
-        axis.text = element_text(size = 13),
-        legend.text = element_text(size = 11),
-        legend.title = element_text(size = 11),
+        plot.title = element_text(size = 16 + input$title_size_slider),
+        axis.title = element_text(size = 13 + input$axis_title_slider),
+        axis.text = element_text(size = 13 + input$axis_text_slider),
+        legend.text = element_text(size = 11 + input$legend_text_slider),
+        legend.title = element_text(size = 11 + input$legend_title_slider),
         legend.position = "right"
       ) +
       ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
@@ -4432,10 +4442,11 @@ observeEvent(input$run_sim, {
      theme(
        panel.grid.major = element_line(colour="grey",size = rel(0.5)),
        panel.grid.minor = element_blank(),
-       axis.title = element_text(size = 13),
-       axis.text = element_text(size = 13),
-       legend.text = element_text(size = 11),
-       legend.title = element_text(size = 11),
+       plot.title = element_text(size = 16 + input$title_size_slider),
+       axis.title = element_text(size = 13 + input$axis_title_slider),
+       axis.text = element_text(size = 13 + input$axis_text_slider),
+       legend.text = element_text(size = 11 + input$legend_text_slider),
+       legend.title = element_text(size = 11 + input$legend_title_slider),
        legend.position = "right"
      ) +
      ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
@@ -4455,10 +4466,11 @@ if(input$METAB_present == TRUE){
       theme(
         panel.grid.major = element_line(colour="grey",size = rel(0.5)),
         panel.grid.minor = element_blank(),
-        axis.title = element_text(size = 13),
-        axis.text = element_text(size = 13),
-        legend.text = element_text(size = 11),
-        legend.title = element_text(size = 11),
+        plot.title = element_text(size = 16 + input$title_size_slider),
+        axis.title = element_text(size = 13 + input$axis_title_slider),
+        axis.text = element_text(size = 13 + input$axis_text_slider),
+        legend.text = element_text(size = 11 + input$legend_text_slider),
+        legend.title = element_text(size = 11 + input$legend_title_slider),
         legend.position = "right"
       ) +
       ggtitle(paste("Concentration vs. time for ",input$metab_plot_caption, sep="")) +
@@ -4477,10 +4489,11 @@ if(input$METAB_present == TRUE){
       theme(
         panel.grid.major = element_line(colour="grey",size = rel(0.5)),
         panel.grid.minor = element_blank(),
-        axis.title = element_text(size = 13),
-        axis.text = element_text(size = 13),
-        legend.text = element_text(size = 11),
-        legend.title = element_text(size = 11),
+        plot.title = element_text(size = 16 + input$title_size_slider),
+        axis.title = element_text(size = 13 + input$axis_title_slider),
+        axis.text = element_text(size = 13 + input$axis_text_slider),
+        legend.text = element_text(size = 11 + input$legend_text_slider),
+        legend.title = element_text(size = 11 + input$legend_title_slider),
         legend.position = "right"
       ) +
       ggtitle(paste("Concentration vs. time for ",input$metab_plot_caption, sep="")) +
@@ -4511,10 +4524,11 @@ if(input$METAB_present == TRUE){
       theme(
         panel.grid.major = element_line(colour="grey",size = rel(0.5)),
         panel.grid.minor = element_blank(),
-        axis.title = element_text(size = 13),
-        axis.text = element_text(size = 13),
-        legend.text = element_text(size = 11),
-        legend.title = element_text(size = 11),
+        plot.title = element_text(size = 16 + input$title_size_slider),
+        axis.title = element_text(size = 13 + input$axis_title_slider),
+        axis.text = element_text(size = 13 + input$axis_text_slider),
+        legend.text = element_text(size = 11 + input$legend_text_slider),
+        legend.title = element_text(size = 11 + input$legend_title_slider),
         legend.position = "right"
       ) +
       ggtitle(paste("Concentration vs. time for ",input$metab_plot_caption, sep="")) +
@@ -4546,10 +4560,11 @@ if(input$METAB_present == TRUE){
       theme(
         panel.grid.major = element_line(colour="grey",size = rel(0.5)),
         panel.grid.minor = element_blank(),
-        axis.title = element_text(size = 13),
-        axis.text = element_text(size = 13),
-        legend.text = element_text(size = 11),
-        legend.title = element_text(size = 11),
+        plot.title = element_text(size = 16 + input$title_size_slider),
+        axis.title = element_text(size = 13 + input$axis_title_slider),
+        axis.text = element_text(size = 13 + input$axis_text_slider),
+        legend.text = element_text(size = 11 + input$legend_text_slider),
+        legend.title = element_text(size = 11 + input$legend_title_slider),
         legend.position = "right"
       ) +
       ggtitle(paste("Concentration vs. time for ",input$metab_plot_caption, sep="")) +
@@ -4583,10 +4598,11 @@ if(input$METAB_present == TRUE){
         theme(
           panel.grid.major = element_line(colour="grey",size = rel(0.5)),
           panel.grid.minor = element_blank(),
-          axis.title = element_text(size = 13),
-          axis.text = element_text(size = 13),
-          legend.text = element_text(size = 11),
-          legend.title = element_text(size = 11),
+          plot.title = element_text(size = 16 + input$title_size_slider),
+          axis.title = element_text(size = 13 + input$axis_title_slider),
+          axis.text = element_text(size = 13 + input$axis_text_slider),
+          legend.text = element_text(size = 11 + input$legend_text_slider),
+          legend.title = element_text(size = 11 + input$legend_title_slider),
           legend.position = "right"
         ) +
         ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
@@ -4622,10 +4638,11 @@ if(input$METAB_present == TRUE){
       theme(
         panel.grid.major = element_line(colour="grey",size = rel(0.5)),
         panel.grid.minor = element_blank(),
-        axis.title = element_text(size = 13),
-        axis.text = element_text(size = 13),
-        legend.text = element_text(size = 11),
-        legend.title = element_text(size = 11),
+        plot.title = element_text(size = 16 + input$title_size_slider),
+        axis.title = element_text(size = 13 + input$axis_title_slider),
+        axis.text = element_text(size = 13 + input$axis_text_slider),
+        legend.text = element_text(size = 11 + input$legend_text_slider),
+        legend.title = element_text(size = 11 + input$legend_title_slider),
         legend.position = "right"
       ) +
       ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
@@ -4659,10 +4676,11 @@ if(input$METAB_present == TRUE){
       theme(
         panel.grid.major = element_line(colour="grey",size = rel(0.5)),
         panel.grid.minor = element_blank(),
-        axis.title = element_text(size = 13),
-        axis.text = element_text(size = 13),
-        legend.text = element_text(size = 11),
-        legend.title = element_text(size = 11),
+        plot.title = element_text(size = 16 + input$title_size_slider),
+        axis.title = element_text(size = 13 + input$axis_title_slider),
+        axis.text = element_text(size = 13 + input$axis_text_slider),
+        legend.text = element_text(size = 11 + input$legend_text_slider),
+        legend.title = element_text(size = 11 + input$legend_title_slider),
         legend.position = "right"
       ) +
       ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
@@ -5688,10 +5706,11 @@ if(input$METAB_present == TRUE){
         theme(
           panel.grid.major = element_line(colour="grey",size = rel(0.5)),
           panel.grid.minor = element_blank(),
-          axis.title = element_text(size = 13),
-          axis.text = element_text(size = 13),
-          legend.text = element_text(size = 11),
-          legend.title = element_text(size = 11),
+          plot.title = element_text(size = 16 + input$title_size_slider),
+          axis.title = element_text(size = 13 + input$axis_title_slider),
+          axis.text = element_text(size = 13 + input$axis_text_slider),
+          legend.text = element_text(size = 11 + input$legend_text_slider),
+          legend.title = element_text(size = 11 + input$legend_title_slider),
           legend.position = "right"
         )
       
@@ -5706,10 +5725,11 @@ if(input$METAB_present == TRUE){
         theme(
           panel.grid.major = element_line(colour="grey",size = rel(0.5)),
           panel.grid.minor = element_blank(),
-          axis.title = element_text(size = 13),
-          axis.text = element_text(size = 13),
-          legend.text = element_text(size = 11),
-          legend.title = element_text(size = 11),
+          plot.title = element_text(size = 16 + input$title_size_slider),
+          axis.title = element_text(size = 13 + input$axis_title_slider),
+          axis.text = element_text(size = 13 + input$axis_text_slider),
+          legend.text = element_text(size = 11 + input$legend_text_slider),
+          legend.title = element_text(size = 11 + input$legend_title_slider),
           legend.position = "right"
         )
       
@@ -5724,10 +5744,11 @@ if(input$METAB_present == TRUE){
         theme(
           panel.grid.major = element_line(colour="grey",size = rel(0.5)),
           panel.grid.minor = element_blank(),
-          axis.title = element_text(size = 13),
-          axis.text = element_text(size = 13),
-          legend.text = element_text(size = 11),
-          legend.title = element_text(size = 11),
+          plot.title = element_text(size = 16 + input$title_size_slider),
+          axis.title = element_text(size = 13 + input$axis_title_slider),
+          axis.text = element_text(size = 13 + input$axis_text_slider),
+          legend.text = element_text(size = 11 + input$legend_text_slider),
+          legend.title = element_text(size = 11 + input$legend_title_slider),
           legend.position = "right"
         )
 
@@ -5742,10 +5763,11 @@ if(input$METAB_present == TRUE){
         theme(
           panel.grid.major = element_line(colour="grey",size = rel(0.5)),
           panel.grid.minor = element_blank(),
-          axis.title = element_text(size = 13),
-          axis.text = element_text(size = 13),
-          legend.text = element_text(size = 11),
-          legend.title = element_text(size = 11),
+          plot.title = element_text(size = 16 + input$title_size_slider),
+          axis.title = element_text(size = 13 + input$axis_title_slider),
+          axis.text = element_text(size = 13 + input$axis_text_slider),
+          legend.text = element_text(size = 11 + input$legend_text_slider),
+          legend.title = element_text(size = 11 + input$legend_title_slider),
           legend.position = "right"
         )
       
@@ -5770,10 +5792,11 @@ if(input$METAB_present == TRUE){
       theme(
         panel.grid.major = element_line(colour="grey",size = rel(0.5)),
         panel.grid.minor = element_blank(),
-        axis.title = element_text(size = 13),
-        axis.text = element_text(size = 13),
-        legend.text = element_text(size = 11),
-        legend.title = element_text(size = 11),
+        plot.title = element_text(size = 16 + input$title_size_slider),
+        axis.title = element_text(size = 13 + input$axis_title_slider),
+        axis.text = element_text(size = 13 + input$axis_text_slider),
+        legend.text = element_text(size = 11 + input$legend_text_slider),
+        legend.title = element_text(size = 11 + input$legend_title_slider),
         legend.position = "right"
       )
     
@@ -5788,10 +5811,11 @@ if(input$METAB_present == TRUE){
       theme(
         panel.grid.major = element_line(colour="grey",size = rel(0.5)),
         panel.grid.minor = element_blank(),
-        axis.title = element_text(size = 13),
-        axis.text = element_text(size = 13),
-        legend.text = element_text(size = 11),
-        legend.title = element_text(size = 11),
+        plot.title = element_text(size = 16 + input$title_size_slider),
+        axis.title = element_text(size = 13 + input$axis_title_slider),
+        axis.text = element_text(size = 13 + input$axis_text_slider),
+        legend.text = element_text(size = 11 + input$legend_text_slider),
+        legend.title = element_text(size = 11 + input$legend_title_slider),
         legend.position = "right"
       )
     
@@ -5806,10 +5830,11 @@ if(input$METAB_present == TRUE){
       theme(
         panel.grid.major = element_line(colour="grey",size = rel(0.5)),
         panel.grid.minor = element_blank(),
-        axis.title = element_text(size = 13),
-        axis.text = element_text(size = 13),
-        legend.text = element_text(size = 11),
-        legend.title = element_text(size = 11),
+        plot.title = element_text(size = 16 + input$title_size_slider),
+        axis.title = element_text(size = 13 + input$axis_title_slider),
+        axis.text = element_text(size = 13 + input$axis_text_slider),
+        legend.text = element_text(size = 11 + input$legend_text_slider),
+        legend.title = element_text(size = 11 + input$legend_title_slider),
         legend.position = "right"
       )
     
@@ -5824,10 +5849,11 @@ if(input$METAB_present == TRUE){
       theme(
         panel.grid.major = element_line(colour="grey",size = rel(0.5)),
         panel.grid.minor = element_blank(),
-        axis.title = element_text(size = 13),
-        axis.text = element_text(size = 13),
-        legend.text = element_text(size = 11),
-        legend.title = element_text(size = 11),
+        plot.title = element_text(size = 16 + input$title_size_slider),
+        axis.title = element_text(size = 13 + input$axis_title_slider),
+        axis.text = element_text(size = 13 + input$axis_text_slider),
+        legend.text = element_text(size = 11 + input$legend_text_slider),
+        legend.title = element_text(size = 11 + input$legend_title_slider),
         legend.position = "right"
       )
     
@@ -5850,10 +5876,11 @@ if(input$METAB_present == TRUE){
      theme(
       panel.grid.major = element_line(colour="grey",size = rel(0.5)),
       panel.grid.minor = element_blank(),
-      axis.title = element_text(size = 13),
-      axis.text = element_text(size = 13),
-      legend.text = element_text(size = 11),
-      legend.title = element_text(size = 11),
+      plot.title = element_text(size = 16 + input$title_size_slider),
+      axis.title = element_text(size = 13 + input$axis_title_slider),
+      axis.text = element_text(size = 13 + input$axis_text_slider),
+      legend.text = element_text(size = 11 + input$legend_text_slider),
+      legend.title = element_text(size = 11 + input$legend_title_slider),
       legend.position = "right"
     ) +
       ggtitle(paste("Log 10 concentration vs. time for ",input$api_plot_caption, sep="")) +
@@ -5871,10 +5898,11 @@ if(input$METAB_present == TRUE){
       theme(
         panel.grid.major = element_line(colour="grey",size = rel(0.5)),
         panel.grid.minor = element_blank(),
-        axis.title = element_text(size = 13),
-        axis.text = element_text(size = 13),
-        legend.text = element_text(size = 11),
-        legend.title = element_text(size = 11),
+        plot.title = element_text(size = 16 + input$title_size_slider),
+        axis.title = element_text(size = 13 + input$axis_title_slider),
+        axis.text = element_text(size = 13 + input$axis_text_slider),
+        legend.text = element_text(size = 11 + input$legend_text_slider),
+        legend.title = element_text(size = 11 + input$legend_title_slider),
         legend.position = "right"
       ) +
       ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
@@ -5892,10 +5920,11 @@ if(input$METAB_present == TRUE){
       theme(
         panel.grid.major = element_line(colour="grey",size = rel(0.5)),
         panel.grid.minor = element_blank(),
-        axis.title = element_text(size = 13),
-        axis.text = element_text(size = 13),
-        legend.text = element_text(size = 11),
-        legend.title = element_text(size = 11),
+        plot.title = element_text(size = 16 + input$title_size_slider),
+        axis.title = element_text(size = 13 + input$axis_title_slider),
+        axis.text = element_text(size = 13 + input$axis_text_slider),
+        legend.text = element_text(size = 11 + input$legend_text_slider),
+        legend.title = element_text(size = 11 + input$legend_title_slider),
         legend.position = "right"
       ) +
       ggtitle(paste("Concentration vs. time for ",input$metab_plot_caption, sep="")) +
@@ -5913,10 +5942,11 @@ if(input$METAB_present == TRUE){
       theme(
         panel.grid.major = element_line(colour="grey",size = rel(0.5)),
         panel.grid.minor = element_blank(),
-        axis.title = element_text(size = 13),
-        axis.text = element_text(size = 13),
-        legend.text = element_text(size = 11),
-        legend.title = element_text(size = 11),
+        plot.title = element_text(size = 16 + input$title_size_slider),
+        axis.title = element_text(size = 13 + input$axis_title_slider),
+        axis.text = element_text(size = 13 + input$axis_text_slider),
+        legend.text = element_text(size = 11 + input$legend_text_slider),
+        legend.title = element_text(size = 11 + input$legend_title_slider),
         legend.position = "right"
       ) +
       ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
@@ -5934,10 +5964,11 @@ if(input$METAB_present == TRUE){
       theme(
         panel.grid.major = element_line(colour="grey",size = rel(0.5)),
         panel.grid.minor = element_blank(),
-        axis.title = element_text(size = 13),
-        axis.text = element_text(size = 13),
-        legend.text = element_text(size = 11),
-        legend.title = element_text(size = 11),
+        plot.title = element_text(size = 16 + input$title_size_slider),
+        axis.title = element_text(size = 13 + input$axis_title_slider),
+        axis.text = element_text(size = 13 + input$axis_text_slider),
+        legend.text = element_text(size = 11 + input$legend_text_slider),
+        legend.title = element_text(size = 11 + input$legend_title_slider),
         legend.position = "right"
       ) +
       ggtitle(paste("Concentration vs. time for ",input$metab_plot_caption, sep="")) +
@@ -5966,10 +5997,11 @@ if(input$METAB_present == TRUE){
       theme(
         panel.grid.major = element_line(colour="grey",size = rel(0.5)),
         panel.grid.minor = element_blank(),
-        axis.title = element_text(size = 13),
-        axis.text = element_text(size = 13),
-        legend.text = element_text(size = 11),
-        legend.title = element_text(size = 11),
+        plot.title = element_text(size = 16 + input$title_size_slider),
+        axis.title = element_text(size = 13 + input$axis_title_slider),
+        axis.text = element_text(size = 13 + input$axis_text_slider),
+        legend.text = element_text(size = 11 + input$legend_text_slider),
+        legend.title = element_text(size = 11 + input$legend_title_slider),
         legend.position = "right"
       ) +
       ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
@@ -5997,10 +6029,11 @@ if(input$METAB_present == TRUE){
       theme(
         panel.grid.major = element_line(colour="grey",size = rel(0.5)),
         panel.grid.minor = element_blank(),
-        axis.title = element_text(size = 13),
-        axis.text = element_text(size = 13),
-        legend.text = element_text(size = 11),
-        legend.title = element_text(size = 11),
+        plot.title = element_text(size = 16 + input$title_size_slider),
+        axis.title = element_text(size = 13 + input$axis_title_slider),
+        axis.text = element_text(size = 13 + input$axis_text_slider),
+        legend.text = element_text(size = 11 + input$legend_text_slider),
+        legend.title = element_text(size = 11 + input$legend_title_slider),
         legend.position = "right"
       ) +
       ggtitle(paste("Concentration vs. time for ",input$metab_plot_caption, sep="")) +
@@ -6027,10 +6060,11 @@ if(input$METAB_present == TRUE){
       theme(
         panel.grid.major = element_line(colour="grey",size = rel(0.5)),
         panel.grid.minor = element_blank(),
-        axis.title = element_text(size = 13),
-        axis.text = element_text(size = 13),
-        legend.text = element_text(size = 11),
-        legend.title = element_text(size = 11),
+        plot.title = element_text(size = 16 + input$title_size_slider),
+        axis.title = element_text(size = 13 + input$axis_title_slider),
+        axis.text = element_text(size = 13 + input$axis_text_slider),
+        legend.text = element_text(size = 11 + input$legend_text_slider),
+        legend.title = element_text(size = 11 + input$legend_title_slider),
         legend.position = "right"
       ) +
       ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
@@ -6056,10 +6090,11 @@ if(input$METAB_present == TRUE){
       theme(
         panel.grid.major = element_line(colour="grey",size = rel(0.5)),
         panel.grid.minor = element_blank(),
-        axis.title = element_text(size = 13),
-        axis.text = element_text(size = 13),
-        legend.text = element_text(size = 11),
-        legend.title = element_text(size = 11),
+        plot.title = element_text(size = 16 + input$title_size_slider),
+        axis.title = element_text(size = 13 + input$axis_title_slider),
+        axis.text = element_text(size = 13 + input$axis_text_slider),
+        legend.text = element_text(size = 11 + input$legend_text_slider),
+        legend.title = element_text(size = 11 + input$legend_title_slider),
         legend.position = "right"
       ) +
       ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
@@ -6086,10 +6121,11 @@ if(input$METAB_present == TRUE){
       theme(
         panel.grid.major = element_line(colour="grey",size = rel(0.5)),
         panel.grid.minor = element_blank(),
-        axis.title = element_text(size = 13),
-        axis.text = element_text(size = 13),
-        legend.text = element_text(size = 11),
-        legend.title = element_text(size = 11),
+        plot.title = element_text(size = 16 + input$title_size_slider),
+        axis.title = element_text(size = 13 + input$axis_title_slider),
+        axis.text = element_text(size = 13 + input$axis_text_slider),
+        legend.text = element_text(size = 11 + input$legend_text_slider),
+        legend.title = element_text(size = 11 + input$legend_title_slider),
         legend.position = "right"
       ) +
       ggtitle(paste("Concentration vs. time for ",input$metab_plot_caption, sep="")) +
@@ -6474,10 +6510,11 @@ if(input$METAB_present == TRUE){
           theme(
             panel.grid.major = element_line(colour="grey",size = rel(0.5)),
             panel.grid.minor = element_blank(),
-            axis.title = element_text(size = 13),
-            axis.text = element_text(size = 13),
-            legend.text = element_text(size = 11),
-            legend.title = element_text(size = 11),
+            plot.title = element_text(size = 16 + input$title_size_slider),
+            axis.title = element_text(size = 13 + input$axis_title_slider),
+            axis.text = element_text(size = 13 + input$axis_text_slider),
+            legend.text = element_text(size = 11 + input$legend_text_slider),
+            legend.title = element_text(size = 11 + input$legend_title_slider),
             legend.position = "right"
           ) +
           ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
@@ -6507,10 +6544,11 @@ if(input$METAB_present == TRUE){
           theme(
             panel.grid.major = element_line(colour="grey",size = rel(0.5)),
             panel.grid.minor = element_blank(),
-            axis.title = element_text(size = 13),
-            axis.text = element_text(size = 13),
-            legend.text = element_text(size = 11),
-            legend.title = element_text(size = 11),
+            plot.title = element_text(size = 16 + input$title_size_slider),
+            axis.title = element_text(size = 13 + input$axis_title_slider),
+            axis.text = element_text(size = 13 + input$axis_text_slider),
+            legend.text = element_text(size = 11 + input$legend_text_slider),
+            legend.title = element_text(size = 11 + input$legend_title_slider),
             legend.position = "right"
           )
         
@@ -6537,10 +6575,11 @@ if(input$METAB_present == TRUE){
           theme(
             panel.grid.major = element_line(colour="grey",size = rel(0.5)),
             panel.grid.minor = element_blank(),
-            axis.title = element_text(size = 13),
-            axis.text = element_text(size = 13),
-            legend.text = element_text(size = 11),
-            legend.title = element_text(size = 11),
+            plot.title = element_text(size = 16 + input$title_size_slider),
+            axis.title = element_text(size = 13 + input$axis_title_slider),
+            axis.text = element_text(size = 13 + input$axis_text_slider),
+            legend.text = element_text(size = 11 + input$legend_text_slider),
+            legend.title = element_text(size = 11 + input$legend_title_slider),
             legend.position = "right"
           ) +
           ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
@@ -6577,10 +6616,11 @@ if(input$METAB_present == TRUE){
           theme(
             panel.grid.major = element_line(colour="grey",size = rel(0.5)),
             panel.grid.minor = element_blank(),
-            axis.title = element_text(size = 13),
-            axis.text = element_text(size = 13),
-            legend.text = element_text(size = 11),
-            legend.title = element_text(size = 11),
+            plot.title = element_text(size = 16 + input$title_size_slider),
+            axis.title = element_text(size = 13 + input$axis_title_slider),
+            axis.text = element_text(size = 13 + input$axis_text_slider),
+            legend.text = element_text(size = 11 + input$legend_text_slider),
+            legend.title = element_text(size = 11 + input$legend_title_slider),
             legend.position = "right"
           ) +
           ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
@@ -6607,10 +6647,11 @@ if(input$METAB_present == TRUE){
           theme(
             panel.grid.major = element_line(colour="grey",size = rel(0.5)),
             panel.grid.minor = element_blank(),
-            axis.title = element_text(size = 13),
-            axis.text = element_text(size = 13),
-            legend.text = element_text(size = 11),
-            legend.title = element_text(size = 11),
+            plot.title = element_text(size = 16 + input$title_size_slider),
+            axis.title = element_text(size = 13 + input$axis_title_slider),
+            axis.text = element_text(size = 13 + input$axis_text_slider),
+            legend.text = element_text(size = 11 + input$legend_text_slider),
+            legend.title = element_text(size = 11 + input$legend_title_slider),
             legend.position = "right"
           ) +
           ggtitle(paste("Log 10 concentration vs. time for ",input$api_plot_caption, sep="")) +
@@ -6633,10 +6674,11 @@ if(input$METAB_present == TRUE){
           theme(
             panel.grid.major = element_line(colour="grey",size = rel(0.5)),
             panel.grid.minor = element_blank(),
-            axis.title = element_text(size = 13),
-            axis.text = element_text(size = 13),
-            legend.text = element_text(size = 11),
-            legend.title = element_text(size = 11),
+            plot.title = element_text(size = 16 + input$title_size_slider),
+            axis.title = element_text(size = 13 + input$axis_title_slider),
+            axis.text = element_text(size = 13 + input$axis_text_slider),
+            legend.text = element_text(size = 11 + input$legend_text_slider),
+            legend.title = element_text(size = 11 + input$legend_title_slider),
             legend.position = "right"
           ) +
           ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
@@ -6668,10 +6710,11 @@ if(input$METAB_present == TRUE){
           theme(
             panel.grid.major = element_line(colour="grey",size = rel(0.5)),
             panel.grid.minor = element_blank(),
-            axis.title = element_text(size = 13),
-            axis.text = element_text(size = 13),
-            legend.text = element_text(size = 11),
-            legend.title = element_text(size = 11),
+            plot.title = element_text(size = 16 + input$title_size_slider),
+            axis.title = element_text(size = 13 + input$axis_title_slider),
+            axis.text = element_text(size = 13 + input$axis_text_slider),
+            legend.text = element_text(size = 11 + input$legend_text_slider),
+            legend.title = element_text(size = 11 + input$legend_title_slider),
             legend.position = "right"
           ) +
           ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
@@ -6703,10 +6746,11 @@ if(input$METAB_present == TRUE){
           theme(
             panel.grid.major = element_line(colour="grey",size = rel(0.5)),
             panel.grid.minor = element_blank(),
-            axis.title = element_text(size = 13),
-            axis.text = element_text(size = 13),
-            legend.text = element_text(size = 11),
-            legend.title = element_text(size = 11),
+            plot.title = element_text(size = 16 + input$title_size_slider),
+            axis.title = element_text(size = 13 + input$axis_title_slider),
+            axis.text = element_text(size = 13 + input$axis_text_slider),
+            legend.text = element_text(size = 11 + input$legend_text_slider),
+            legend.title = element_text(size = 11 + input$legend_title_slider),
             legend.position = "right"
           ) +
           ggtitle(paste("Concentration vs. time for ",input$api_plot_caption, sep="")) +
@@ -6800,10 +6844,11 @@ if(input$METAB_present == TRUE){
             theme(
               panel.grid.major = element_line(colour="grey",size = rel(0.5)),
               panel.grid.minor = element_blank(),
-              axis.title = element_text(size = 13),
-              axis.text = element_text(size = 13),
-              legend.text = element_text(size = 11),
-              legend.title = element_text(size = 11),
+              plot.title = element_text(size = 16 + input$title_size_slider),
+              axis.title = element_text(size = 13 + input$axis_title_slider),
+              axis.text = element_text(size = 13 + input$axis_text_slider),
+              legend.text = element_text(size = 11 + input$legend_text_slider),
+              legend.title = element_text(size = 11 + input$legend_title_slider),
               legend.position = "right"
             ) +
             ggtitle(paste("Concentration vs. time for ",input$metab_plot_caption, sep="")) +
@@ -6838,10 +6883,11 @@ if(input$METAB_present == TRUE){
             theme(
               panel.grid.major = element_line(colour="grey",size = rel(0.5)),
               panel.grid.minor = element_blank(),
-              axis.title = element_text(size = 13),
-              axis.text = element_text(size = 13),
-              legend.text = element_text(size = 11),
-              legend.title = element_text(size = 11),
+              plot.title = element_text(size = 16 + input$title_size_slider),
+              axis.title = element_text(size = 13 + input$axis_title_slider),
+              axis.text = element_text(size = 13 + input$axis_text_slider),
+              legend.text = element_text(size = 11 + input$legend_text_slider),
+              legend.title = element_text(size = 11 + input$legend_title_slider),
               legend.position = "right"
             ) +
             ggtitle(paste("Concentration vs. time for ",input$metab_plot_caption, sep="")) +
@@ -6866,10 +6912,11 @@ if(input$METAB_present == TRUE){
             theme(
               panel.grid.major = element_line(colour="grey",size = rel(0.5)),
               panel.grid.minor = element_blank(),
-              axis.title = element_text(size = 13),
-              axis.text = element_text(size = 13),
-              legend.text = element_text(size = 11),
-              legend.title = element_text(size = 11),
+              plot.title = element_text(size = 16 + input$title_size_slider),
+              axis.title = element_text(size = 13 + input$axis_title_slider),
+              axis.text = element_text(size = 13 + input$axis_text_slider),
+              legend.text = element_text(size = 11 + input$legend_text_slider),
+              legend.title = element_text(size = 11 + input$legend_title_slider),
               legend.position = "right"
             ) +
             ggtitle(paste("Concentration vs. time for ",input$metab_plot_caption, sep="")) +
@@ -6901,10 +6948,11 @@ if(input$METAB_present == TRUE){
             theme(
               panel.grid.major = element_line(colour="grey",size = rel(0.5)),
               panel.grid.minor = element_blank(),
-              axis.title = element_text(size = 13),
-              axis.text = element_text(size = 13),
-              legend.text = element_text(size = 11),
-              legend.title = element_text(size = 11),
+              plot.title = element_text(size = 16 + input$title_size_slider),
+              axis.title = element_text(size = 13 + input$axis_title_slider),
+              axis.text = element_text(size = 13 + input$axis_text_slider),
+              legend.text = element_text(size = 11 + input$legend_text_slider),
+              legend.title = element_text(size = 11 + input$legend_title_slider),
               legend.position = "right"
             ) +
             ggtitle(paste("Concentration vs. time for ",input$metab_plot_caption, sep="")) +
